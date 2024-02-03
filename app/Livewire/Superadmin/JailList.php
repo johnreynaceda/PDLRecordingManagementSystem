@@ -21,6 +21,7 @@ use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
 use Livewire\Component;
 use Filament\Tables\Actions\EditAction;
+use Filament\Forms\Components\ViewField;
 
 class JailList extends Component implements HasForms, HasTable
 {
@@ -34,7 +35,7 @@ class JailList extends Component implements HasForms, HasTable
                 CreateAction::make('new')->label('New Jail Branch')->color('main')->size('sm')->icon('heroicon-s-plus')->form([
                     TextInput::make('name'),
                     Select::make('region_id')->label('Region')->options(
-                        Region::all()->pluck('name','id')
+                        Region::all()->pluck('name', 'id')
                     )
                 ])->modalWidth('xl'),
             ])
@@ -47,26 +48,33 @@ class JailList extends Component implements HasForms, HasTable
             ])
             ->actions([
                 Action::make('assign')->label('Assign Account')->color('main')->icon('heroicon-s-user-plus')->action(
-                    function($record){
-                        dd($record);
+                    function ($record, $data) {
+                       User::create([
+                        'name' => $data['name'],
+                        'email' => $data['email'],
+                        'password' => bcrypt($data['password']),
+                        'user_type' => $data['user_type'],
+                        'jail_id' => $record->id,
+                       ]);
                     }
                 )->form([
+                    ViewField::make('rating')
+                        ->view('filament.forms.jail'),
                     Grid::make(2)->schema([
-                        
+
                         TextInput::make('name'),
                         TextInput::make('email')->email(),
-                        TextInput::make('password')->email(),
+                        TextInput::make('password')->password(),
                         Select::make('user_type')->options([
                             'admin' => 'Branch Admin',
                             'records' => 'Record Section',
                         ])
                     ])
                 ])->modalWidth('2xl'),
-               EditAction::make('edit')->color('success'),
-               DeleteAction::make('delete'),
+                EditAction::make('edit')->color('success'),
+                DeleteAction::make('delete'),
             ])
-            ->bulkActions([
-            ])->emptyStateIcon('heroicon-s-table-cells')->emptyStateHeading('No Jail Branch yet!')->emptyStateDescription('Once you create new Jail branch, it will appear here.');
+            ->bulkActions([])->emptyStateIcon('heroicon-s-table-cells')->emptyStateHeading('No Jail Branch yet!')->emptyStateDescription('Once you create new Jail branch, it will appear here.');
     }
 
     public function render()

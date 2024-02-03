@@ -33,7 +33,7 @@
                                 <img src="{{ asset('images/bjmp_logo.png') }}" class="h-14" alt="">
                                 <div>
                                     <h1 class="font-bold text-lg text-gray-700 font-barlow">BJMP</h1>
-                                    <h1 class="text-xs leading-3 text-gray-500">PDL-Carpeta Management System</h1>
+                                    <h1 class="text-xs leading-3 text-gray-500">PDL-Carpeta  Management System</h1>
                                 </div>
                             </a>
                             <button class="hidden rounded-lg focus:outline-none focus:shadow-outline">

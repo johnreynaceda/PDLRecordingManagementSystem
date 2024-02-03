@@ -40,6 +40,7 @@ class AccountList extends Component implements HasForms, HasTable
                 TextColumn::make('name')->label('NAME')->searchable(),
                 TextColumn::make('email')->label('EMAIL')->searchable(),
                 TextColumn::make('user_type')->label('USER TYPE')->searchable(),
+                TextColumn::make('jail.name')->label('JAIL BRANCH')->searchable(),
             ])
             ->filters([
                 // ...
