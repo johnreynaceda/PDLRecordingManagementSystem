@@ -12,7 +12,6 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    <!-- Scripts -->
     <style>
         [x-cloak] {
             display: none !important;
@@ -23,16 +22,20 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="font-sans text-gray-900 antialiased">
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-        <div>
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </div>
-
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-            {{ $slot }}
+<body class="font-sans antialiased relative bg-main">
+    <img src="{{ asset('images/camouflage.jpg') }}"
+        class="fixed top-0 bottom-0 opacity-10 object-cover h-full left-0 w-full" alt="">
+    <div class=" bg-white sticky top-0 z-50  shadow-xl border-b">
+        <livewire:navbar />
+    </div>
+    <div class="mx-auto max-w-7xl py-12">
+        <header class="text-white text-2xl uppercase font-bold">
+            @yield('title')
+        </header>
+        <div class="mt-10">
+            <main>
+                {{ $slot }}
+            </main>
         </div>
     </div>
     @filamentScripts
