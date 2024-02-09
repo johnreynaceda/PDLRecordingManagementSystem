@@ -5,6 +5,8 @@ namespace App\Livewire\Admin;
 use App\Models\Crime;
 use App\Models\EmergencyContact;
 use App\Models\Pdl;
+use App\Models\PdlAttachment;
+use App\Models\PdlCases;
 use App\Models\PersonalDescription;
 use App\Models\PersonalInformation;
 use Filament\Forms\Components\DatePicker;
@@ -25,7 +27,7 @@ class CommitAdd extends Component implements HasForms
 {
     use InteractsWithForms;
 
-    public $date_arrested, $criminal_case_no, $date_of_confinement, $court, $time, $crime_commited;
+    public $date_arrested, $criminal_case_no, $date_of_confinement, $court, $time, $crime_commited = [], $classification;
 
     public $firstname, $lastname, $middlename, $birthdate, $birthplace, $residence, $civil_status, $sex, $no_of_children, $blood_type;
 
@@ -37,6 +39,8 @@ class CommitAdd extends Component implements HasForms
     public $age, $height, $weight, $build, $complexion, $hair, $eyes, $religion, $occupation, $attaintment, $nationality, $aliases, $register_voter, $brgy_registration, $language, $skills, $returning_rate, $sentence;
     public $contacts = [];
     public $photos = [];
+
+    public $attachments = [];
 
     public function form(Form $form): Form
     {
@@ -50,11 +54,19 @@ class CommitAdd extends Component implements HasForms
 
                     DatePicker::make('date_arrested'),
                     TextInput::make('criminal_case_no'),
-                    DatePicker::make('date_of_confinement'),
+                    DatePicker::make('date_of_confinement')->label('Date of Commited'),
                     TextInput::make('court'),
                     TextInput::make('time'),
-                    Select::make('crime_commited')->searchable()->options(Crime::all()->pluck('name', 'id')),
-
+                    Select::make('crime_commited')->multiple()->searchable()->options(Crime::all()->pluck('name', 'id')),
+                    Select::make('classification')->options([
+                        'HIGH RISKS' => 'HIGH RISKS',
+                        'HIGH PROFILE' => 'HIGH PROFILE',
+                        'HIGH PROFILE/HIGH RISK' => 'HIGH PROFILE/HIGH RISK',
+                        'INSULAR PDL' => 'INSULAR PDL',
+                        'CITY PDL' => 'CITY PDL',
+                        'MUNICIPAL PDL' => 'MUNICIPAL PDL',
+                        'ORDINARY' => ' ORDINARY',
+                    ]),
                 ])->columns(3),
 
                 Fieldset::make('PERSONAL INFORMATION')->schema([
@@ -121,6 +133,9 @@ class CommitAdd extends Component implements HasForms
                         TextInput::make('contact_number'),
                     ])->columns(2)->columnSpan(2)->addActionLabel('Add additional information')->defaultItems(1),
                 ]),
+              Grid::make(3)->schema([
+                FileUpload::make('attachments')->multiple()->columnSpan(2),
+              ])
             ]);
     }
 
@@ -136,10 +151,17 @@ class CommitAdd extends Component implements HasForms
                 'date_of_confinement' => $this->date_of_confinement,
                 'court' => $this->court,
                 'time' => $this->time,
-                'crime_id' => $this->crime_commited,
+                // 'crime_id' => $this->crime_commited,
                 'photo_path' => $value->store('PDL PHOTO', 'public'),
             ]);
         }
+
+       foreach ($this->crime_commited as $key => $value) {
+        PdlCases::create([
+            'pdl_id' => $pdl->id,
+            'crime_id' =>$value,
+        ]);
+       }
 
         PersonalInformation::create([
             'pdl_id' => $pdl->id,
@@ -189,13 +211,20 @@ class CommitAdd extends Component implements HasForms
             'sentence' => $this->sentence,
         ]);
 
-        foreach ($this->contacts as $key => $value) {
+        foreach ($this->contacts as $key => $value)  {
             EmergencyContact::create([
                 'pdl_id' => $pdl->id,
                 'name' => $value['contact_name'],
                 'relationship' => $value['contact_relationship'],
                 'address' => $value['contact_address'],
                 'contact_number' => $value['contact_number'],
+            ]);
+        }
+
+        foreach ($this->attachments as $key => $value) {
+            PdlAttachment::create([
+                'pdl_id' => $pdl->id,
+                'path' => $value->store('PDL Attachments', 'public'),
             ]);
         }
 

@@ -19,7 +19,6 @@ return new class extends Migration
             $table->date('date_of_confinement');
             $table->string('court');
             $table->string('time');
-            $table->foreignId('crime_id');
             $table->string('photo_path');
             $table->date('date_of_hearing')->nullable();
             $table->date('date_of_remand')->nullable();

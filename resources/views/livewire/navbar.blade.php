@@ -6,9 +6,16 @@
                 <a class="text-lg tracking-tight text-black uppercase focus:outline-none focus:ring lg:text-2xl"
                     href="/">
                     <div class="flex space-x-2 items-center">
-                        <img src="{{ asset('images/bjmp_logo.png') }}" class="h-16" alt="">
+                        @if (auth()->user()->jail->logo_path != null)
+                            <img src="{{ Storage::url(auth()->user()->jail->logo_path) }}"
+                                class="h-16 w-16 object-cover rounded-full" alt="">
+                        @else
+                            <img src="{{ asset('images/bjmp_logo.png') }}" class="h-16 object-cover w-16"
+                                alt="">
+                        @endif
                         <div>
-                            <h1 class="font-bold font-barlow text-gray-700">BJMP</h1>
+                            <h1 class="font-bold font-barlow text-gray-700">BJMP -
+                                {{ auth()->user()->jail->region->name }}</h1>
                             <h1 class="text-sm font-semibold leading-3 text-red-600">
                                 {{ auth()->user()->jail->name }}</h1>
                         </div>

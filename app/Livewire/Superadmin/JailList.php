@@ -5,6 +5,7 @@ namespace App\Livewire\Superadmin;
 use App\Models\Jail;
 use App\Models\Region;
 use App\Models\Shop\Product;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -28,15 +29,27 @@ class JailList extends Component implements HasForms, HasTable
     use InteractsWithTable;
     use InteractsWithForms;
 
+    public $logo;
+    public $name, $region_id;
+
     public function table(Table $table): Table
     {
         return $table
             ->query(Jail::query())->headerActions([
-                CreateAction::make('new')->label('New Jail Branch')->color('main')->size('sm')->icon('heroicon-s-plus')->form([
+                CreateAction::make('new')->label('New Jail Branch')->color('main')->size('sm')->icon('heroicon-s-plus')->action(
+                    function($data){
+                        Jail::create([
+                            'name' => $data['name'],
+                          'region_id' => $data['region_id'],
+                          'logo_path' => $this->logo->store('Branch Logo', 'public'),
+                        ]);
+                    }
+                )->form([
                     TextInput::make('name'),
                     Select::make('region_id')->label('Region')->options(
                         Region::all()->pluck('name', 'id')
-                    )
+                    ),
+                    ViewField::make('logo')->label('logo')->view('filament.forms.logo'),
                 ])->modalWidth('xl'),
             ])
             ->columns([

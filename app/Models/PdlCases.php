@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Crime extends Model
+class PdlCases extends Model
 {
     use HasFactory;
     protected $guarded = [];
 
-    public function pdls(){
-        return $this->hasMany(Pdl::class);
+    public function pdl(){
+        return $this->belongsTo(Pdl::class);
     }
 
-    public function pdlcases(){
-        return $this->hasMany(PdlCases::class);
+    public function crime(){
+        return $this->belongsTo(Crime::class);
     }
 }

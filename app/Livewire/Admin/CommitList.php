@@ -28,6 +28,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use WireUi\Traits\Actions;
 use Filament\Forms\Components\ViewField;
+use Filament\Tables\Columns\ViewColumn;
 
 class CommitList extends Component implements HasForms, HasTable
 {
@@ -52,7 +53,8 @@ class CommitList extends Component implements HasForms, HasTable
                 TextColumn::make('criminal_case_no')->label('CRIMINAL CASE')->searchable(),
                 TextColumn::make('court')->label('BRANCH OF COURT')->searchable(),
                 TextColumn::make('date_of_confinement')->date()->label('CONFINEMENT DATE')->searchable(),
-                TextColumn::make('crime.name')->label('COMMITTED CRIME')->searchable(),
+                // TextColumn::make('crime.name')->label('COMMITTED CRIME')->searchable(),
+                ViewColumn::make('status')->label('COMMITTED CRIME')->view('filament.tables.columns.cases')
                 ])
             ->filters([
                 Filter::make('created_at')->indicator('Administrators')

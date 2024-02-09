@@ -24,6 +24,8 @@
 
 <body class="font-sans antialiased">
     <div class="flex h-screen overflow-hidden bg-gradient-to-tr from-black to-main">
+        <img src="{{ asset('images/bjmp_logo.png') }}" class=" bottom-0 -left-72 absolute opacity-10 ">
+        <img src="{{ asset('images/jailplan.png') }}" class="h-[60rem] bottom-0 -right-72 absolute opacity-10 ">
         <img src="{{ asset('images/camouflage.jpg') }}"
             class="absolute top-0 bottom-0 opacity-10 object-cover h-full left-0 w-full" alt="">
         <div class="hidden md:flex md:flex-shrink-0">
@@ -270,6 +272,9 @@
                             <header class="text-2xl text-white uppercase font-bold">
                                 @yield('title')
                             </header>
+                            <div class=" text-5xl font-dancing text-white font-extrabold text-center">
+                                Changing Lives, Building a Safer Nation
+                            </div>
                             <div class="mt-10">
                                 {{ $slot }}
                             </div>

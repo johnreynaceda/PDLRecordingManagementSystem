@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jails', function (Blueprint $table) {
+        Schema::create('pdl_hearings', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignId('region_id');
-            $table->string('logo_path');
+            $table->foreignId('pdl_id');
+            $table->date('date_of_hearing');
+            $table->dateTime('morning_time')->nullable();
+            $table->dateTime('afternoon_time')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jails');
+        Schema::dropIfExists('pdl_hearings');
     }
 };

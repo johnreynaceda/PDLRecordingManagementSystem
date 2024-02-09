@@ -27,4 +27,8 @@ class Pdl extends Model
     public function crime(){
         return $this->belongsTo(Crime::class);
     }
+
+    public function pdlcases(){
+        return $this->hasMany(PdlCases::class);
+    }
 }
