@@ -41,7 +41,7 @@ class HearingList extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Pdl::query()->where('status', 'hearing')->where('jail_id', auth()->user()->jail_id))
+            ->query(auth()->user()->user_type == 'superadmin' ?  Pdl::query()->where('status', 'hearing') : Pdl::query()->where('status', 'hearing')->where('jail_id', auth()->user()->jail_id))
             ->columns([
                 TextColumn::make('personalInformation.firstname')->label('FIRSTNAME')->searchable(),
                 TextColumn::make('personalInformation.lastname')->label('LASTNAME')->searchable(),
@@ -72,7 +72,7 @@ class HearingList extends Component implements HasForms, HasTable
                                 ViewField::make('rating')
                 ->view('filament.forms.hearing_date')
                         ];
-                        
+
                     }
                 )->modalHeading('Hearing Dates')->modalWidth('2xl'),
                 ActionGroup::make([
@@ -120,7 +120,7 @@ class HearingList extends Component implements HasForms, HasTable
                             );
                         }
                     )->form([
-                       
+
                         DatePicker::make('date')->label('Date of Release'),
                     ])->modalWidth('xl'),
                 ])

@@ -39,12 +39,12 @@ class CommitList extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Pdl::query()->where('jail_id', auth()->user()->jail_id))->headerActions([
+            ->query(auth()->user()->user_type == 'superadmin' ? Pdl::query() : Pdl::query()->where('jail_id', auth()->user()->jail_id))->headerActions([
                Action::make('new_record')->icon('heroicon-o-plus')->icon('heroicon-o-plus')->color('success')->action(
                 function(){
                     return redirect()->route('admin.commits.add');
                 }
-               )
+               )->hidden(auth()->user()->user_type == 'superadmin')
             ])
             ->columns([
                 TextColumn::make('personalInformation.firstname')->label('FIRSTNAME')->searchable(),
@@ -258,7 +258,7 @@ class CommitList extends Component implements HasForms, HasTable
                             );
                         }
                     )->form([
-                       
+
                         DatePicker::make('date')->label('Date of Release'),
                     ])->modalWidth('xl'),
                 ])

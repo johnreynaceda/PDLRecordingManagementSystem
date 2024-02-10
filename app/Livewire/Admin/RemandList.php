@@ -38,7 +38,7 @@ class RemandList extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Pdl::query()->where('status', 'remand')->where('jail_id', auth()->user()->jail_id))
+            ->query(auth()->user()->user_type == 'superadmin' ? Pdl::query()->where('status', 'remand') : Pdl::query()->where('status', 'remand')->where('jail_id', auth()->user()->jail_id))
             ->columns([
                 TextColumn::make('personalInformation.firstname')->label('FIRSTNAME'),
                 TextColumn::make('personalInformation.lastname')->label('LASTNAME'),
@@ -80,7 +80,7 @@ class RemandList extends Component implements HasForms, HasTable
                             );
                         }
                     )->form([
-                       
+
                         DatePicker::make('date')->label('Date of Release'),
                     ])->modalWidth('xl'),
                 ])

@@ -68,7 +68,7 @@
                             <ul>
                                 <li>
                                     <a class="{{ request()->routeIs('superadmin.dashboard') ? 'bg-gray-200 text-main scale-95' : '' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
-                                        href="#">
+                                        href="{{ route('superadmin.dashboard') }}">
                                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                             fill="currentColor" aria-hidden="true">
                                             <path
@@ -131,8 +131,8 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
-                                            href="#">
+                                        <a class="{{ request()->routeIs('superadmin.hearings') ? 'bg-gray-200 text-main scale-95' : '' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
+                                            href="{{ route('superadmin.hearings') }}">
                                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                 fill="currentColor" aria-hidden="true">
                                                 <path
@@ -151,8 +151,8 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
-                                            href="#">
+                                        <a class="{{ request()->routeIs('superadmin.remands') ? 'bg-gray-200 text-main scale-95' : '' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
+                                            href="{{ route('superadmin.remands') }}">
                                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                 fill="currentColor" aria-hidden="true">
                                                 <path
@@ -171,8 +171,8 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
-                                            href="#">
+                                        <a class="{{ request()->routeIs('superadmin.releases') ? 'bg-gray-200 text-main scale-95' : '' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
+                                            href="{{ route('superadmin.releases') }}">
                                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                 fill="currentColor" aria-hidden="true">
                                                 <path

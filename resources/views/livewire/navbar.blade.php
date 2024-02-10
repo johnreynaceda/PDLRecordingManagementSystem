@@ -54,9 +54,9 @@
                     href="{{ route('admin.releases') }}">
                     Releases
                 </a>
-                <a class="px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main" href="#">
+                {{-- <a class="px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main" href="#">
                     Visitors
-                </a>
+                </a> --}}
 
                 <div class="inline-flex items-center gap-2 list-none lg:ml-auto">
                     <div class="relative flex-shrink-0 ml-5" @click.away="open = false" x-data="{ open: false }">

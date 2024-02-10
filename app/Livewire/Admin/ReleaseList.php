@@ -35,7 +35,7 @@ class ReleaseList extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Pdl::query()->where('status', 'release')->where('jail_id', auth()->user()->jail_id))
+            ->query(auth()->user()->user_type == 'superadmin' ? Pdl::query()->where('status', 'release') : Pdl::query()->where('status', 'release')->where('jail_id', auth()->user()->jail_id))
             ->columns([
                 TextColumn::make('personalInformation.firstname')->label('FIRSTNAME'),
                 TextColumn::make('personalInformation.lastname')->label('LASTNAME'),

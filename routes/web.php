@@ -42,6 +42,15 @@ Route::prefix('superadmin')->group(function(){
     Route::get('/pdl-records', function(){
         return view('superadmin.pdl');
     })->name('superadmin.pdl');
+    Route::get('/hearings', function(){
+        return view('superadmin.hearings');
+    })->name('superadmin.hearings');
+    Route::get('/remands', function(){
+        return view('superadmin.remands');
+    })->name('superadmin.remands');
+    Route::get('/releases', function(){
+        return view('superadmin.releases');
+    })->name('superadmin.releases');
 
 });
 
