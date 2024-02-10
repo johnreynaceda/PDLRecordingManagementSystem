@@ -66,7 +66,7 @@ class CommitAdd extends Component implements HasForms
                         'CITY PDL' => 'CITY PDL',
                         'MUNICIPAL PDL' => 'MUNICIPAL PDL',
                         'ORDINARY' => ' ORDINARY',
-                    ]),
+                    ])->required(),
                 ])->columns(3),
 
                 Fieldset::make('PERSONAL INFORMATION')->schema([
@@ -151,6 +151,7 @@ class CommitAdd extends Component implements HasForms
                 'date_of_confinement' => $this->date_of_confinement,
                 'court' => $this->court,
                 'time' => $this->time,
+                'classification' => $this->classification,
                 // 'crime_id' => $this->crime_commited,
                 'photo_path' => $value->store('PDL PHOTO', 'public'),
             ]);
@@ -229,7 +230,7 @@ class CommitAdd extends Component implements HasForms
         }
 
         DB::commit();
-        sweetalert()->addSuccess('PDL is successfully created');
+        // sweetalert()->addSuccess('PDL is successfully created');
         return redirect()->route('admin.commits');
     }
 

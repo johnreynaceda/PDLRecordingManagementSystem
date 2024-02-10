@@ -23,16 +23,30 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="font-sans text-gray-900 antialiased">
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-        <div>
+<body class="font-sans text-gray-900 antialiased relative bg-main">
+    <img src="{{ asset('images/bjmp_logo.png') }}" class=" bottom-0 -left-72 fixed opacity-10 ">
+    <img src="{{ asset('images/jailplan.png') }}" class="h-[60rem] bottom-0 -right-72 fixed opacity-10 ">
+    <img src="{{ asset('images/camouflage.jpg') }}"
+        class="fixed top-0 bottom-0 opacity-10 object-cover h-full left-0 w-full" alt="">
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 ">
+        {{-- <div>
             <a href="/">
                 <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
             </a>
-        </div>
+        </div> --}}
 
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4  shadow-md overflow-hidden relative bg-white sm:rounded-lg">
+            <a class="text-lg font-semibold flex space-x-2 items-center justify-center tracking-tighter text-black focus:outline-none focus:ring "
+                            href="/">
+                            <img src="{{ asset('images/bjmp_logo.png') }}" class="h-14" alt="">
+                            <div>
+                                <h1 class="font-bold text-xl text-gray-700 font-barlow">BJMP</h1>
+                                <h1 class="text-sm leading-3 text-gray-500">PDL-Carpeta Management System</h1>
+                            </div>
+                        </a>
+           <div class="mt-10">
             {{ $slot }}
+           </div>
         </div>
     </div>
     @filamentScripts

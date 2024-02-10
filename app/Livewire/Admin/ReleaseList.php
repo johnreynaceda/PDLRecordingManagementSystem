@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Livewire\Admin\PdlList;
 use App\Models\Pdl;
+use Filament\Tables\Columns\ViewColumn;
 use Livewire\Component;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
@@ -38,11 +39,11 @@ class ReleaseList extends Component implements HasForms, HasTable
             ->columns([
                 TextColumn::make('personalInformation.firstname')->label('FIRSTNAME'),
                 TextColumn::make('personalInformation.lastname')->label('LASTNAME'),
-                TextColumn::make('date_of_hearing')->date()->label('HEARING DATE')->searchable(),
+                TextColumn::make('date_of_release')->date()->label('RELEASE DATE')->searchable(),
                 TextColumn::make('criminal_case_no')->label('CRIMINAL CASE')->searchable(),
                 TextColumn::make('court')->label('BRANCH OF COURT')->searchable(),
                 TextColumn::make('date_of_confinement')->date()->label('CONFINEMENT DATE')->searchable(),
-                TextColumn::make('crime_commited')->label('COMMITTED CRIME')->searchable(),
+                ViewColumn::make('status')->label('COMMITTED CRIME')->view('filament.tables.columns.cases')
                 ])
             ->filters([
                 Filter::make('created_at')->indicator('Administrators')
@@ -60,11 +61,11 @@ class ReleaseList extends Component implements HasForms, HasTable
             ])
             ->actions([
                 EditAction::make('edit')->color('success'),
-                ActionGroup::make([
-                    Action::make('hearings')->icon('heroicon-s-cursor-arrow-ripple')->color('info'),
-                    Action::make('remands')->icon('heroicon-s-cursor-arrow-ripple')->color('warning'),
-                    Action::make('release')->icon('heroicon-s-cursor-arrow-ripple')->color('success'),
-                ])
+                // ActionGroup::make([
+                //     olAction::make('hearings')->icon('heroicon-s-cursor-arrow-ripple')->cor('info'),
+                //     Action::make('remands')->icon('heroicon-s-cursor-arrow-ripple')->color('warning'),
+                //     Action::make('release')->icon('heroicon-s-cursor-arrow-ripple')->color('success'),
+                // ])
             ])
             ->bulkActions([
                 // ...

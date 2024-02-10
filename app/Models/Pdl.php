@@ -31,4 +31,8 @@ class Pdl extends Model
     public function pdlcases(){
         return $this->hasMany(PdlCases::class);
     }
+
+    public function pdlHearings(){
+        return $this->hasMany(PdlHearing::class);
+    }
 }

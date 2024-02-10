@@ -23,8 +23,8 @@
 </head>
 
 <body class="font-sans antialiased relative bg-main">
-    <img src="{{ asset('images/bjmp_logo.png') }}" class=" bottom-0 -left-72 absolute opacity-10 ">
-    <img src="{{ asset('images/jailplan.png') }}" class="h-[60rem] bottom-0 -right-72 absolute opacity-10 ">
+    <img src="{{ asset('images/bjmp_logo.png') }}" class=" bottom-0 -left-72 fixed opacity-10 ">
+    <img src="{{ asset('images/jailplan.png') }}" class="h-[60rem] bottom-0 -right-72 fixed opacity-10 ">
     <img src="{{ asset('images/camouflage.jpg') }}"
         class="fixed top-0 bottom-0 opacity-10 object-cover h-full left-0 w-full" alt="">
     <div class=" bg-white sticky top-0 z-30  shadow-xl border-b">

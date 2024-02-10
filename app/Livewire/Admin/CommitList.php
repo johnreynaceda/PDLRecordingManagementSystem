@@ -47,8 +47,8 @@ class CommitList extends Component implements HasForms, HasTable
                )
             ])
             ->columns([
-                TextColumn::make('personalInformation.firstname')->label('FIRSTNAME'),
-                TextColumn::make('personalInformation.lastname')->label('LASTNAME'),
+                TextColumn::make('personalInformation.firstname')->label('FIRSTNAME')->searchable(),
+                TextColumn::make('personalInformation.lastname')->label('LASTNAME')->searchable(),
                 TextColumn::make('date_arrested')->date()->label('ARRESTED DATE')->searchable(),
                 TextColumn::make('criminal_case_no')->label('CRIMINAL CASE')->searchable(),
                 TextColumn::make('court')->label('BRANCH OF COURT')->searchable(),
@@ -217,20 +217,15 @@ class CommitList extends Component implements HasForms, HasTable
                         function($record, $data){
                             $record->update([
                                 'status' => 'hearing',
-                                'date_of_hearing' => Carbon::parse($data['date']),
+                                // 'date_of_hearing' => Carbon::parse($data['date']),
                             ]);
 
                             $this->dialog()->success(
                                 $title = 'Status updated',
                                 $description = 'PDL infos are now in hearing status.'
-
                             );
                         }
-                    )->form([
-                        // ViewField::make('data')
-                        // ->view('filament.forms.pdl'),
-                        DatePicker::make('date')->label('Date of Hearing'),
-                    ])->modalWidth('xl'),
+                    ),
                     Action::make('remands')->icon('heroicon-s-cursor-arrow-ripple')->color('warning')->action(
                         function($record, $data){
                             $record->update([
@@ -263,8 +258,7 @@ class CommitList extends Component implements HasForms, HasTable
                             );
                         }
                     )->form([
-                        ViewField::make('data')
-                        ->view('filament.forms.pdl'),
+                       
                         DatePicker::make('date')->label('Date of Release'),
                     ])->modalWidth('xl'),
                 ])

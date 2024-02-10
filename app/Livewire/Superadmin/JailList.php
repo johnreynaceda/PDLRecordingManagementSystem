@@ -60,7 +60,7 @@ class JailList extends Component implements HasForms, HasTable
                 // ...
             ])
             ->actions([
-                Action::make('assign')->label('Assign Account')->color('main')->icon('heroicon-s-user-plus')->action(
+                Action::make('assign')->label('Assign Account')->icon('heroicon-s-user-plus')->action(
                     function ($record, $data) {
                        User::create([
                         'name' => $data['name'],
@@ -84,7 +84,12 @@ class JailList extends Component implements HasForms, HasTable
                         ])
                     ])
                 ])->modalWidth('2xl'),
-                EditAction::make('edit')->color('success'),
+                EditAction::make('edit')->color('success')->form([
+                    TextInput::make('name'),
+                    Select::make('region_id')->label('Region')->options(
+                        Region::all()->pluck('name', 'id')
+                    ),
+                ]),
                 DeleteAction::make('delete'),
             ])
             ->bulkActions([])->emptyStateIcon('heroicon-s-table-cells')->emptyStateHeading('No Jail Branch yet!')->emptyStateDescription('Once you create new Jail branch, it will appear here.');

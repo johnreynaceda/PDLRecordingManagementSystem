@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Livewire\Admin\PdlList;
 use App\Models\Pdl;
+use Filament\Tables\Columns\ViewColumn;
 use Livewire\Component;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
@@ -19,17 +20,20 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\Shop\Product;
+use Carbon\Carbon;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
+use WireUi\Traits\Actions;
 
 class RemandList extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
+    use Actions;
 
     public function table(Table $table): Table
     {
@@ -42,7 +46,7 @@ class RemandList extends Component implements HasForms, HasTable
                 TextColumn::make('criminal_case_no')->label('CRIMINAL CASE')->searchable(),
                 TextColumn::make('court')->label('BRANCH OF COURT')->searchable(),
                 TextColumn::make('date_of_confinement')->date()->label('CONFINEMENT DATE')->searchable(),
-                TextColumn::make('crime_commited')->label('COMMITTED CRIME')->searchable(),
+                ViewColumn::make('status')->label('COMMITTED CRIME')->view('filament.tables.columns.cases')
                 ])
             ->filters([
                 Filter::make('created_at')->indicator('Administrators')
@@ -61,9 +65,24 @@ class RemandList extends Component implements HasForms, HasTable
             ->actions([
                 EditAction::make('edit')->color('success'),
                 ActionGroup::make([
-                    Action::make('hearings')->icon('heroicon-s-cursor-arrow-ripple')->color('info'),
-                    Action::make('remands')->icon('heroicon-s-cursor-arrow-ripple')->color('warning'),
-                    Action::make('release')->icon('heroicon-s-cursor-arrow-ripple')->color('success'),
+                    // Action::make('hearings')->icon('heroicon-s-cursor-arrow-ripple')->color('info'),
+                    Action::make('release')->icon('heroicon-s-cursor-arrow-ripple')->color('success')->action(
+                        function($record, $data){
+                            $record->update([
+                                'status' => 'release',
+                                'date_of_release' => Carbon::parse($data['date']),
+                            ]);
+
+                            $this->dialog()->success(
+                                $title = 'Status updated',
+                                $description = 'PDL infos are now in release status.'
+
+                            );
+                        }
+                    )->form([
+                       
+                        DatePicker::make('date')->label('Date of Release'),
+                    ])->modalWidth('xl'),
                 ])
             ])
             ->bulkActions([

@@ -1,11 +1,101 @@
 <div>
 
     <div class="border-b pb-10">
-        <div class="mb-3 w-96">
-            <x-datetime-picker placeholder="{{ now()->format('m/d/Y') }}" without-time wire:model.live="date" />
+        <div>
+            <div class="mb-3 w-96">
+                <x-datetime-picker placeholder="{{ now()->format('m/d/Y') }}" without-time wire:model.live="date" />
+            </div>
+            <div class="grid grid-cols-4 mt-3 gap-4 relative">
+                <div class=" rounded-[25px] bg-white  p-5 shadow-xl aspect">
+                    <div class="flex justify-end">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-main" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M12 0.5C18.3513 0.5 23.5 5.64873 23.5 12C23.5 12.3369 23.4855 12.6704 23.4571 13H21.9506C21.4489 18.0533 17.1853 22 12 22C6.47715 22 2 17.5228 2 12C2 6.81465 5.94668 2.5511 11 2.04938V0.542876C11.3296 0.514488 11.6631 0.5 12 0.5ZM11 4.06189C7.05369 4.55399 4 7.92038 4 12C4 16.4183 7.58172 20 12 20C16.0796 20 19.446 16.9463 19.9381 13H11V4.06189ZM13 2.552V11H21.448C20.9827 6.55197 17.448 3.01732 13 2.552Z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="my-1">
+                        <h2 class="text-3xl fill-main font-bold"><span>
+                                {{ $commits }}
+                            </span></h2>
+                    </div>
+
+                    <div>
+                        <p class=" font-sans text-base font-medium text-gray-500">Total Commits</p>
+                    </div>
+                </div>
+                <div class=" rounded-[25px] bg-white  p-5 shadow-xl aspect">
+                    <div class="flex justify-end">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-main" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M12 0.5C18.3513 0.5 23.5 5.64873 23.5 12C23.5 12.3369 23.4855 12.6704 23.4571 13H21.9506C21.4489 18.0533 17.1853 22 12 22C6.47715 22 2 17.5228 2 12C2 6.81465 5.94668 2.5511 11 2.04938V0.542876C11.3296 0.514488 11.6631 0.5 12 0.5ZM11 4.06189C7.05369 4.55399 4 7.92038 4 12C4 16.4183 7.58172 20 12 20C16.0796 20 19.446 16.9463 19.9381 13H11V4.06189ZM13 2.552V11H21.448C20.9827 6.55197 17.448 3.01732 13 2.552Z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="my-1">
+                        <h2 class="text-3xl fill-main font-bold"><span>
+                                {{ $remands }}
+                            </span></h2>
+                    </div>
+
+                    <div>
+                        <p class=" font-sans text-base font-medium text-gray-500">Total Remands</p>
+                    </div>
+                </div>
+                <div class=" rounded-[25px] bg-white  p-5 shadow-xl aspect">
+                    <div class="flex justify-end">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-main" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M12 0.5C18.3513 0.5 23.5 5.64873 23.5 12C23.5 12.3369 23.4855 12.6704 23.4571 13H21.9506C21.4489 18.0533 17.1853 22 12 22C6.47715 22 2 17.5228 2 12C2 6.81465 5.94668 2.5511 11 2.04938V0.542876C11.3296 0.514488 11.6631 0.5 12 0.5ZM11 4.06189C7.05369 4.55399 4 7.92038 4 12C4 16.4183 7.58172 20 12 20C16.0796 20 19.446 16.9463 19.9381 13H11V4.06189ZM13 2.552V11H21.448C20.9827 6.55197 17.448 3.01732 13 2.552Z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="my-1">
+                        <h2 class="text-3xl fill-main font-bold"><span>
+                                {{ $releases }}
+                            </span></h2>
+                    </div>
+
+                    <div>
+                        <p class=" font-sans text-base font-medium text-gray-500">Total Release</p>
+                    </div>
+                </div>
+                <div class=" rounded-[25px] bg-white  p-5 shadow-xl aspect">
+                    <div class="flex justify-end">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-main" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M12 0.5C18.3513 0.5 23.5 5.64873 23.5 12C23.5 12.3369 23.4855 12.6704 23.4571 13H21.9506C21.4489 18.0533 17.1853 22 12 22C6.47715 22 2 17.5228 2 12C2 6.81465 5.94668 2.5511 11 2.04938V0.542876C11.3296 0.514488 11.6631 0.5 12 0.5ZM11 4.06189C7.05369 4.55399 4 7.92038 4 12C4 16.4183 7.58172 20 12 20C16.0796 20 19.446 16.9463 19.9381 13H11V4.06189ZM13 2.552V11H21.448C20.9827 6.55197 17.448 3.01732 13 2.552Z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="my-1">
+                        <h2 class="text-3xl fill-main font-bold"><span>
+                                {{ $jails }}
+                            </span></h2>
+                    </div>
+
+                    <div>
+                        <p class=" font-sans text-base font-medium text-gray-500">Total Jail Population</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="grid grid-cols-4 mt-3 gap-4 relative">
-            <div class=" rounded-[25px] bg-white  p-5 shadow-xl aspect">
+    </div>
+    <div class="border-b py-10">
+        <div>
+            {{-- <div class="mb-3 w-96">
+                <x-datetime-picker placeholder="{{ now()->format('m/d/Y') }}" without-time wire:model.live="date" />
+            </div> --}}
+            <div class="grid grid-cols-4 mt-3 gap-4 relative">
+                @php
+                    $classifications = [['name' => 'HIGH RISK'], ['name' => 'HIGH PROFILE'], ['name' => 'HIGH PROFILE/HIGH RISK'], ['name' => 'INSULAR PDL'], ['name' => 'CITY PDL'], ['name' => 'MUNICIPAL PDL'], ['name' => 'ORDINARY']];
+                @endphp
+               @foreach ($classifications as $item)
+               <div class=" rounded-[25px] bg-white  p-5 shadow-xl aspect">
                 <div class="flex justify-end">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-main" viewBox="0 0 24 24"
                         fill="currentColor">
@@ -16,70 +106,16 @@
                 </div>
                 <div class="my-1">
                     <h2 class="text-3xl fill-main font-bold"><span>
-                            {{-- {{ $commits }} --}}0
+                          {{\App\Models\Pdl::where('classification', $item['name'])->count()}}
                         </span></h2>
                 </div>
 
                 <div>
-                    <p class=" font-sans text-base font-medium text-gray-500">Total Commits</p>
+                    <p class=" font-sans text-base font-medium text-gray-500">{{$item['name']}}</p>
                 </div>
             </div>
-            <div class=" rounded-[25px] bg-white  p-5 shadow-xl aspect">
-                <div class="flex justify-end">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-main" viewBox="0 0 24 24"
-                        fill="currentColor">
-                        <path
-                            d="M12 0.5C18.3513 0.5 23.5 5.64873 23.5 12C23.5 12.3369 23.4855 12.6704 23.4571 13H21.9506C21.4489 18.0533 17.1853 22 12 22C6.47715 22 2 17.5228 2 12C2 6.81465 5.94668 2.5511 11 2.04938V0.542876C11.3296 0.514488 11.6631 0.5 12 0.5ZM11 4.06189C7.05369 4.55399 4 7.92038 4 12C4 16.4183 7.58172 20 12 20C16.0796 20 19.446 16.9463 19.9381 13H11V4.06189ZM13 2.552V11H21.448C20.9827 6.55197 17.448 3.01732 13 2.552Z">
-                        </path>
-                    </svg>
-                </div>
-                <div class="my-1">
-                    <h2 class="text-3xl fill-main font-bold"><span>
-                            {{-- {{ $remands }} --}}0
-                        </span></h2>
-                </div>
-
-                <div>
-                    <p class=" font-sans text-base font-medium text-gray-500">Total Remands</p>
-                </div>
-            </div>
-            <div class=" rounded-[25px] bg-white  p-5 shadow-xl aspect">
-                <div class="flex justify-end">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-main" viewBox="0 0 24 24"
-                        fill="currentColor">
-                        <path
-                            d="M12 0.5C18.3513 0.5 23.5 5.64873 23.5 12C23.5 12.3369 23.4855 12.6704 23.4571 13H21.9506C21.4489 18.0533 17.1853 22 12 22C6.47715 22 2 17.5228 2 12C2 6.81465 5.94668 2.5511 11 2.04938V0.542876C11.3296 0.514488 11.6631 0.5 12 0.5ZM11 4.06189C7.05369 4.55399 4 7.92038 4 12C4 16.4183 7.58172 20 12 20C16.0796 20 19.446 16.9463 19.9381 13H11V4.06189ZM13 2.552V11H21.448C20.9827 6.55197 17.448 3.01732 13 2.552Z">
-                        </path>
-                    </svg>
-                </div>
-                <div class="my-1">
-                    <h2 class="text-3xl fill-main font-bold"><span>
-                            {{-- {{ $releases }} --}}0
-                        </span></h2>
-                </div>
-
-                <div>
-                    <p class=" font-sans text-base font-medium text-gray-500">Total Release</p>
-                </div>
-            </div>
-            <div class=" rounded-[25px] bg-white  p-5 shadow-xl aspect">
-                <div class="flex justify-end">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-main" viewBox="0 0 24 24"
-                        fill="currentColor">
-                        <path
-                            d="M12 0.5C18.3513 0.5 23.5 5.64873 23.5 12C23.5 12.3369 23.4855 12.6704 23.4571 13H21.9506C21.4489 18.0533 17.1853 22 12 22C6.47715 22 2 17.5228 2 12C2 6.81465 5.94668 2.5511 11 2.04938V0.542876C11.3296 0.514488 11.6631 0.5 12 0.5ZM11 4.06189C7.05369 4.55399 4 7.92038 4 12C4 16.4183 7.58172 20 12 20C16.0796 20 19.446 16.9463 19.9381 13H11V4.06189ZM13 2.552V11H21.448C20.9827 6.55197 17.448 3.01732 13 2.552Z">
-                        </path>
-                    </svg>
-                </div>
-                <div class="my-1">
-                    <h2 class="text-3xl fill-main font-bold"><span>
-                            {{-- {{ $jails }} --}}0
-                        </span></h2>
-                </div>
-
-                <div>
-                    <p class=" font-sans text-base font-medium text-gray-500">Total Jail Population</p>
-                </div>
+               @endforeach
+               
             </div>
         </div>
     </div>
@@ -99,7 +135,9 @@
                 </div>
                 <div class="my-1">
                     <h2 class="text-3xl fill-main font-bold"><span>
-                            {{-- {{ \App\Models\Pdl::where('jail_id', auth()->user()->jail_id)->where('crime_id', $item->id)->count() }} --}}0
+                            {{ \App\Models\PdlCases::whereHas('pdl', function ($record) {
+                                $record->where('jail_id', auth()->user()->jail_id);
+                            })->where('crime_id', $item->id)->count() }}
                         </span></h2>
                 </div>
 

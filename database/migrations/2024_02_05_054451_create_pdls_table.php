@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('court');
             $table->string('time');
             $table->string('photo_path');
+            $table->string('classification')->nullable();
             $table->date('date_of_hearing')->nullable();
             $table->date('date_of_remand')->nullable();
             $table->date('date_of_release')->nullable();

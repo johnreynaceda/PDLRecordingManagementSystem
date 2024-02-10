@@ -9,4 +9,8 @@ class PdlHearing extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function pdl(){
+        return $this->belongsTo(Pdl::class);
+    }
 }
