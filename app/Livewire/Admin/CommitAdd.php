@@ -48,13 +48,13 @@ class CommitAdd extends Component implements HasForms
         return $form
             ->schema([
                 Grid::make(3)->schema([
-                    FileUpload::make('photos')->label('Photo')->columnSpan(1),
+                    FileUpload::make('photos')->imageEditor()->label('Photo')->columnSpan(1)->uploadingMessage('Uploading attachment...'),
                 ]),
                 Fieldset::make('')->schema([
 
                     DatePicker::make('date_arrested'),
                     TextInput::make('criminal_case_no'),
-                    DatePicker::make('date_of_confinement')->label('Date of Commited'),
+                    DatePicker::make('date_of_confinement')->label('Date Commited'),
                     TextInput::make('court'),
                     TextInput::make('time'),
                     Select::make('crime_commited')->multiple()->searchable()->options(Crime::all()->pluck('name', 'id')),

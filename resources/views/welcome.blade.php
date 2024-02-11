@@ -20,26 +20,25 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased relative bg-gradient-to-b from-black  to-main overflow">
+<body class="font-sans antialiased relative 2xl:bg-gradient-to-b 2xl:from-black  2xl:to-main bg-main overflow">
     <img src="{{ asset('images/camouflage.jpg') }}"
-        class="absolute left-0 top-0 bottom-0 w-full h-full object-cover opacity-5" alt="">
+        class="fixed left-0 top-0 bottom-0 w-full h-full object-cover opacity-5" alt="">
     <section class="relative overflow-hidden ">
 
         <div class="relative w-full">
-            <div class="relative flex flex-col max-w-7xl w-full px-5 py-3 mx-auto lg:px-16 md:flex-row md:items-center md:justify-between md:px-6"
+            <div class="relative flex flex-col max-w-7xl w-full px-5 py-5 mx-auto lg:px-16 md:flex-row md:items-center md:justify-between md:px-6"
                 x-data="{ open: false }">
-                <div class="flex flex-row items-center justify-between text-sm text-black lg:justify-start">
+                <div class="flex flex-row items-start justify-between text-sm text-black ">
                     <a href="/">
-                        <div class="bjmp flex space-x-3 items-center">
-                            <img src="{{ asset('images/bjmp_logo.png') }}" class="h-14" alt="">
-                            <div class="">
-                                <p class="font-extrabold text-lg font-barlow text-white">BJMP</p>
-                                <p class=" leading-[.50rem] font-medium text-gray-300 text-xs">PDL- Carpeta Management
-                                    Database
-                                    System</p>
-                            </div>
+                        <div class="bjmp flex space-x-3 items-end">
+
+                            <p class=" font-bold text-white font-barlow 2xl:text-2xl text-lg">PDL- Carpeta Management
+                                Database
+                                System</p>
+
                         </div>
-                    </a><button @click="open = !open"
+                    </a>
+                    {{-- <button @click="open = !open"
                         class="items-center justify-center focus:outline-none inline-flex focus:text-white hover:text-main md:hidden p-2 text-white">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path d="M4 6h16M4 12h16M4 18h16" :class="{ 'hidden': open, 'inline-flex': !open }"
@@ -48,7 +47,7 @@
                             <path d="M6 18L18 6M6 6l12 12" :class="{ 'hidden': !open, 'inline-flex': open }"
                                 class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
                         </svg>
-                    </button>
+                    </button> --}}
                 </div>
                 <nav :class="{ 'flex': open, 'hidden': !open }"
                     class="flex-col items-center flex-grow hidden md:flex md:flex-row md:justify-end md:pb-0 md:space-x-6">
@@ -61,17 +60,18 @@
     <section class="relative flex items-center w-full  overflow-hidden">
         <img src="{{ asset('images/bjmp_logo.png') }}"
             class="absolute object-cover 2xl:-right-24 -bottom-20 2xl:h-[35rem] h-96 opacity-5 z-10 " alt="">
-        <div class="relative z-50 items-center w-full px-5 py-24 mx-auto lg:px-16 lg:py-40 max-w-7xl md:px-12">
+        <div
+            class="relative z-50 items-center w-full px-5 2xl:py-24 py-10 mx-auto lg:px-16 lg:py-40 max-w-7xl md:px-12">
             <div class="relative flex-col items-start m-auto align-middle">
                 <div class="grid grid-cols-1 gap-6 lg:gap-24 lg:grid-cols-2">
                     <div class="relative items-center gap-12 m-auto lg:inline-flex">
-                        <div class="max-w-xl text-center lg:text-left">
+                        <div class="2xl:max-w-xl text-center lg:text-left">
                             <div>
-                                <p class="text-3xl font-medium md:text-6xl text-slate-900">
-                                    <span class="text-white font-barlow font-bold ">"Changing lives, Building a Safer
+                                <p class="2xl:text-7xl text-5xl font-medium  text-slate-900">
+                                    <span class="text-white font-dancing font-bold ">"Changing lives, Building a Safer
                                         Nation".</span>
                                 </p>
-                                <p class="mt-4  flex space-x-3 tracking-tight text-slate-200 ">
+                                <p class="mt-4 hidden 2xl:block flex space-x-3 tracking-tight text-slate-200 ">
                                     <x-button label="#Mandate" sm rounded
                                         class="font-semibold text-white  hover:text-main" />
                                     <x-button label="#Mission" sm rounded
@@ -113,7 +113,7 @@
         <section>
             <div class="relative items-center w-full px-5 py-20 mx-auto md:px-12 lg:px-20 max-w-7xl">
                 <div class="div">
-                    <h1 class="font-bold text-4xl text-red-500">KEY POINTS JAIL PLAN 2024 PERSPECTIVES</h1>
+                    <h1 class="font-bold text-4xl text-red-500">KEY POINTS J.A.I.L PLAN 2040 PERSPECTIVES</h1>
                     <div class="w-20 h-1 bg-gray-600 rounded-br-xl"></div>
                 </div>
                 <div class="grid w-full grid-cols-1 mx-auto mt-10 lg:grid-cols-4">
@@ -235,7 +235,7 @@
                                     </div>
                                     <div class="mt-2 text-base text-gray-500">
                                         <ul>
-                                            <li>MAKATAO(Respect forhumanity)</li>
+                                            <li>MAKATAO(Respect for humanity)</li>
                                             <li>MAY INTEGRIDAD(With Integrity)</li>
                                             <li>MATATAG(Resilency)</li>
                                         </ul>
@@ -286,66 +286,66 @@
         <div class="px-5 py-12 mx-auto max-w-7xl lg:py-16 md:px-12 lg:px-20">
             <div class="xl:grid xl:grid-cols-3 xl:gap-8">
                 <div class="xl:col-span-1">
-                    <a href="/"
+                    {{-- <a href="/"
                         class="text-lg font-bold tracking-tighter transition duration-500 ease-in-out transform text-black tracking-relaxed lg:pr-8">
-                    <img src="{{asset('images/bjmp_logo.png')}}" class="h-20" alt="">   
+                        <img src="{{ asset('images/bjmp_logo.png') }}" class="h-20" alt="">
                     </a>
                     <div>
                         <h1 class="font-bold text-xl text-white">BJMP</h1>
                         <span class="text-white text-sm leading-3">PDL - Recording Management System</span>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="grid grid-cols-2 gap-8 mt-12 xl:mt-0 xl:col-span-2">
                     <div class="md:grid md:grid-cols-2 md:gap-8">
                         <div>
-                            <h3 class="font-semibold leading-6 uppercase text-black">
+                            <h3 class="font-semibold leading-6 uppercase text-white">
                                 Solutions
                             </h3>
                             <ul role="list" class="mt-4 space-y-3">
                                 <li>
-                                    <a href="#_" class="text-sm text-gray-500 hover:text-blue-600">
+                                    <a href="#_" class="text-sm text-white hover:text-blue-600">
                                         Marketing
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#_" class="text-sm text-gray-500 hover:text-blue-600">
+                                    <a href="#_" class="text-sm text-white hover:text-blue-600">
                                         Analytics
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#_" class="text-sm text-gray-500 hover:text-blue-600">
+                                    <a href="#_" class="text-sm text-white hover:text-blue-600">
                                         Commerce
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#_" class="text-sm text-gray-500 hover:text-blue-600">
+                                    <a href="#_" class="text-sm text-white hover:text-blue-600">
                                         Insights
                                     </a>
                                 </li>
                             </ul>
                         </div>
                         <div class="mt-12 md:mt-0">
-                            <h3 class="font-semibold leading-6 uppercase text-black">
+                            <h3 class="font-semibold leading-6 uppercase text-white">
                                 Support
                             </h3>
                             <ul role="list" class="mt-4 space-y-4">
                                 <li>
-                                    <a href="#_" class="text-sm text-gray-500 hover:text-blue-600">
+                                    <a href="#_" class="text-sm text-white hover:text-blue-600">
                                         Pricing
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#_" class="text-sm text-gray-500 hover:text-blue-600">
+                                    <a href="#_" class="text-sm text-white hover:text-blue-600">
                                         Alpine.js
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#_" class="text-sm text-gray-500 hover:text-blue-600">
+                                    <a href="#_" class="text-sm text-white hover:text-blue-600">
                                         Guides
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#_" class="text-sm text-gray-500 hover:text-blue-600">
+                                    <a href="#_" class="text-sm text-white hover:text-blue-600">
                                         API Status
                                     </a>
                                 </li>
@@ -355,10 +355,10 @@
                     <div class="hidden lg:justify-end md:grid md:grid-cols-1">
                         <div class="w-full mt-12 md:mt-0">
                             <div class="mt-8 lg:justify-end xl:mt-0">
-                                <h3 class="font-semibold leading-6 uppercase text-black">
+                                <h3 class="font-semibold leading-6 uppercase text-white">
                                     Subscribe to our newsletter
                                 </h3>
-                                <p class="mt-4 text-sm font-light text-gray-500 lg:ml-auto">
+                                <p class="mt-4 text-sm font-light text-white lg:ml-auto">
                                     The latest news, articles, and resources, sent to your inbox
                                     weekly.
                                 </p>
@@ -389,8 +389,9 @@
                 </div>
             </div>
         </div>
-        <div class="px-5 py-12 mx-auto border-t max-w-7xl sm:px-6 md:flex md:items-center md:justify-between lg:px-20">
-            <div class="flex justify-center mb-8 space-x-6 md:order-last md:mb-0">
+        <div
+            class="px-5 py-12 mx-auto border-t border-white max-w-7xl sm:px-6 md:flex md:items-center md:justify-between lg:px-20">
+            {{-- <div class="flex justify-center mb-8 space-x-6 md:order-last md:mb-0">
                 <span class="inline-flex justify-center w-full gap-3 lg:ml-auto md:justify-start md:w-auto">
                     <a class="w-6 h-6 transition fill-black hover:text-blue-500">
                         <span class="sr-only"> github</span>
@@ -413,12 +414,12 @@
                             aria-label="logo linkedin"></ion-icon>
                     </a>
                 </span>
-            </div>
+            </div> --}}
             <div class="mt-8 md:mt-0 md:order-1">
-                <span class="mt-2 text-sm font-light text-gray-500">
-                    Copyright © 2020 - 2021
+                <span class="mt-2 text-sm font-light text-white">
+                    Copyright © 2024
                     <a href="#_" class="mx-2 text-wickedblue hover:text-gray-500"
-                        rel="noopener noreferrer">@unwrappedHQ</a>. Since 2020
+                        rel="noopener noreferrer">PDL-Carpeta Record Management System</a>. Since 2024
                 </span>
             </div>
         </div>

@@ -79,8 +79,8 @@ class JailList extends Component implements HasForms, HasTable
                         TextInput::make('email')->email(),
                         TextInput::make('password')->password(),
                         Select::make('user_type')->options([
-                            'admin' => 'Branch Admin',
-                            'records' => 'Record Section',
+                            'admin' => 'Jail Records Unit',
+                            'records' => 'Operations Monitoring',
                         ])
                     ])
                 ])->modalWidth('2xl'),

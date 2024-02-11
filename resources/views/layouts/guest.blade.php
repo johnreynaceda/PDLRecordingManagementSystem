@@ -36,17 +36,10 @@
         </div> --}}
 
         <div class="w-full sm:max-w-md mt-6 px-6 py-4  shadow-md overflow-hidden relative bg-white sm:rounded-lg">
-            <a class="text-lg font-semibold flex space-x-2 items-center justify-center tracking-tighter text-black focus:outline-none focus:ring "
-                            href="/">
-                            <img src="{{ asset('images/bjmp_logo.png') }}" class="h-14" alt="">
-                            <div>
-                                <h1 class="font-bold text-xl text-gray-700 font-barlow">BJMP</h1>
-                                <h1 class="text-sm leading-3 text-gray-500">PDL-Carpeta Management System</h1>
-                            </div>
-                        </a>
-           <div class="mt-10">
-            {{ $slot }}
-           </div>
+            <h1 class="text-2xl text-center pt-3 font-bold font-barlow text-main">PDL-Carpeta Management System</h1>
+            <div class="mt-10">
+                {{ $slot }}
+            </div>
         </div>
     </div>
     @filamentScripts

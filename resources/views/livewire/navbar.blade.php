@@ -14,7 +14,7 @@
                                 alt="">
                         @endif
                         <div>
-                            <h1 class="font-bold font-barlow text-gray-700">BJMP -
+                            <h1 class="font-bold font-barlow text-gray-700">
                                 {{ auth()->user()->jail->region->name }}</h1>
                             <h1 class="text-sm font-semibold leading-3 text-red-600">
                                 {{ auth()->user()->jail->name }}</h1>
@@ -54,15 +54,15 @@
                     href="{{ route('admin.releases') }}">
                     Releases
                 </a>
-                {{-- <a class="px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main" href="#">
-                    Visitors
-                </a> --}}
+                <a class="px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main" href="#">
+                    Latest Issuance
+                </a>
 
                 <div class="inline-flex items-center gap-2 list-none lg:ml-auto">
                     <div class="relative flex-shrink-0 ml-5" @click.away="open = false" x-data="{ open: false }">
                         <div>
                             <button @click="open = !open" type="button"
-                                class="flex bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                class="flex bg-white rounded-full focus:outline-none  focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                 id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                 <span class="sr-only">
                                     Open user menu
