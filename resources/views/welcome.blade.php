@@ -111,7 +111,7 @@
     </section>
     <section class="bg-white bg-opacity-90">
         <section>
-            <div class="relative items-center w-full px-5 py-20 mx-auto md:px-12 lg:px-20 max-w-7xl">
+            <div class="relative items-center w-full px-5 pt-20 pb-10 mx-auto md:px-12 lg:px-20 max-w-7xl">
                 <div class="div">
                     <h1 class="font-bold text-4xl text-red-500">KEY POINTS J.A.I.L PLAN 2040 PERSPECTIVES</h1>
                     <div class="w-20 h-1 bg-gray-600 rounded-br-xl"></div>
@@ -210,7 +210,7 @@
         </section>
 
         <section class="">
-            <div class="relative items-center w-full px-5 py-24 mx-auto md:px-12 lg:px-16 max-w-7xl">
+            <div class="relative items-center w-full px-5 pb-20  mx-auto md:px-12 lg:px-16 max-w-7xl">
                 <div class="grid items-center grid-cols-1 gap-12 text-left lg:gap-24 md:grid-cols-2 lg:grid-cols-3">
                     <div class="relative items-end gap-12 m-auto lg:inline-flex md:order-first">
                         <div class="mx-auto lg:max-w-7xl">

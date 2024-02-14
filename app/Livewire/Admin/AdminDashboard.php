@@ -30,9 +30,11 @@ class AdminDashboard extends Component
                 $record->where('date_of_release', 'like', '%'. $this->date. '%');
             })->where('status','release')->where('jail_id', auth()->user()->jail_id)->count(),
 
-            'jails' => Pdl::when($this->date, function($record){
-                $record->where('date_of_confinement', 'like', '%'. $this->date. '%');
-            })->where('jail_id', auth()->user()->jail_id)->where('status', '!=', 'release')->count(),
+            // 'jails' => Pdl::when($this->date, function($record){
+            //     $record->where('date_of_confinement', 'like', '%'. $this->date. '%');
+            // })->where('jail_id', auth()->user()->jail_id)->where('status', '!=', 'release')
+            // ->count(),
+            'jails' => Pdl::where('status', '!=', 'release')->orWhereNull('status')->get()->count(),
         ]);
     }
 }

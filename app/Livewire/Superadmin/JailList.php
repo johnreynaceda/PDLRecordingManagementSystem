@@ -5,6 +5,7 @@ namespace App\Livewire\Superadmin;
 use App\Models\Jail;
 use App\Models\Region;
 use App\Models\Shop\Product;
+use Filament\Forms\Components\Field;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -60,30 +61,30 @@ class JailList extends Component implements HasForms, HasTable
                 // ...
             ])
             ->actions([
-                Action::make('assign')->label('Assign Account')->icon('heroicon-s-user-plus')->action(
-                    function ($record, $data) {
-                       User::create([
-                        'name' => $data['name'],
-                        'email' => $data['email'],
-                        'password' => bcrypt($data['password']),
-                        'user_type' => $data['user_type'],
-                        'jail_id' => $record->id,
-                       ]);
-                    }
-                )->form([
-                    ViewField::make('rating')
-                        ->view('filament.forms.jail'),
-                    Grid::make(2)->schema([
+                // Action::make('assign')->label('Assign Account')->icon('heroicon-s-user-plus')->action(
+                //     function ($record, $data) {
+                //        User::create([
+                //         'name' => $data['name'],
+                //         'email' => $data['email'],
+                //         'password' => bcrypt($data['password']),
+                //         'user_type' => $data['user_type'],
+                //         'jail_id' => $record->id,
+                //        ]);
+                //     }
+                // )->form([
+                //     ViewField::make('rating')
+                //         ->view('filament.forms.jail'),
+                //     Grid::make(2)->schema([
 
-                        TextInput::make('name'),
-                        TextInput::make('email')->email(),
-                        TextInput::make('password')->password(),
-                        Select::make('user_type')->options([
-                            'admin' => 'Jail Records Unit',
-                            'records' => 'Operations Monitoring',
-                        ])
-                    ])
-                ])->modalWidth('2xl'),
+                //         TextInput::make('name'),
+                //         TextInput::make('email')->email(),
+                //         TextInput::make('password')->password(),
+                //         Select::make('user_type')->options([
+                //             'admin' => 'Jail Records Unit',
+                //             'records' => 'Operations Monitoring',
+                //         ])
+                //     ])
+                // ])->modalWidth('2xl'),
                 EditAction::make('edit')->color('success')->form([
                     TextInput::make('name'),
                     Select::make('region_id')->label('Region')->options(
