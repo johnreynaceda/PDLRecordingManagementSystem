@@ -1,6 +1,6 @@
 @section('title', 'Dashboard')
 <x-superadmin-layout>
     <div class="text-white">
-        Content here...
+        <livewire:superadmin.superadmin-dashboard />
     </div>
 </x-superadmin-layout>

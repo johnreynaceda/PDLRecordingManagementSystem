@@ -52,8 +52,7 @@ class CommitList extends Component implements HasForms, HasTable
             ->columns([
                 TextColumn::make('personalInformation.firstname')->label('FIRSTNAME')->searchable(),
                 TextColumn::make('personalInformation.lastname')->label('LASTNAME')->searchable(),
-                TextColumn::make('criminal_case_no')->label('CRIMINAL CASE')->searchable(),
-                TextColumn::make('court')->label('BRANCH OF COURT')->searchable(),
+                TextColumn::make('classification')->label('CLASSIFICATION')->searchable(),
                 TextColumn::make('date_of_confinement')->date()->label('DATE COMMITED')->searchable(),
                 ViewColumn::make('status')->label('COMMITTED CRIME')->view('filament.tables.columns.cases')
                 ])
