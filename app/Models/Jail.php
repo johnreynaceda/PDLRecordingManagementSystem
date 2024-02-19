@@ -14,6 +14,10 @@ class Jail extends Model
         return $this->belongsTo(Region::class);
     }
 
+    public function pdls(){
+        return $this->hasMany(Pdl::class);
+    }
+
     public function users(){
         return $this->hasMany(User::class);
     }

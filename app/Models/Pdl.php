@@ -35,4 +35,8 @@ class Pdl extends Model
     public function pdlHearings(){
         return $this->hasMany(PdlHearing::class);
     }
+
+    public function jail(){
+        return $this->belongsTo(Jail::class);
+    }
 }
