@@ -62,7 +62,7 @@
                     </div>
                     <div class="my-1">
                         <h2 class="text-3xl fill-main font-bold"><span>
-                                {{ $releases }}
+                                {{ $releases < 0 ? 0 : $releases }}
                             </span></h2>
                     </div>
 
@@ -84,7 +84,7 @@
                     </div>
                     <div class="my-1">
                         <h2 class="text-3xl fill-main font-bold"><span>
-                                {{ $jails }}
+                                {{ $jails < 0 ? 0 : $jails }}
                             </span></h2>
                     </div>
 

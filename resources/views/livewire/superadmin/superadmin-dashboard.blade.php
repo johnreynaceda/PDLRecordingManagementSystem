@@ -38,7 +38,7 @@
                     </div>
                     <div class="my-1">
                         <h2 class="text-3xl text-main font-bold"><span>
-                                {{ $remands }}
+                                {{ $remands < 0 ? 0 : $remands }}
                             </span></h2>
                     </div>
 
@@ -58,7 +58,7 @@
                     </div>
                     <div class="my-1">
                         <h2 class="text-3xl text-main font-bold"><span>
-                                {{ $releases }}
+                                {{ $releases < 0 ? 0 : $releases }}
                             </span></h2>
                     </div>
 
@@ -78,7 +78,7 @@
                     </div>
                     <div class="my-1">
                         <h2 class="text-3xl text-main font-bold"><span>
-                                {{ $jails }}
+                                {{ $jails < 0 ? 0 : $jails }}
                             </span></h2>
                     </div>
 
@@ -113,8 +113,7 @@
                             <h2 class="text-3xl text-main font-bold"><span>
                                     @php
                                         $total =
-                                            \App\Models\Pdl::where('classification', $item['name'])
-                                            ->count() -
+                                            \App\Models\Pdl::where('classification', $item['name'])->count() -
                                             (\App\Models\Pdl::where('classification', $item['name'])
 
                                                 ->where('status', 'remand')
