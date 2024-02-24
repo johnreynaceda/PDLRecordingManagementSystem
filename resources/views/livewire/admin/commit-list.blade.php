@@ -4,8 +4,12 @@
     <x-modal.card title="PDL DATA FORM" fullscreen blur wire:model.defer="view_modal">
         <div class="mx-auto max-w-7xl">
             @if ($pdl_data)
-                <img src="{{ Storage::url($pdl_data->photo_path) }}" class="h-40 w-40 object-cover border" alt="">
-                <div class="mt-5 grid grid-cols-6 gap-5">
+                <div class="flex space-x-4 items-end">
+                    <img src="{{ Storage::url($pdl_data->photo_path) }}" class="h-40 w-40 object-cover border"
+                        alt="">
+                    <x-button label="View Attachments" slate icon="eye" rounded xs />
+                </div>
+                <div class="mt-8 grid grid-cols-6 gap-5">
                     <div>
                         <h1 class="font-bold text-xs uppercase">date arrested</h1>
                         <h1 class="">
@@ -322,10 +326,10 @@
 
         <x-slot name="footer">
             <div class="flex justify-end gap-x-4">
-
-
+                <x-button dark label="Print" icon="printer" />
+                <x-button positive label="Edit Record" icon="pencil-alt" />
                 <div class="flex">
-                    <x-button dark label="Cancel" x-on:click="close" />
+                    <x-button outline label="Cancel" x-on:click="close" />
 
                 </div>
             </div>
