@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Livewire\Admin\PdlList;
 use App\Models\Pdl;
+use App\Models\PdlCases;
 use App\Models\PdlHearing;
 use Filament\Tables\Columns\ViewColumn;
 use Livewire\Component;
@@ -38,6 +39,9 @@ class HearingList extends Component implements HasForms, HasTable
     use InteractsWithForms;
     use Actions;
 
+
+    public $view_cases = false;
+    public $crime_data = [];
     public function table(Table $table): Table
     {
         return $table
@@ -46,9 +50,9 @@ class HearingList extends Component implements HasForms, HasTable
                 TextColumn::make('personalInformation.firstname')->label('FIRSTNAME')->searchable(),
                 TextColumn::make('personalInformation.lastname')->label('LASTNAME')->searchable(),
                 // TextColumn::make('date_of_hearing')->date()->label('HEARING DATE')->searchable(),
-                TextColumn::make('criminal_case_no')->label('CRIMINAL CASE')->searchable(),
-                TextColumn::make('court')->label('BRANCH OF COURT')->searchable(),
-                TextColumn::make('date_of_confinement')->date()->label('CONFINEMENT DATE')->searchable(),
+                TextColumn::make('classification')->label('CLASSIFICATION')->searchable(),
+                // TextColumn::make('court')->label('BRANCH OF COURT')->searchable(),
+                TextColumn::make('date_of_confinement')->date()->label('COMMITTED DATE')->searchable(),
                 ViewColumn::make('status')->label('COMMITTED CRIME')->view('filament.tables.columns.cases')
                 ])
             ->filters([
@@ -66,7 +70,7 @@ class HearingList extends Component implements HasForms, HasTable
                 })
             ])
             ->actions([
-                ViewAction::make('view')->color('warning')->form(
+                ViewAction::make('view')->label('view hearing dates')->icon('heroicon-s-calendar')->color('warning')->form(
                     function($record){
                         return [
                                 ViewField::make('rating')
@@ -129,6 +133,14 @@ class HearingList extends Component implements HasForms, HasTable
                 // ...
             ])->emptyStateHeading('No Hearings yet!')->emptyStateDescription('Once you add Hearings Record, it will appear here.')->emptyStateIcon('heroicon-o-document-text');
     }
+
+    public function viewCommitedCrime($id){
+        $this->crime_data = PdlCases::where('pdl_id', $id)->get();
+
+        $this->view_cases = true;
+
+    }
+
     public function render()
     {
         return view('livewire.admin.hearing-list');

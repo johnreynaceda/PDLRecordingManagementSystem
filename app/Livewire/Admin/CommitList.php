@@ -14,6 +14,7 @@ use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\CreateAction;
@@ -44,8 +45,85 @@ class CommitList extends Component implements HasForms, HasTable
     public $view_cases = false;
     public $view_modal = false;
 
+    public $edit_data = false;
+
     public $crime_data = [];
     public $contacts = [];
+
+    //pdl
+    public $date_arrested, $criminal_case,$confinement_date, $court, $time, $classification, $remarks, $photo_path;
+    //personal info
+    public $firstname, $lastname,$birthdate, $birthplace, $residence, $civil_status, $sex, $no_of_children, $blood_type, $father_name, $father_birthplace, $father_occupation, $mother_name, $mother_occupation, $mother_birthplace, $spouse_name, $spouse_occupation, $first_relative,$relationship, $relative_address;
+
+    //description
+    public $age, $height, $weight, $build, $complexion, $hair, $eyes, $religion, $occupation, $attaintment, $nationality, $aliases, $register_voter, $brgy_registration, $language, $skills, $returning_date, $sentence;
+
+    public $contact_details;
+    public $contact_detailss = [];
+    public function updatedEditData(){
+        if ($this->edit_data) {
+            // $this->photo_path = $this->pdl_data->photo_path;
+           $this->date_arrested = $this->pdl_data->date_arrested;
+           $this->criminal_case = $this->pdl_data->criminal_case_no;
+           $this->confinement_date = $this->pdl_data->date_of_confinement;
+           $this->court = $this->pdl_data->court;
+           $this->time = $this->pdl_data->time;
+           $this->classification = $this->pdl_data->classification;
+           $this->remarks = $this->pdl_data->remarks;
+
+           $this->firstname = $this->pdl_data->personalInformation->firstname;
+           $this->lastname = $this->pdl_data->personalInformation->lastname;
+           $this->birthdate = $this->pdl_data->personalInformation->birthdate;
+           $this->birthplace = $this->pdl_data->personalInformation->birthplace;
+           $this->residence = $this->pdl_data->personalInformation->residence;
+           $this->civil_status = $this->pdl_data->personalInformation->civil_status;
+           $this->sex = $this->pdl_data->personalInformation->sex;
+           $this->no_of_children = $this->pdl_data->personalInformation->no_of_children;
+           $this->blood_type = $this->pdl_data->personalInformation->blood_type;
+           $this->father_name = $this->pdl_data->personalInformation->father_name;
+           $this->father_birthplace = $this->pdl_data->personalInformation->father_birthplace;
+           $this->father_occupation = $this->pdl_data->personalInformation->father_occupation;
+           $this->mother_name = $this->pdl_data->personalInformation->mother_name;
+           $this->mother_occupation = $this->pdl_data->personalInformation->mother_occupation;
+           $this->mother_birthplace = $this->pdl_data->personalInformation->mother_birthplace;
+           $this->spouse_name = $this->pdl_data->personalInformation->spouse_name;
+           $this->spouse_occupation = $this->pdl_data->personalInformation->spouse_occupation;
+           $this->first_relative = $this->pdl_data->personalInformation->first_relative;
+           $this->relationship = $this->pdl_data->personalInformation->relationship;
+           $this->relative_address = $this->pdl_data->personalInformation->relative_address;
+
+           $this->age = $this->pdl_data->PersonalDescription->age;
+           $this->height = $this->pdl_data->PersonalDescription->height;
+           $this->weight = $this->pdl_data->PersonalDescription->weight;
+           $this->build = $this->pdl_data->PersonalDescription->build;
+           $this->complexion = $this->pdl_data->PersonalDescription->complexion;
+           $this->hair = $this->pdl_data->PersonalDescription->hair;
+           $this->eyes = $this->pdl_data->PersonalDescription->eyes;
+           $this->religion = $this->pdl_data->PersonalDescription->religion;
+           $this->occupation = $this->pdl_data->PersonalDescription->occupation;
+           $this->attaintment = $this->pdl_data->PersonalDescription->attaintment;
+           $this->nationality = $this->pdl_data->PersonalDescription->nationality;
+           $this->aliases = $this->pdl_data->PersonalDescription->aliases;
+           $this->register_voter = $this->pdl_data->PersonalDescription->register_voter;
+           $this->brgy_registration = $this->pdl_data->PersonalDescription->brgy_registration;
+           $this->language = $this->pdl_data->PersonalDescription->language;
+           $this->skills = $this->pdl_data->PersonalDescription->skills;
+           $this->returning_date = $this->pdl_data->PersonalDescription->returning_rate;
+           $this->sentence = $this->pdl_data->PersonalDescription->sentence;
+
+           $this->contact_details = $this->pdl_data->EmergencyContacts->toArray();
+
+        }
+    }
+
+    public function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Select::make('cases')->options(Crime::pluck('name', 'id'))->multiple()->required()->default(PdlCases::where('pdl_id', ($this->pdl_data->id ?? 2))->pluck('crime_id')->toArray())
+            ])
+           ;
+    }
 
     public function table(Table $table): Table
     {
@@ -82,6 +160,25 @@ class CommitList extends Component implements HasForms, HasTable
     ->options(Jail::pluck('name', 'id'))
             ])
             ->actions([
+                Action::make('edit_cases')->icon('heroicon-c-paper-clip')->color('success')->action(
+                    function($record, $data){
+
+                        PdlCases::where('pdl_id', $record->id)->delete();
+
+                        foreach ($data['cases'] as $key => $value) {
+                            PdlCases::create([
+                                'pdl_id' => $record->id,
+                                'crime_id' => $value,
+                            ]);
+                        }
+                    }
+                )->form(
+                    function($record){
+                        return [
+                            Select::make('cases')->searchable()->options(Crime::pluck('name', 'id'))->multiple()->required()->default(PdlCases::where('pdl_id', ($record->id))->pluck('crime_id')->toArray())
+                        ];
+                    }
+                ),
                 Action::make('view_data')->icon('heroicon-s-folder-open')->color('warning')->action(
                     function($record){
                         $this->pdl_data = $record;
@@ -90,91 +187,7 @@ class CommitList extends Component implements HasForms, HasTable
                         $this->view_modal = true;
                     }
                 ),
-                EditAction::make('edit')->color('success')->form([
-                    Fieldset::make('')->schema([
 
-                        DatePicker::make('date_arrested'),
-                        TextInput::make('criminal_case_no'),
-                        DatePicker::make('date_of_confinement')->label('Date Commited'),
-                        TextInput::make('court'),
-                        TextInput::make('time'),
-                        Select::make('crime_commited')->multiple()->searchable()->options(Crime::all()->pluck('name', 'id')),
-                        Select::make('classification')->options([
-                            'HIGH RISKS' => 'HIGH RISKS',
-                            'HIGH PROFILE' => 'HIGH PROFILE',
-                            'HIGH PROFILE/HIGH RISK' => 'HIGH PROFILE/HIGH RISK',
-                            'INSULAR PDL' => 'INSULAR PDL',
-                            'CITY PDL' => 'CITY PDL',
-                            'MUNICIPAL PDL' => 'MUNICIPAL PDL',
-                            'ORDINARY' => ' ORDINARY',
-                        ])->required(),
-                    ])->columns(3),
-
-                    Fieldset::make('PERSONAL INFORMATION')->schema([
-                        TextInput::make('firstname')->label('Firstname'),
-                        TextInput::make('middlename')->label('Middlename'),
-                        TextInput::make('lastname')->label('Lastname'),
-                        DatePicker::make('birthdate')->label('Birthdate'),
-                        TextInput::make('birthplace')->label('Birthplace'),
-                        TextInput::make('residence')->label('Residence'),
-                        TextInput::make('civil_status')->label('Civil Status'),
-                        Select::make('sex')->options([
-                            'Male' => 'Male',
-                            'Female' => 'Female',
-                        ]),
-                        TextInput::make('no_of_children')->label('No. of Children'),
-                        TextInput::make('blood_type')->label('Blood Type'),
-                    ])->columns(3),
-                    Fieldset::make('FATHER INFORMATION')->schema([
-                        TextInput::make('father_name')->label('Name'),
-                        TextInput::make('father_address')->label('Address'),
-                        TextInput::make('father_birthplace')->label('Birthplace'),
-                        TextInput::make('father_occupation')->label('Occupation'),
-                    ])->columns(4),
-                    Fieldset::make('MOTHER INFORMATION')->schema([
-                        TextInput::make('mother_name')->label('Name'),
-                        TextInput::make('mother_address')->label('Address'),
-                        TextInput::make('mother_birthplace')->label('Birthplace'),
-                        TextInput::make('mother_occupation')->label('Occupation'),
-                    ])->columns(4),
-
-                    Grid::make(4)->schema([
-                        TextInput::make('spouse_name')->label('Spouse Name'),
-                        TextInput::make('spouse_occupation')->label('Spouse Occupation'),
-
-                        TextInput::make('first_relative')->label('First Relative'),
-                        TextInput::make('relationship')->label('Relationship'),
-                        TextInput::make('relative_address')->label('Address')->columnSpan(2),
-                    ]),
-                    Fieldset::make('PERSONAL DESCRIPTION')->schema([
-                        TextInput::make('age')->label('Age'),
-                        TextInput::make('height'),
-                        TextInput::make('weight'),
-                        TextInput::make('build'),
-                        TextInput::make('complexion'),
-                        TextInput::make('hair'),
-                        TextInput::make('eyes'),
-                        TextInput::make('religion'),
-                        TextInput::make('occupation'),
-                        TextInput::make('attaintment'),
-                        TextInput::make('nationality'),
-                        TextInput::make('aliases'),
-                        TextInput::make('register_voter'),
-                        TextInput::make('brgy_registration'),
-                        TextInput::make('language')->label('Language/Dialects Spoken'),
-                        TextInput::make('skills'),
-                        TextInput::make('returning_rate'),
-                        TextInput::make('sentence'),
-                    ])->columns(3),
-                    Fieldset::make('OTHER RELATIVE TO BE CONTACTED/NOTED IN CASE OF EMERGENCY')->schema([
-                        Repeater::make('contacts')->label('')->schema([
-                            TextInput::make('contact_name'),
-                            TextInput::make('contact_relationship'),
-                            TextInput::make('contact_address'),
-                            TextInput::make('contact_number'),
-                        ])->columns(2)->columnSpan(2)->addActionLabel('Add additional information')->defaultItems(1),
-                    ]),
-                ])->modalWidth('6xl'),
                 ActionGroup::make([
                     Action::make('hearings')->icon('heroicon-s-cursor-arrow-ripple')->color('info')->action(
                         function($record, $data){
@@ -229,6 +242,84 @@ class CommitList extends Component implements HasForms, HasTable
             ->bulkActions([
                 // ...
             ])->emptyStateDescription('Once you add PDL Record, it will appear here.')->emptyStateIcon('heroicon-o-document-text');
+    }
+
+    public function editRecord(){
+        $this->edit_data = true;
+    }
+
+    public function updateRecord(){
+      $this->pdl_data->update([
+        'date_arrested' => Carbon::parse($this->date_arrested),
+        'criminal_case_no' => $this->criminal_case,
+        'date_of_confinement' => Carbon::parse($this->confinement_date),
+        'court' => $this->court,
+        'time' => $this->time,
+        'photo_path' => $this->photo_path != null ? $this->photo_path->store('PDL PHOTO', 'public') : $this->pdl_data->photo_path,
+        'classification' => $this->classification,
+        'remarks' => $this->remarks,
+      ]);
+
+      $this->pdl_data->personalInformation->update([
+        'firstname' => $this->firstname,
+        'lastname' => $this->lastname,
+        'birthdate' => Carbon::parse($this->birthdate),
+        'birthplace' => $this->birthplace,
+        'residence' => $this->residence,
+        'civil_status' => $this->civil_status,
+        'sex' => $this->sex,
+        'no_of_children' => $this->no_of_children,
+        'blood_type' => $this->blood_type,
+        'father_name' => $this->father_name,
+        'father_occupation' => $this->father_occupation,
+        'father_birthplace' => $this->father_birthplace,
+        'mother_name' => $this->mother_name,
+        'mother_occupation' => $this->mother_occupation,
+        'mother_birthplace' => $this->mother_birthplace,
+        'spouse_name' => $this->spouse_name,
+        'spouse_occupation' => $this->spouse_occupation,
+        'first_relative' => $this->first_relative,
+        'relationship' => $this->relationship,
+        'relative_address' => $this->relative_address,
+      ]);
+
+      $this->pdl_data->personalDescription->update([
+        'age' => $this->age,
+        'height' => $this->height,
+        'weight' => $this->weight,
+        'build' => $this->build,
+        'complexion' => $this->complexion,
+        'hair' => $this->hair,
+        'eyes' => $this->eyes,
+      'religion' => $this->religion,
+      'occupation' => $this->occupation,
+      'attaintment' => $this->attaintment,
+      'nationality' => $this->nationality,
+      'aliases' => $this->aliases,
+    'register_voter' => $this->register_voter,
+    'brgy_registration' => $this->brgy_registration,
+    'language' => $this->language,
+ 'skills' => $this->skills,
+
+'returning_rate' => Carbon::parse($this->returning_date),
+'sentence' => $this->sentence,
+      ]);
+
+      foreach($this->contact_details as $contact){
+        EmergencyContact::where('id', $contact['id'])->first()->update([
+           'name' => $contact['name'],
+           'relationship' => $contact['relationship'],
+           'address' => $contact['address'],
+           'contact_number' => $contact['contact_number'],
+        ]);
+         }
+         $this->updatedEditData();
+      $this->dialog()->success(
+        $title = 'PDL updated',
+        $description = 'PDL information has been updated.'
+      );
+
+      $this->edit_data = false;
     }
 
     public function viewCommitedCrime($id){
