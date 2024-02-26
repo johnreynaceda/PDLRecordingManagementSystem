@@ -25,6 +25,7 @@ return new class extends Migration
             $table->date('date_of_remand')->nullable();
             $table->date('date_of_release')->nullable();
             $table->string('status')->nullable();
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
     }

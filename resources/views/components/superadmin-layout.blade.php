@@ -113,83 +113,123 @@
                                             </span>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a class="{{ request()->routeIs('superadmin.pdl') ? 'bg-gray-200 text-main scale-95' : '' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
-                                            href="{{ route('superadmin.pdl') }}">
-                                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                fill="currentColor" aria-hidden="true">
-                                                <path
-                                                    d="M20.5 10.19h-2.89c-2.37 0-4.3-1.93-4.3-4.3V3c0-.55-.45-1-1-1H8.07C4.99 2 2.5 4 2.5 7.57v8.86C2.5 20 4.99 22 8.07 22h7.86c3.08 0 5.57-2 5.57-5.57v-5.24c0-.55-.45-1-1-1z"
-                                                    opacity=".4"></path>
-                                                <path
-                                                    d="M15.8 2.21c-.41-.41-1.12-.13-1.12.44v3.49c0 1.46 1.24 2.67 2.75 2.67.95.01 2.27.01 3.4.01.57 0 .87-.67.47-1.07-1.44-1.45-4.02-4.06-5.5-5.54zM13.5 13.75h-6c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h6c.41 0 .75.34.75.75s-.34.75-.75.75zM11.5 17.75h-4c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h4c.41 0 .75.34.75.75s-.34.75-.75.75z">
-                                                </path>
-                                            </svg>
-                                            <span class="ml-4">
-                                                PDL Records
+
+                                    <div x-data="{ open: false }">
+                                        <button
+                                            class="inline-flex items-center justify-between w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-100 hover:scale-95 hover:text-main group"
+                                            @click="open = ! open">
+                                            <span class="inline-flex items-center text-base font-light">
+                                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                    <path
+                                                        d="M20.5 10.19h-2.89c-2.37 0-4.3-1.93-4.3-4.3V3c0-.55-.45-1-1-1H8.07C4.99 2 2.5 4 2.5 7.57v8.86C2.5 20 4.99 22 8.07 22h7.86c3.08 0 5.57-2 5.57-5.57v-5.24c0-.55-.45-1-1-1z"
+                                                        opacity=".4"></path>
+                                                    <path
+                                                        d="M15.8 2.21c-.41-.41-1.12-.13-1.12.44v3.49c0 1.46 1.24 2.67 2.75 2.67.95.01 2.27.01 3.4.01.57 0 .87-.67.47-1.07-1.44-1.45-4.02-4.06-5.5-5.54zM13.5 13.75h-6c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h6c.41 0 .75.34.75.75s-.34.75-.75.75zM11.5 17.75h-4c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h4c.41 0 .75.34.75.75s-.34.75-.75.75z">
+                                                    </path>
+                                                </svg>
+                                                <span class="ml-4">
+                                                    PDL
+                                                </span>
                                             </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="{{ request()->routeIs('superadmin.hearings') ? 'bg-gray-200 text-main scale-95' : '' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
-                                            href="{{ route('superadmin.hearings') }}">
-                                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                fill="currentColor" aria-hidden="true">
-                                                <path
-                                                    d="M3.23 1h8.13c.68 0 1.23.56 1.23 1.25v1.37c0 .5-.31 1.12-.62 1.43L9.32 7.42c-.37.31-.62.94-.62 1.43v2.68c0 .37-.25.87-.55 1.06l-.86.56c-.8.5-1.91-.06-1.91-1.06V8.78c0-.44-.25-1-.49-1.31l-2.34-2.5C2.24 4.66 2 4.1 2 3.72V2.29C2 1.56 2.55 1 3.23 1z">
-                                                </path>
-                                                <path
-                                                    d="M17 2h-2.4c-.28 0-.5.22-.5.5v1.12c0 .99-.53 1.96-1.05 2.49l-2.72 2.43c-.03.07-.08.17-.11.25v2.75c0 .91-.54 1.9-1.28 2.35l-.82.53c-.46.29-.97.43-1.48.43-.46 0-.92-.12-1.34-.35-.65-.36-1.1-.95-1.3-1.63v-2.66a.47.47 0 00-.15-.35l-1-1c-.32-.31-.85-.09-.85.35V17c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5z"
-                                                    opacity=".4"></path>
-                                                <path
-                                                    d="M18 13.75h-5c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h5c.41 0 .75.34.75.75s-.34.75-.75.75zM18 17.75h-7c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h7c.41 0 .75.34.75.75s-.34.75-.75.75z">
-                                                </path>
+                                            <svg fill="currentColor" viewBox="0 0 20 20"
+                                                :class="{ 'rotate-180': open, 'rotate-0': !open }"
+                                                class="inline w-5 h-5 ml-auto transition-transform duration-200 transform group-hover:text-accent rotate-0">
+                                                <path fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd"></path>
                                             </svg>
-                                            <span class="ml-4">
-                                                Hearings
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="{{ request()->routeIs('superadmin.remands') ? 'bg-gray-200 text-main scale-95' : '' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
-                                            href="{{ route('superadmin.remands') }}">
-                                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                fill="currentColor" aria-hidden="true">
-                                                <path
-                                                    d="M3.23 1h8.13c.68 0 1.23.56 1.23 1.25v1.37c0 .5-.31 1.12-.62 1.43L9.32 7.42c-.37.31-.62.94-.62 1.43v2.68c0 .37-.25.87-.55 1.06l-.86.56c-.8.5-1.91-.06-1.91-1.06V8.78c0-.44-.25-1-.49-1.31l-2.34-2.5C2.24 4.66 2 4.1 2 3.72V2.29C2 1.56 2.55 1 3.23 1z">
-                                                </path>
-                                                <path
-                                                    d="M17 2h-2.4c-.28 0-.5.22-.5.5v1.12c0 .99-.53 1.96-1.05 2.49l-2.72 2.43c-.03.07-.08.17-.11.25v2.75c0 .91-.54 1.9-1.28 2.35l-.82.53c-.46.29-.97.43-1.48.43-.46 0-.92-.12-1.34-.35-.65-.36-1.1-.95-1.3-1.63v-2.66a.47.47 0 00-.15-.35l-1-1c-.32-.31-.85-.09-.85.35V17c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5z"
-                                                    opacity=".4"></path>
-                                                <path
-                                                    d="M18 13.75h-5c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h5c.41 0 .75.34.75.75s-.34.75-.75.75zM18 17.75h-7c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h7c.41 0 .75.34.75.75s-.34.75-.75.75z">
-                                                </path>
-                                            </svg>
-                                            <span class="ml-4">
-                                                Remands
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="{{ request()->routeIs('superadmin.releases') ? 'bg-gray-200 text-main scale-95' : '' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
-                                            href="{{ route('superadmin.releases') }}">
-                                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                fill="currentColor" aria-hidden="true">
-                                                <path
-                                                    d="M3.23 1h8.13c.68 0 1.23.56 1.23 1.25v1.37c0 .5-.31 1.12-.62 1.43L9.32 7.42c-.37.31-.62.94-.62 1.43v2.68c0 .37-.25.87-.55 1.06l-.86.56c-.8.5-1.91-.06-1.91-1.06V8.78c0-.44-.25-1-.49-1.31l-2.34-2.5C2.24 4.66 2 4.1 2 3.72V2.29C2 1.56 2.55 1 3.23 1z">
-                                                </path>
-                                                <path
-                                                    d="M17 2h-2.4c-.28 0-.5.22-.5.5v1.12c0 .99-.53 1.96-1.05 2.49l-2.72 2.43c-.03.07-.08.17-.11.25v2.75c0 .91-.54 1.9-1.28 2.35l-.82.53c-.46.29-.97.43-1.48.43-.46 0-.92-.12-1.34-.35-.65-.36-1.1-.95-1.3-1.63v-2.66a.47.47 0 00-.15-.35l-1-1c-.32-.31-.85-.09-.85.35V17c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5z"
-                                                    opacity=".4"></path>
-                                                <path
-                                                    d="M18 13.75h-5c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h5c.41 0 .75.34.75.75s-.34.75-.75.75zM18 17.75h-7c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h7c.41 0 .75.34.75.75s-.34.75-.75.75z">
-                                                </path>
-                                            </svg>
-                                            <span class="ml-4">
-                                                Releases
-                                            </span>
-                                        </a>
-                                    </li>
+                                        </button>
+                                        <div class="p-2 pl-6 -px-px" x-show="open" @click.outside="open = false"
+                                            style="display: none;">
+                                            <ul>
+                                                <li>
+                                                    <a class="{{ request()->routeIs('superadmin.pdl') ? 'bg-gray-200 text-main scale-95' : '' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
+                                                        href="{{ route('superadmin.pdl') }}">
+                                                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
+                                                            viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                            <path
+                                                                d="M3.23 1h8.13c.68 0 1.23.56 1.23 1.25v1.37c0 .5-.31 1.12-.62 1.43L9.32 7.42c-.37.31-.62.94-.62 1.43v2.68c0 .37-.25.87-.55 1.06l-.86.56c-.8.5-1.91-.06-1.91-1.06V8.78c0-.44-.25-1-.49-1.31l-2.34-2.5C2.24 4.66 2 4.1 2 3.72V2.29C2 1.56 2.55 1 3.23 1z">
+                                                            </path>
+                                                            <path
+                                                                d="M17 2h-2.4c-.28 0-.5.22-.5.5v1.12c0 .99-.53 1.96-1.05 2.49l-2.72 2.43c-.03.07-.08.17-.11.25v2.75c0 .91-.54 1.9-1.28 2.35l-.82.53c-.46.29-.97.43-1.48.43-.46 0-.92-.12-1.34-.35-.65-.36-1.1-.95-1.3-1.63v-2.66a.47.47 0 00-.15-.35l-1-1c-.32-.31-.85-.09-.85.35V17c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5z"
+                                                                opacity=".4"></path>
+                                                            <path
+                                                                d="M18 13.75h-5c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h5c.41 0 .75.34.75.75s-.34.75-.75.75zM18 17.75h-7c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h7c.41 0 .75.34.75.75s-.34.75-.75.75z">
+                                                            </path>
+                                                        </svg>
+                                                        <span class="ml-4">
+                                                            List
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="{{ request()->routeIs('superadmin.hearings') ? 'bg-gray-200 text-main scale-95' : '' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
+                                                        href="{{ route('superadmin.hearings') }}">
+                                                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
+                                                            viewBox="0 0 24 24" fill="currentColor"
+                                                            aria-hidden="true">
+                                                            <path
+                                                                d="M3.23 1h8.13c.68 0 1.23.56 1.23 1.25v1.37c0 .5-.31 1.12-.62 1.43L9.32 7.42c-.37.31-.62.94-.62 1.43v2.68c0 .37-.25.87-.55 1.06l-.86.56c-.8.5-1.91-.06-1.91-1.06V8.78c0-.44-.25-1-.49-1.31l-2.34-2.5C2.24 4.66 2 4.1 2 3.72V2.29C2 1.56 2.55 1 3.23 1z">
+                                                            </path>
+                                                            <path
+                                                                d="M17 2h-2.4c-.28 0-.5.22-.5.5v1.12c0 .99-.53 1.96-1.05 2.49l-2.72 2.43c-.03.07-.08.17-.11.25v2.75c0 .91-.54 1.9-1.28 2.35l-.82.53c-.46.29-.97.43-1.48.43-.46 0-.92-.12-1.34-.35-.65-.36-1.1-.95-1.3-1.63v-2.66a.47.47 0 00-.15-.35l-1-1c-.32-.31-.85-.09-.85.35V17c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5z"
+                                                                opacity=".4"></path>
+                                                            <path
+                                                                d="M18 13.75h-5c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h5c.41 0 .75.34.75.75s-.34.75-.75.75zM18 17.75h-7c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h7c.41 0 .75.34.75.75s-.34.75-.75.75z">
+                                                            </path>
+                                                        </svg>
+                                                        <span class="ml-4">
+                                                            Hearings
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="{{ request()->routeIs('superadmin.remands') ? 'bg-gray-200 text-main scale-95' : '' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
+                                                        href="{{ route('superadmin.remands') }}">
+                                                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
+                                                            viewBox="0 0 24 24" fill="currentColor"
+                                                            aria-hidden="true">
+                                                            <path
+                                                                d="M3.23 1h8.13c.68 0 1.23.56 1.23 1.25v1.37c0 .5-.31 1.12-.62 1.43L9.32 7.42c-.37.31-.62.94-.62 1.43v2.68c0 .37-.25.87-.55 1.06l-.86.56c-.8.5-1.91-.06-1.91-1.06V8.78c0-.44-.25-1-.49-1.31l-2.34-2.5C2.24 4.66 2 4.1 2 3.72V2.29C2 1.56 2.55 1 3.23 1z">
+                                                            </path>
+                                                            <path
+                                                                d="M17 2h-2.4c-.28 0-.5.22-.5.5v1.12c0 .99-.53 1.96-1.05 2.49l-2.72 2.43c-.03.07-.08.17-.11.25v2.75c0 .91-.54 1.9-1.28 2.35l-.82.53c-.46.29-.97.43-1.48.43-.46 0-.92-.12-1.34-.35-.65-.36-1.1-.95-1.3-1.63v-2.66a.47.47 0 00-.15-.35l-1-1c-.32-.31-.85-.09-.85.35V17c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5z"
+                                                                opacity=".4"></path>
+                                                            <path
+                                                                d="M18 13.75h-5c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h5c.41 0 .75.34.75.75s-.34.75-.75.75zM18 17.75h-7c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h7c.41 0 .75.34.75.75s-.34.75-.75.75z">
+                                                            </path>
+                                                        </svg>
+                                                        <span class="ml-4">
+                                                            Remands
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="{{ request()->routeIs('superadmin.releases') ? 'bg-gray-200 text-main scale-95' : '' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
+                                                        href="{{ route('superadmin.releases') }}">
+                                                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
+                                                            viewBox="0 0 24 24" fill="currentColor"
+                                                            aria-hidden="true">
+                                                            <path
+                                                                d="M3.23 1h8.13c.68 0 1.23.56 1.23 1.25v1.37c0 .5-.31 1.12-.62 1.43L9.32 7.42c-.37.31-.62.94-.62 1.43v2.68c0 .37-.25.87-.55 1.06l-.86.56c-.8.5-1.91-.06-1.91-1.06V8.78c0-.44-.25-1-.49-1.31l-2.34-2.5C2.24 4.66 2 4.1 2 3.72V2.29C2 1.56 2.55 1 3.23 1z">
+                                                            </path>
+                                                            <path
+                                                                d="M17 2h-2.4c-.28 0-.5.22-.5.5v1.12c0 .99-.53 1.96-1.05 2.49l-2.72 2.43c-.03.07-.08.17-.11.25v2.75c0 .91-.54 1.9-1.28 2.35l-.82.53c-.46.29-.97.43-1.48.43-.46 0-.92-.12-1.34-.35-.65-.36-1.1-.95-1.3-1.63v-2.66a.47.47 0 00-.15-.35l-1-1c-.32-.31-.85-.09-.85.35V17c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5z"
+                                                                opacity=".4"></path>
+                                                            <path
+                                                                d="M18 13.75h-5c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h5c.41 0 .75.34.75.75s-.34.75-.75.75zM18 17.75h-7c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h7c.41 0 .75.34.75.75s-.34.75-.75.75z">
+                                                            </path>
+                                                        </svg>
+                                                        <span class="ml-4">
+                                                            Releases
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
                                     <li>
                                         <a class="inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
                                             href="#">

@@ -90,7 +90,9 @@
 
                     <div class="flex justify-between items-center">
                         <p class=" font-sans text-base font-medium text-gray-500">Total Jail Population</p>
-
+                        <x-badge
+                            label="{{ \App\Models\Pdl::where('jail_id', auth()->user()->jail_id)->count() -(\App\Models\Pdl::where('status', 'remand')->where('jail_id', auth()->user()->jail_id)->count() +\App\Models\Pdl::where('status', 'release')->where('jail_id', auth()->user()->jail_id)->count()) }}"
+                            dark />
                     </div>
                 </div>
             </div>
@@ -144,7 +146,7 @@
             </div>
         </div>
     </div>
-    <div class="w-96 mt-10 ">
+    {{-- <div class="w-96 mt-10 ">
         <x-input wire:model.live="search" icon="search" placeholder="Search..." />
     </div>
     <div class="grid grid-cols-4 mt-3 gap-4 relative">
@@ -174,5 +176,5 @@
     </div>
     <div class="mt-3 text-white">
         {{ $crimes->links('pagination::simple-tailwind') }}
-    </div>
+    </div> --}}
 </div>
