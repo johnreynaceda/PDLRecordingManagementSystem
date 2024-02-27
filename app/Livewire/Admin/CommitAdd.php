@@ -157,7 +157,7 @@ class CommitAdd extends Component implements HasForms
             ]);
         }
 
-       foreach ($this->crime_commited as $key => $value) {
+       foreach ($this->crime_commited as $key => $value)  {
         PdlCases::create([
             'pdl_id' => $pdl->id,
             'crime_id' =>$value,
