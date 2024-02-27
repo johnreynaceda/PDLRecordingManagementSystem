@@ -51,7 +51,7 @@ class CommitList extends Component implements HasForms, HasTable
     public $contacts = [];
 
     //pdl
-    public $date_arrested, $criminal_case,$confinement_date, $court, $time, $classification, $remarks, $photo_path;
+    public $date_arrested, $criminal_case,$confinement_date, $court, $time, $classification, $remarks, $photo_path, $cell_location;
     //personal info
     public $firstname, $lastname,$birthdate, $birthplace, $residence, $civil_status, $sex, $no_of_children, $blood_type, $father_name, $father_birthplace, $father_occupation, $mother_name, $mother_occupation, $mother_birthplace, $spouse_name, $spouse_occupation, $first_relative,$relationship, $relative_address;
 
@@ -70,6 +70,7 @@ class CommitList extends Component implements HasForms, HasTable
            $this->time = $this->pdl_data->time;
            $this->classification = $this->pdl_data->classification;
            $this->remarks = $this->pdl_data->remarks;
+           $this->cell_location = $this->pdl_data->cell_location;
 
            $this->firstname = $this->pdl_data->personalInformation->firstname;
            $this->lastname = $this->pdl_data->personalInformation->lastname;
@@ -140,7 +141,7 @@ class CommitList extends Component implements HasForms, HasTable
                 TextColumn::make('personalInformation.lastname')->label('LASTNAME')->searchable(),
                 TextColumn::make('classification')->label('CLASSIFICATION')->searchable(),
                 TextColumn::make('date_of_confinement')->date()->label('DATE COMMITED')->searchable(),
-                ViewColumn::make('status')->label('COMMITTED CRIME')->view('filament.tables.columns.cases'),
+                ViewColumn::make('status')->label('COMMITTED CRIME')->view('filament.tables.columns.crime-committed'),
                 TextColumn::make('jail.region.name')->label('REGION')->searchable()->visible(auth()->user()->user_type == 'superadmin'),
                 ])
             ->filters([
@@ -258,6 +259,7 @@ class CommitList extends Component implements HasForms, HasTable
         'photo_path' => $this->photo_path != null ? $this->photo_path->store('PDL PHOTO', 'public') : $this->pdl_data->photo_path,
         'classification' => $this->classification,
         'remarks' => $this->remarks,
+        'cell_location' => $this->cell_location,
       ]);
 
       $this->pdl_data->personalInformation->update([

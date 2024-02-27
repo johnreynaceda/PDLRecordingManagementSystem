@@ -50,12 +50,10 @@ class HearingList extends Component implements HasForms, HasTable
                 TextColumn::make('personalInformation.firstname')->label('FIRSTNAME')->searchable(),
                 TextColumn::make('personalInformation.lastname')->label('LASTNAME')->searchable(),
                 // TextColumn::make('date_of_hearing')->date()->label('HEARING DATE')->searchable(),
-                TextColumn::make('criminal_case_no')->label('CRIMINAL CASE NO.')->searchable(),
+                TextColumn::make('classification')->label('CLASSIFICATION')->searchable(),
                 // TextColumn::make('court')->label('BRANCH OF COURT')->searchable(),
-                // TextColumn::make('date_of_confinement')->date()->label('COMMITTED DATE')->searchable(),
-                ViewColumn::make('status')->label('CRIME COMMITTED')->view('filament.tables.columns.cases'),
-                TextColumn::make('court')->label('BRANCH COURT')->searchable(),
-                TextColumn::make('date_of_hearing')->date()->label('HEARING DATE')->searchable(),
+                TextColumn::make('date_of_confinement')->date()->label('COMMITTED DATE')->searchable(),
+                ViewColumn::make('status')->label('COMMITTED CRIME')->view('filament.tables.columns.cases')
                 ])
             ->filters([
                 Filter::make('created_at')->indicator('Administrators')

@@ -27,7 +27,7 @@ class CommitAdd extends Component implements HasForms
 {
     use InteractsWithForms;
 
-    public $date_arrested, $criminal_case_no, $date_of_confinement, $court, $time, $crime_commited = [], $classification;
+    public $date_arrested, $criminal_case_no, $date_of_confinement, $court, $time, $crime_commited = [], $classification, $cell_location;
 
     public $firstname, $lastname, $middlename, $birthdate, $birthplace, $residence, $civil_status, $sex, $no_of_children, $blood_type;
 
@@ -67,6 +67,7 @@ class CommitAdd extends Component implements HasForms
                         'MUNICIPAL PDL' => 'MUNICIPAL PDL',
                         'ORDINARY' => ' ORDINARY',
                     ])->required(),
+                    TextInput::make('cell_location')->label('Cell Location'),
                 ])->columns(3),
 
                 Fieldset::make('PERSONAL INFORMATION')->schema([
@@ -152,6 +153,7 @@ class CommitAdd extends Component implements HasForms
                 'court' => $this->court,
                 'time' => $this->time,
                 'classification' => $this->classification,
+                'cell_location' => $this->cell_location,
                 // 'crime_id' => $this->crime_commited,
                 'photo_path' => $value->store('PDL PHOTO', 'public'),
             ]);

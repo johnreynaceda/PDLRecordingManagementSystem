@@ -58,6 +58,12 @@
                             <x-input wire:model="remarks" />
                         </h1>
                     </div>
+                    <div>
+                        <h1 class="font-bold text-xs uppercase">CELL LOCATION</h1>
+                        <h1 class="mt-1">
+                            <x-input wire:model="cell_location" />
+                        </h1>
+                    </div>
                     <div class="col-span-6">
                         <h1 class="font-bold text-xs">COMMITED CRIMES</h1>
                         <p class="mt-1">
@@ -412,6 +418,12 @@
                                     @default
                                         <span>No status</span>
                                 @endswitch
+                            </div>
+                            <div>
+                                <h1 class="font-bold text-xs uppercase">CELL LOCATION</h1>
+                                <h1 class="">
+                                    {{ $pdl_data->cell_location ?? 'No location' }}
+                                </h1>
                             </div>
                             <div class="col-span-6">
                                 <h1 class="font-bold text-xs">COMMITED CRIMES</h1>

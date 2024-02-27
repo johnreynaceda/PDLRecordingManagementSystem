@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('time');
             $table->string('photo_path');
             $table->string('classification')->nullable();
+            $table->string('cell_location')->nullable();
             $table->date('date_of_hearing')->nullable();
             $table->date('date_of_remand')->nullable();
             $table->date('date_of_release')->nullable();
