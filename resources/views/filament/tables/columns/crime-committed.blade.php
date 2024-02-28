@@ -4,5 +4,5 @@
         <button wire:click="viewCommitedCrime({{ $getRecord()->id }})"> more..</button>
     </span>
 @else
-    {{ $getRecord()->pdlcases->first()->crime->name }}
+    <span class="text-sm ml-3"> {{ $getRecord()->pdlcases->first()->crime->name }}</span>
 @endif
