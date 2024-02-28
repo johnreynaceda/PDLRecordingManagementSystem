@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,64 +20,64 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     if (auth()->user()->user_type == 'superadmin') {
-       return redirect()->route('superadmin.dashboard');
-    }elseif (auth()->user()->user_type == 'admin') {
+        return redirect()->route('superadmin.dashboard');
+    } elseif (auth()->user()->user_type == 'admin') {
         return redirect()->route('admin.dashboard');
-    }else{
+    } else {
         dd('record section');
     }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 //superadmin Routes
-Route::prefix('superadmin')->group(function(){
-    Route::get('/dashboard', function(){
+Route::prefix('superadmin')->group(function () {
+    Route::get('/dashboard', function () {
         return view('superadmin.index');
     })->name('superadmin.dashboard');
-    Route::get('/accounts', function(){
+    Route::get('/accounts', function () {
         return view('superadmin.accounts');
     })->name('superadmin.accounts');
-    Route::get('/jails', function(){
+    Route::get('/jails', function () {
         return view('superadmin.jails');
     })->name('superadmin.jails');
-    Route::get('/pdl-records', function(){
+    Route::get('/pdl-records', function () {
         return view('superadmin.pdl');
     })->name('superadmin.pdl');
-    Route::get('/hearings', function(){
+    Route::get('/hearings', function () {
         return view('superadmin.hearings');
     })->name('superadmin.hearings');
-    Route::get('/remands', function(){
+    Route::get('/remands', function () {
         return view('superadmin.remands');
     })->name('superadmin.remands');
-    Route::get('/releases', function(){
+    Route::get('/releases', function () {
         return view('superadmin.releases');
     })->name('superadmin.releases');
+    Route::get('/cases', function () {
+        return view('superadmin.cases');
+    })->name('superadmin.cases');
 
 });
 
-
-
 //administator route
-Route::prefix('admin')->group( function(){
-    Route::get('/dashboard', function(){
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', function () {
         return view('admin.index');
     })->name('admin.dashboard');
-    Route::get('/commits', function(){
+    Route::get('/commits', function () {
         return view('admin.commits');
     })->name('admin.commits');
-    Route::get('/commits/add', function(){
+    Route::get('/commits/add', function () {
         return view('admin.commits.add');
     })->name('admin.commits.add');
-    Route::get('/hearings', function(){
+    Route::get('/hearings', function () {
         return view('admin.hearings');
     })->name('admin.hearings');
-    Route::get('/remands', function(){
+    Route::get('/remands', function () {
         return view('admin.remands');
     })->name('admin.remands');
-    Route::get('/releases', function(){
+    Route::get('/releases', function () {
         return view('admin.releases');
     })->name('admin.releases');
 });
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -85,4 +85,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
