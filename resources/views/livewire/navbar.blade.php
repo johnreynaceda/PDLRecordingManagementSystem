@@ -61,6 +61,7 @@
                 <div class="inline-flex items-center gap-2 list-none lg:ml-auto">
                     <div class="relative flex-shrink-0 ml-5" @click.away="open = false" x-data="{ open: false }">
                         <div>
+
                             <button @click="open = !open" type="button"
                                 class="flex bg-white rounded-full focus:outline-none  focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                 id="user-menu-button" aria-expanded="false" aria-haspopup="true">

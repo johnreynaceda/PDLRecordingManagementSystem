@@ -355,7 +355,8 @@
                         <div class="flex space-x-4 items-end">
                             <img src="{{ asset('storage/' . $pdl_data->photo_path) }}" wire:ignore
                                 class="h-40 w-40 object-cover border" alt="">
-                            <x-button label="View Attachments" slate icon="eye" rounded xs />
+                            <x-button label="View Attachments" slate icon="eye" wire:click="openAttachment"
+                                spinner="openAttachment" rounded xs />
                         </div>
                         <div class="mt-8 grid grid-cols-5 gap-5">
                             <div>
@@ -735,6 +736,19 @@
                         <li>{{ $item->crime->name }}</li>
                     @endforeach
                 </ul>
+            </div>
+            <x-slot name="footer">
+                <div class="flex justify-end gap-x-4">
+                    <x-button flat label="Cancel" x-on:click="close" />
+                </div>
+            </x-slot>
+        </x-card>
+    </x-modal>
+
+    <x-modal wire:model.defer="attachment_modal" align="center">
+        <x-card title="Attachments">
+            <div>
+                <livewire:pdl-attachment :pdl="$pdl_id" />
             </div>
             <x-slot name="footer">
                 <div class="flex justify-end gap-x-4">

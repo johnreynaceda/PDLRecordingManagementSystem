@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\Filament\Exports\PdlExporter;
 use App\Models\Crime;
 use App\Models\EmergencyContact;
 use App\Models\Jail;
@@ -32,9 +33,15 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 use WireUi\Traits\Actions;
 use Filament\Forms\Components\ViewField;
 use Filament\Tables\Columns\ViewColumn;
+use pxlrbt\FilamentExcel\Columns\Column;
+// use App\Filament\Exports\ProductExporter;
+use Filament\Tables\Actions\ExportAction;
+use App\Filament\Exports\ProductExporter;
+use Filament\Tables\Actions\ExportBulkAction;
 
 class CommitList extends Component implements HasForms, HasTable
 {
@@ -49,6 +56,9 @@ class CommitList extends Component implements HasForms, HasTable
 
     public $crime_data = [];
     public $contacts = [];
+
+    public $attachment_modal = false;
+    public $pdl_id;
 
     //pdl
     public $date_arrested, $criminal_case,$confinement_date, $court, $time, $classification, $remarks, $photo_path, $cell_location;
@@ -126,6 +136,12 @@ class CommitList extends Component implements HasForms, HasTable
            ;
     }
 
+    public function openAttachment(){
+        sleep(2);
+        $this->dispatch('attachment', pdl_id: $this->pdl_id);
+        $this->attachment_modal = true;
+    }
+
     public function table(Table $table): Table
     {
         return $table
@@ -134,14 +150,32 @@ class CommitList extends Component implements HasForms, HasTable
                 function(){
                     return redirect()->route('admin.commits.add');
                 }
-               )->hidden(auth()->user()->user_type == 'superadmin')
+               )->hidden(auth()->user()->user_type == 'superadmin'),
             ])
             ->columns([
-                TextColumn::make('personalInformation.firstname')->label('FIRSTNAME')->searchable(),
-                TextColumn::make('personalInformation.lastname')->label('LASTNAME')->searchable(),
+                TextColumn::make('id')->label('FULLNAME')->formatStateUsing(
+                    function ($record) {
+                        return $record->personalInformation->lastname. ', '. $record->personalInformation->firstname. ' '. $record->personalInformation->middlename[0].'.' ;
+                    }
+                )->searchable(query: function (Builder $query, string $search): Builder {
+                    return $query->whereHas('personalInformation', function($record) use ($search){
+                        return $record->where('firstname', 'LIKE', '%'.$search.'%')->orWhere('lastname', 'LIKE', '%'.$search.'%')->orWhere('middlename', 'LIKE', '%'. $search. '%');
+                    });
+                }),
                 TextColumn::make('classification')->label('CLASSIFICATION')->searchable(),
                 TextColumn::make('date_of_confinement')->date()->label('DATE COMMITED')->searchable(),
-                ViewColumn::make('status')->label('COMMITTED CRIME')->view('filament.tables.columns.crime-committed'),
+                ViewColumn::make('crime')->label('CRIME COMMITTED')->view('filament.tables.columns.crime-committed')->searchable(
+                    query: function (Builder $query, string $search): Builder {
+                        return $query->whereHas('pdlcases', function($record) use ($search){
+                            $record->whereHas('crime', function($k) use ($search){
+                                $k->where('name', 'LIKE', '%'.$search.'%');
+                            });
+                        });
+                    }
+                ),
+                TextColumn::make('court')->label('BRANCH/COURT')->searchable(),
+                TextColumn::make('status')->label('STATUS')->searchable(),
+                TextColumn::make('remarks')->label('REMARKS')->searchable(),
                 TextColumn::make('jail.region.name')->label('REGION')->searchable()->visible(auth()->user()->user_type == 'superadmin'),
                 ])
             ->filters([
@@ -183,6 +217,7 @@ class CommitList extends Component implements HasForms, HasTable
                 Action::make('view_data')->icon('heroicon-s-folder-open')->color('warning')->action(
                     function($record){
                         $this->pdl_data = $record;
+                        $this->pdl_id = $record->id;
                         $this->crime_data = PdlCases::where('pdl_id', $record->id)->get();
                         $this->contacts = EmergencyContact::where('pdl_id', $record->id)->get();
                         $this->view_modal = true;
@@ -241,7 +276,7 @@ class CommitList extends Component implements HasForms, HasTable
                 ])
             ])
             ->bulkActions([
-                // ...
+
             ])->emptyStateDescription('Once you add PDL Record, it will appear here.')->emptyStateIcon('heroicon-o-document-text');
     }
 

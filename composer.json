@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "eightynine/filament-excel-import": "^3.0",
         "filament/tables": "^3.2",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/breeze": "^1.28",
@@ -17,6 +18,8 @@
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.4",
         "php-flasher/flasher-sweetalert-laravel": "^1.15",
+        "psr/simple-cache": "^2.0",
+        "pxlrbt/filament-excel": "^2.3",
         "wireui/wireui": "^1.18"
     },
     "require-dev": {
