@@ -136,8 +136,14 @@ class CommitAdd extends Component implements HasForms
                     ])->columns(2)->columnSpan(2)->addActionLabel('Add additional information')->defaultItems(1),
                 ]),
               Grid::make(3)->schema([
-                FileUpload::make('attachments')->multiple()
-                ->maxSize(49152)->columnSpan(2),
+                FileUpload::make('attachments')->multiple()->acceptedFileTypes([
+                    "application/x-compressed",
+                    "application/x-zip-compressed",
+                    "application/zip",
+                    "multipart/x-zip",
+                ])->maxSize(49152)
+                ->maxFiles(1)
+                ->downloadable()->columnSpan(2),
               ])
             ]);
     }
