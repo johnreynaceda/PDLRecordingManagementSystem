@@ -137,12 +137,8 @@ class CommitAdd extends Component implements HasForms
                 ]),
               Grid::make(3)->schema([
                 FileUpload::make('attachments')->multiple()->acceptedFileTypes([
-                    "application/x-compressed",
-                    "application/x-zip-compressed",
-                    "application/zip",
-                    "multipart/x-zip",
+                    "application/pdf",
                 ])->maxSize(49152)
-                ->maxFiles(1)
                 ->downloadable()->columnSpan(2),
               ])
             ]);
