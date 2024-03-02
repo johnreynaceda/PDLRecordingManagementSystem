@@ -85,6 +85,12 @@
                         </h1>
                     </div>
                     <div>
+                        <h1 class="font-bold text-gray-700 text-xs uppercase">Middlename</h1>
+                        <h1 class="mt-1">
+                            <x-input wire:model="middlename" />
+                        </h1>
+                    </div>
+                    <div>
                         <h1 class="font-bold text-gray-700 text-xs uppercase">Lastname</h1>
                         <h1 class="mt-1">
                             <x-input wire:model="lastname" />
@@ -442,7 +448,7 @@
                             <div>
                                 <h1 class="font-bold text-gray-700 text-xs uppercase">Name</h1>
                                 <h1 class="">
-                                    {{ $pdl_data->personalInformation->firstname . ' ' . $pdl_data->personalInformation->lastname }}
+                                    {{ $pdl_data->personalInformation->firstname . ' ' . $pdl_data->personalInformation->middlename. ' ' . $pdl_data->personalInformation->lastname }}
                                 </h1>
                             </div>
                             <div>
@@ -451,6 +457,7 @@
                                     {{ \Carbon\Carbon::parse($pdl_data->personalInformation->birthdate)->format('F d, Y') }}
                                 </h1>
                             </div>
+                            
                             <div>
                                 <h1 class="font-bold text-xs uppercase">Place of Birth</h1>
                                 <h1 class="">
@@ -708,23 +715,26 @@
         </div>
 
         <x-slot name="footer">
-            <div class="flex  justify-end gap-x-4">
+            <div class="flex  justify-end gap-x-4" wire:key="{{$edit_data}}" >
+                <x-button dark label="Print" icon="printer"
+                    @click="printOut($refs.printContainer.outerHTML);" />
+                <x-button positive label="Edit Record" icon="pencil-alt" wire:click="editRecord" spinner="editRecord" />
+                <div class="flex">
+                    <x-button outline label="Cancel" x-on:click="close" />
 
-                @if ($edit_data)
-                    <x-button positive label="Update Record" icon="save" wire:click="updateRecord"
+                </div>
+            </div>
+
+                {{-- @if ($edit_data)
+                <div class="flex  justify-end gap-x-4" wire:key="{{$edit_data}}" >
+                    <x-button positive label="Update Record" icon="save" wire:click="updateRecords"
                         spinner="updateRecord" />
                     <x-button negative wire:click="$set('edit_data', false)" label="Cancel" />
+                </div>
                 @else
-                    <x-button dark label="Print" icon="printer"
-                        @click="printOut($refs.printContainer.outerHTML);" />
-                    <x-button positive label="Edit Record" icon="pencil-alt" wire:click="$set('edit_data', true)"
-                        spinner="$set('edit_data', true)" />
-                    <div class="flex">
-                        <x-button outline label="Cancel" x-on:click="close" />
-
-                    </div>
-                @endif
-            </div>
+              
+                @endif --}}
+            
         </x-slot>
     </x-modal.card>
 
@@ -755,6 +765,14 @@
                     <x-button flat label="Cancel" x-on:click="close" />
                 </div>
             </x-slot>
+        </x-card>
+    </x-modal>
+
+    <x-modal wire:model.defer="edit_data" align="center">
+        <x-card >
+           <div>
+            sdsdsdsdsd
+           </div>
         </x-card>
     </x-modal>
 </div>
