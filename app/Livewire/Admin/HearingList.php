@@ -47,13 +47,30 @@ class HearingList extends Component implements HasForms, HasTable
         return $table
             ->query(auth()->user()->user_type == 'superadmin' ?  Pdl::query()->where('status', 'hearing') : Pdl::query()->where('status', 'hearing')->where('jail_id', auth()->user()->jail_id))
             ->columns([
-                TextColumn::make('personalInformation.firstname')->label('FIRSTNAME')->searchable(),
-                TextColumn::make('personalInformation.lastname')->label('LASTNAME')->searchable(),
-                // TextColumn::make('date_of_hearing')->date()->label('HEARING DATE')->searchable(),
+                TextColumn::make('id')->label('FULLNAME')->formatStateUsing(
+                    function ($record) {
+                        return $record->personalInformation->lastname. ', '. $record->personalInformation->firstname. ' '. $record->personalInformation->middlename[0].'.' ;
+                    }
+                )->searchable(query: function (Builder $query, string $search): Builder {
+                    return $query->whereHas('personalInformation', function($record) use ($search){
+                        return $record->where('firstname', 'LIKE', '%'.$search.'%')->orWhere('lastname', 'LIKE', '%'.$search.'%')->orWhere('middlename', 'LIKE', '%'. $search. '%');
+                    });
+                }),
                 TextColumn::make('classification')->label('CLASSIFICATION')->searchable(),
-                // TextColumn::make('court')->label('BRANCH OF COURT')->searchable(),
-                TextColumn::make('date_of_confinement')->date()->label('COMMITTED DATE')->searchable(),
-                ViewColumn::make('status')->label('COMMITTED CRIME')->view('filament.tables.columns.cases')
+                TextColumn::make('date_of_confinement')->date()->label('DATE COMMITED')->searchable(),
+                ViewColumn::make('crime')->label('CRIME COMMITTED')->view('filament.tables.columns.crime-committed')->searchable(
+                    query: function (Builder $query, string $search): Builder {
+                        return $query->whereHas('pdlcases', function($record) use ($search){
+                            $record->whereHas('crime', function($k) use ($search){
+                                $k->where('name', 'LIKE', '%'.$search.'%');
+                            });
+                        });
+                    }
+                ),
+                TextColumn::make('court')->label('BRANCH/COURT')->searchable(),
+                TextColumn::make('status')->label('STATUS')->searchable(),
+                TextColumn::make('remarks')->label('REMARKS')->searchable(),
+                TextColumn::make('jail.region.name')->label('REGION')->searchable()->visible(auth()->user()->user_type == 'superadmin'),
                 ])
             ->filters([
                 Filter::make('created_at')->indicator('Administrators')
