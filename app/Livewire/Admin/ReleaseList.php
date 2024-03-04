@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Livewire\Admin\PdlList;
 use App\Models\Pdl;
+use App\Models\PdlCases;
 use Filament\Tables\Columns\ViewColumn;
 use Livewire\Component;
 use Filament\Forms\Components\DatePicker;
@@ -32,18 +33,38 @@ class ReleaseList extends Component implements HasForms, HasTable
     use InteractsWithTable;
     use InteractsWithForms;
 
+    public $view_cases = false;
+    public $crime_data = [];
     public function table(Table $table): Table
     {
         return $table
             ->query(auth()->user()->user_type == 'superadmin' ? Pdl::query()->where('status', 'release') : Pdl::query()->where('status', 'release')->where('jail_id', auth()->user()->jail_id))
             ->columns([
-                TextColumn::make('personalInformation.firstname')->label('FIRSTNAME'),
-                TextColumn::make('personalInformation.lastname')->label('LASTNAME'),
+                TextColumn::make('id')->label('FULLNAME')->formatStateUsing(
+                    function ($record) {
+                        return $record->personalInformation->lastname. ', '. $record->personalInformation->firstname. ' '. ($record->personalInformation->middlename == null ? '' : $record->personalInformation->middlename[0].'.') ;
+                    }
+                )->searchable(query: function (Builder $query, string $search): Builder {
+                    return $query->whereHas('personalInformation', function($record) use ($search){
+                        return $record->where('firstname', 'LIKE', '%'.$search.'%')->orWhere('lastname', 'LIKE', '%'.$search.'%')->orWhere('middlename', 'LIKE', '%'. $search. '%');
+                    });
+                }),
+                TextColumn::make('classification')->label('CLASSIFICATION')->searchable(),
+                TextColumn::make('date_of_confinement')->date()->label('DATE COMMITED')->searchable(),
+                ViewColumn::make('crime')->label('CRIME COMMITTED')->view('filament.tables.columns.crime-committed')->searchable(
+                    query: function (Builder $query, string $search): Builder {
+                        return $query->whereHas('pdlcases', function($record) use ($search){
+                            $record->whereHas('crime', function($k) use ($search){
+                                $k->where('name', 'LIKE', '%'.$search.'%');
+                            });
+                        });
+                    }
+                ),
+                TextColumn::make('court')->label('BRANCH/COURT')->searchable(),
+                TextColumn::make('status')->label('STATUS')->searchable(),
+                TextColumn::make('remarks')->label('REMARKS')->searchable(),
                 TextColumn::make('date_of_release')->date()->label('RELEASE DATE')->searchable(),
-                TextColumn::make('criminal_case_no')->label('CRIMINAL CASE')->searchable(),
-                TextColumn::make('court')->label('BRANCH OF COURT')->searchable(),
-                TextColumn::make('date_of_confinement')->date()->label('CONFINEMENT DATE')->searchable(),
-                ViewColumn::make('status')->label('COMMITTED CRIME')->view('filament.tables.columns.cases')
+                TextColumn::make('jail.region.name')->label('REGION')->searchable()->visible(auth()->user()->user_type == 'superadmin'),
                 ])
             ->filters([
                 Filter::make('created_at')->indicator('Administrators')
@@ -60,7 +81,7 @@ class ReleaseList extends Component implements HasForms, HasTable
                 })
             ])
             ->actions([
-                EditAction::make('edit')->color('success'),
+                // EditAction::make('edit')->color('success'),
                 // ActionGroup::make([
                 //     olAction::make('hearings')->icon('heroicon-s-cursor-arrow-ripple')->cor('info'),
                 //     Action::make('remands')->icon('heroicon-s-cursor-arrow-ripple')->color('warning'),
@@ -70,6 +91,13 @@ class ReleaseList extends Component implements HasForms, HasTable
             ->bulkActions([
                 // ...
             ])->emptyStateHeading('No Release yet!')->emptyStateDescription('Once you add Release Record, it will appear here.')->emptyStateIcon('heroicon-o-document-text');
+    }
+
+    public function viewCommitedCrime($id){
+        $this->crime_data = PdlCases::where('pdl_id', $id)->get();
+
+        $this->view_cases = true;
+
     }
     public function render()
     {

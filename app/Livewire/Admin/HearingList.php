@@ -49,7 +49,7 @@ class HearingList extends Component implements HasForms, HasTable
             ->columns([
                 TextColumn::make('id')->label('FULLNAME')->formatStateUsing(
                     function ($record) {
-                        return $record->personalInformation->lastname. ', '. $record->personalInformation->firstname. ' '. $record->personalInformation->middlename[0].'.' ;
+                        return $record->personalInformation->lastname. ', '. $record->personalInformation->firstname. ' '. ($record->personalInformation->middlename == null ? '' : $record->personalInformation->middlename[0].'.') ;
                     }
                 )->searchable(query: function (Builder $query, string $search): Builder {
                     return $query->whereHas('personalInformation', function($record) use ($search){

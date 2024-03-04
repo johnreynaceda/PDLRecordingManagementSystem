@@ -135,6 +135,7 @@ class ViewData extends Component implements HasForms
           $pdl_data->personalInformation->update([
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
+            'middlename' => $this->middlename,
             'birthdate' => Carbon::parse($this->birthdate),
             'birthplace' => $this->birthplace,
             'residence' => $this->residence,
