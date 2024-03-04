@@ -21,7 +21,7 @@ class ViewData extends Component implements HasForms
     use Actions;
 
 
-
+    public $attachment_modal = false;
     public $pdl_id;
     public $edit_modal = false;
 
@@ -51,6 +51,12 @@ class ViewData extends Component implements HasForms
 
     public function mount(){
         $this->pdl_id = request('id');
+    }
+
+    public function openAttachment(){
+        sleep(2);
+        $this->dispatch('attachment', pdl_id: $this->pdl_id);
+        $this->attachment_modal = true;
     }
 
     public function editRecord(){

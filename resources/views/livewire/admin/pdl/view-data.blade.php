@@ -747,4 +747,17 @@
         </x-card>
     </x-modal>
 
+    <x-modal wire:model.defer="attachment_modal" align="center">
+        <x-card title="Attachments">
+            <div>
+                <livewire:pdl-attachment :pdl="$pdl_id" />
+            </div>
+            <x-slot name="footer">
+                <div class="flex justify-end gap-x-4">
+                    <x-button flat label="Cancel" x-on:click="close" />
+                </div>
+            </x-slot>
+        </x-card>
+    </x-modal>
+
 </div>
