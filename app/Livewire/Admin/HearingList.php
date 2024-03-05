@@ -57,7 +57,7 @@ class HearingList extends Component implements HasForms, HasTable
                     });
                 }),
                 TextColumn::make('classification')->label('CLASSIFICATION')->searchable(),
-                TextColumn::make('date_of_confinement')->date()->label('DATE COMMITED')->searchable(),
+                TextColumn::make('criminal_case_no')->label('CRIMINAL CASE NO.')->searchable(),
                 ViewColumn::make('crime')->label('CRIME COMMITTED')->view('filament.tables.columns.crime-committed')->searchable(
                     query: function (Builder $query, string $search): Builder {
                         return $query->whereHas('pdlcases', function($record) use ($search){
@@ -67,9 +67,8 @@ class HearingList extends Component implements HasForms, HasTable
                         });
                     }
                 ),
+                TextColumn::make('cell_location')->label('CELL/LOCAION')->searchable(),
                 TextColumn::make('court')->label('BRANCH/COURT')->searchable(),
-                TextColumn::make('status')->label('STATUS')->searchable(),
-                TextColumn::make('remarks')->label('REMARKS')->searchable(),
                 TextColumn::make('jail.region.name')->label('REGION')->searchable()->visible(auth()->user()->user_type == 'superadmin'),
                 ])
             ->filters([

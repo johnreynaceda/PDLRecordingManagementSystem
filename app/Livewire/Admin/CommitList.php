@@ -125,12 +125,12 @@ class CommitList extends Component implements HasForms, HasTable
 
     //        $this->contact_details = $this->pdl_data->EmergencyContacts->toArray();
     //         $this->view_modal = false;
-            
-            
+
+
     //     }
     // }
 
-    
+
 
     public function form(Form $form): Form
     {
@@ -184,20 +184,20 @@ class CommitList extends Component implements HasForms, HasTable
                 TextColumn::make('jail.region.name')->label('REGION')->searchable()->visible(auth()->user()->user_type == 'superadmin'),
                 ])
             ->filters([
-                Filter::make('created_at')->indicator('Administrators')
-                ->form([
-                    DatePicker::make('created_from'),
-                ])
-                ->query(function (Builder $query, array $data): Builder {
-                    return $query
-                        ->when(
-                            $data['created_from'],
-                            fn (Builder $query, $date): Builder => $query->whereDate('created_at', $date),
-                        );
+    //             Filter::make('created_at')->indicator('Administrators')
+    //             ->form([
+    //                 DatePicker::make('created_from'),
+    //             ])
+    //             ->query(function (Builder $query, array $data): Builder {
+    //                 return $query
+    //                     ->when(
+    //                         $data['created_from'],
+    //                         fn (Builder $query, $date): Builder => $query->whereDate('created_at', $date),
+    //                     );
 
-                }),
-                SelectFilter::make('jail')
-    ->options(Jail::pluck('name', 'id'))
+    //             }),
+    //             SelectFilter::make('jail')
+    // ->options(Jail::pluck('name', 'id'))
             ])
             ->actions([
                 Action::make('edit_cases')->icon('heroicon-c-paper-clip')->color('success')->action(
