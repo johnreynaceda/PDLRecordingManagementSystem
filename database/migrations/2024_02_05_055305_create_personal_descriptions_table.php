@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('brgy_registration')->nullable();
             $table->string('language')->nullable();
             $table->string('skills')->nullable();
-            $table->string('returning_rate')->nullable();
+            $table->date('returning_rate')->nullable();
             $table->longText('sentence')->nullable();
             $table->timestamps();
         });

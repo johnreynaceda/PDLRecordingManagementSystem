@@ -12,6 +12,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use WireUi\Traits\Actions;
 
 class PdlAttachment extends Component implements HasForms
@@ -30,7 +31,10 @@ class PdlAttachment extends Component implements HasForms
     {
         return $form
             ->schema([
-              FileUpload::make('attachmentss')->label('Upload Attachment')->multiple()
+              FileUpload::make('attachmentss')->label('Upload Attachment')->multiple()->getUploadedFileNameForStorageUsing(
+                fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
+                    ->prepend('custom-prefix-'),
+            )
             ]);
     }
 
@@ -42,7 +46,7 @@ class PdlAttachment extends Component implements HasForms
         foreach ($this->attachmentss as $key => $value) {
             \App\Models\PdlAttachment::create([
                 'pdl_id' => $this->pdl_id,
-                'path' => $value->store('PDL Attachments', 'public'),
+                'path' => $value->storeAs('PDL Attachments', $value->getClientOriginalName(),'public'),
             ]);
         }
 

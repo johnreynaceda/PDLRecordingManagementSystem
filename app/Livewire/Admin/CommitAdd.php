@@ -138,7 +138,7 @@ class CommitAdd extends Component implements HasForms
               Grid::make(3)->schema([
                 FileUpload::make('attachments')->multiple()->acceptedFileTypes([
                     "application/pdf",
-                ])->maxSize(49152)
+                ])->maxSize(49152)->preserveFilenames()
                 ->downloadable()->columnSpan(2),
               ])
             ]);
@@ -232,7 +232,7 @@ class CommitAdd extends Component implements HasForms
         foreach ($this->attachments as $key => $value) {
             PdlAttachment::create([
                 'pdl_id' => $pdl->id,
-                'path' => $value->store('PDL Attachments', 'public'),
+                'path' => $value->storeAs('PDL Attachments', $value->getClientOriginalName()),
             ]);
         }
 

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('pdl_id');
             $table->date('date_of_hearing');
-            $table->dateTime('morning_time')->nullable();
-            $table->dateTime('afternoon_time')->nullable();
+
+            $table->dateTime('time_of_hearing')->nullable();
             $table->timestamps();
         });
     }

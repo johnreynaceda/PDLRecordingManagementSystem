@@ -6,6 +6,7 @@ use App\Livewire\Admin\PdlList;
 use App\Models\Pdl;
 use App\Models\PdlCases;
 use App\Models\PdlHearing;
+use Filament\Forms\Form;
 use Filament\Tables\Columns\ViewColumn;
 use Livewire\Component;
 use Filament\Forms\Components\DatePicker;
@@ -42,6 +43,8 @@ class HearingList extends Component implements HasForms, HasTable
 
     public $view_cases = false;
     public $crime_data = [];
+    public $date, $time, $hearing_id;
+    public $edit_hearings = false;
     public function table(Table $table): Table
     {
         return $table
@@ -49,7 +52,7 @@ class HearingList extends Component implements HasForms, HasTable
             ->columns([
                 TextColumn::make('id')->label('FULLNAME')->formatStateUsing(
                     function ($record) {
-                        return $record->personalInformation->lastname. ', '. $record->personalInformation->firstname. ' '. ($record->personalInformation->middlename == null ? '' : $record->personalInformation->middlename[0].'.') ;
+                        return $record->personalInformation->lastname. ', '. $record->personalInformation->firstname. ' '. ($record->personalInformation->middlename == null ? '' : $record->personalInformation->middlename) ;
                     }
                 )->searchable(query: function (Builder $query, string $search): Builder {
                     return $query->whereHas('personalInformation', function($record) use ($search){
@@ -74,13 +77,15 @@ class HearingList extends Component implements HasForms, HasTable
             ->filters([
                 Filter::make('created_at')->indicator('Administrators')
                 ->form([
-                    DatePicker::make('created_from'),
+                    DatePicker::make('created_from')->label('Date of Hearing'),
                 ])
                 ->query(function (Builder $query, array $data): Builder {
                     return $query
                         ->when(
                             $data['created_from'],
-                            fn (Builder $query, $date): Builder => $query->whereDate('created_at', $date),
+                            fn (Builder $query, $date): Builder => $query->whereHas('pdlHearings', function($record) use ($date){
+                                $record->whereDate('date_of_hearing', $date);
+                            })
                         );
 
                 })
@@ -88,6 +93,7 @@ class HearingList extends Component implements HasForms, HasTable
             ->actions([
                 ViewAction::make('view')->label('view hearing dates')->icon('heroicon-s-calendar')->color('warning')->form(
                     function($record){
+                        $this->edit_hearings = false;
                         return [
                                 ViewField::make('rating')
                 ->view('filament.forms.hearing_date')
@@ -98,18 +104,22 @@ class HearingList extends Component implements HasForms, HasTable
                 ActionGroup::make([
                     Action::make('hearings')->label('Add Hearing Dates')->icon('heroicon-m-calendar-days')->color('info')->action(
                         function($record, $data){
+
                             PdlHearing::create([
                                 'pdl_id' => $record->id,
                                 'date_of_hearing' => Carbon::parse($data['date']),
-                                'morning_time' => Carbon::parse($data['morning_time']),
-                                'afternoon_time' => Carbon::parse($data ['afternoon_time']),
+                                'time_of_hearing' => Carbon::parse($data['time']),
                             ]);
                         }
-                    )->form([
+                    )->form(
+                        function($record){
+
+                            return [
                         DatePicker::make('date'),
-                        TimePicker::make('morning_time')->seconds(false),
-                        TimePicker::make('afternoon_time')->seconds(false),
-                    ])->modalWidth('xl'),
+                        TimePicker::make('time')->seconds(false),
+
+                            ];
+                        })->modalWidth('xl'),
                     Action::make('remands')->icon('heroicon-s-cursor-arrow-ripple')->color('warning')->action(
                         function($record, $data){
                             $record->update([
@@ -148,6 +158,42 @@ class HearingList extends Component implements HasForms, HasTable
             ->bulkActions([
                 // ...
             ])->emptyStateHeading('No Hearings yet!')->emptyStateDescription('Once you add Hearings Record, it will appear here.')->emptyStateIcon('heroicon-o-document-text');
+    }
+
+    public function editHearing($id){
+        $this->edit_hearings = true;
+        $this->hearing_data = PdlHearing::where('id', $id)->first();
+        $this->date = $this->hearing_data->date_of_hearing;
+        $this->time = Carbon::parse($this->hearing_data->time_of_hearing);
+        $this->hearing_id = $id;
+
+    }
+
+
+
+    public function deleteHearing($id){
+        $hearing = PdlHearing::find($id);
+        $hearing->delete();
+
+        $this->dialog()->success(
+            $title = 'Hearing deleted',
+            $description = 'Date has been deleted.'
+
+        );
+    }
+
+    public function updateHearing(){
+       $data = PdlHearing::where('id', $this->hearing_id)->first();
+       $data->update([
+        'date_of_hearing' => Carbon::parse($this->date),
+        'time_of_hearing' => Carbon::parse($this->time),
+       ]);
+       $this->edit_hearings = false;
+       $this->dialog()->success(
+        $title = 'Hearing update',
+        $description = 'Date has been updated.'
+
+    );
     }
 
     public function viewCommitedCrime($id){

@@ -13,7 +13,10 @@
                         </path>
                     </svg>
                     <span>
-                        {{ $item->path }}
+                        @php
+                            $file = explode('/', $item->path);
+                        @endphp
+                        {{ $file[1] }}
                     </span>
                 </a>
             </li>
