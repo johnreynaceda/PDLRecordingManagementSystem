@@ -81,6 +81,11 @@ Route::prefix('admin')->group(function () {
     Route::get('/releases', function () {
         return view('admin.releases');
     })->name('admin.releases');
+
+    Route::get('/report', function () {
+        return view('admin.report');
+    })->name('admin.report');
+
 });
 
 Route::middleware('auth')->group(function () {

@@ -20,7 +20,7 @@
             </h1>
         </div>
         <div>
-            <h1 class="font-bold text-xs uppercase">date of confinement</h1>
+            <h1 class="font-bold text-xs uppercase">date commited</h1>
             <h1 class="">
                 {{ \Carbon\Carbon::parse($pdls->date_of_confinement)->format('F d, Y') }}
             </h1>
@@ -69,7 +69,7 @@
             @endswitch
         </div>
         <div>
-            <h1 class="font-bold text-xs uppercase">CELL LOCATION</h1>
+            <h1 class="font-bold text-xs uppercase">CELL/LOCATION</h1>
             <h1 class="">
                 {{ $pdls->cell_location ?? 'No location' }}
             </h1>
@@ -390,7 +390,7 @@
                         </h1>
                     </div>
                     <div>
-                        <h1 class="font-bold text-xs uppercase">date of confinement</h1>
+                        <h1 class="font-bold text-xs uppercase">date commited</h1>
                         <h1 class="mt-1">
                             <x-datetime-picker wire:model="confinement_date" without-time />
                         </h1>
@@ -427,7 +427,7 @@
                         </h1>
                     </div>
                     <div>
-                        <h1 class="font-bold text-xs uppercase">CELL LOCATION</h1>
+                        <h1 class="font-bold text-xs uppercase">CELL/LOCATION</h1>
                         <h1 class="mt-1">
                             <x-input wire:model="cell_location" />
                         </h1>
