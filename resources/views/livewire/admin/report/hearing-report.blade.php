@@ -63,10 +63,11 @@
                                 {{ $commit->classification }}
                             </td>
                             <td class="border-2 text-sm  text-gray-700  px-3 py-1">
-                                {{ \Carbon\Carbon::parse($commit->date_of_confinement)->format('F d, Y') }}
+                                {{ $commit->criminal_case_no }}
                             </td>
+
                             <td class="border-2 text-sm  text-gray-700  px-3 py-1">
-                                sdsdsd
+                                {{ $commit->pdlCases->first()->crime->name }} and more..
                             </td>
                             <td class="border-2 text-sm  text-gray-700  px-3 py-1">
                                 {{ $commit->court }}
