@@ -31,7 +31,7 @@
 
             @default
                 <div class="flex justify-center mt-10 items-center">
-                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="h-80" viewBox="0 0 797.5 834.5"
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="h-40" viewBox="0 0 797.5 834.5"
                         xmlns:xlink="http://www.w3.org/1999/xlink">
                         <title>void</title>
                         <ellipse cx="308.5" cy="780" rx="308.5" ry="54.5" fill="#3f3d56" />

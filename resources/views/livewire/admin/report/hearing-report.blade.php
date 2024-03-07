@@ -74,8 +74,15 @@
                             <td class="border-2 text-sm  text-gray-700  px-3 py-1">
                                 <ul>
                                     @foreach ($commit->pdlHearings as $item)
-                                        <li>{{ \Carbon\Carbon::parse($item->date_of_hearing)->format('F d, Y') . ' - ' . \Carbon\Carbon::parse($item->time_of_hearing)->format('h:i A') }}
-                                        </li>
+                                        @if ($date)
+                                            @if ($item->date_of_hearing == $date)
+                                                <li>{{ \Carbon\Carbon::parse($item->date_of_hearing)->format('F d, Y') . ' - ' . \Carbon\Carbon::parse($item->time_of_hearing)->format('h:i A') }}
+                                                </li>
+                                            @endif
+                                        @else
+                                            <li>{{ \Carbon\Carbon::parse($item->date_of_hearing)->format('F d, Y') . ' - ' . \Carbon\Carbon::parse($item->time_of_hearing)->format('h:i A') }}
+                                            </li>
+                                        @endif
                                     @endforeach
                                 </ul>
                             </td>
