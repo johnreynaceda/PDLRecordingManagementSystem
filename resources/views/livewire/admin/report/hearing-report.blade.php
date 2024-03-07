@@ -26,24 +26,24 @@
             <table id="example" class="table-auto mt-5" style="width:100%">
                 <thead class="font-normal">
                     <tr>
-                        <th class="border-[0.1rem]  text-left px-2 text-sm font-semibold text-gray-700 py-2">
+                        <th class="border-2  text-left px-2 text-sm font-semibold text-gray-700 py-2">
                         </th>
-                        <th class="border-[0.1rem]  text-left px-2 text-sm font-semibold text-gray-700 py-2">
+                        <th class="border-2  text-left px-2 text-sm font-semibold text-gray-700 py-2">
                             Fullname</th>
-                        <th class="border-[0.1rem]  text-left px-2 text-sm font-semibold text-gray-700 py-2">
+                        <th class="border-2  text-left px-2 text-sm font-semibold text-gray-700 py-2">
                             Classification
                         </th>
-                        <th class="border-[0.1rem]  text-left px-2 text-sm font-semibold text-gray-700 py-2">
+                        <th class="border-2  text-left px-2 text-sm font-semibold text-gray-700 py-2">
                             Criminal Case No.
                         </th>
-                        <th class="border-[0.1rem]  text-left px-2 text-sm font-semibold text-gray-700 py-2">
+                        <th class="border-2  text-left px-2 text-sm font-semibold text-gray-700 py-2">
                             Crime Commited
                         </th>
-                        <th class="border-[0.1rem]  text-left px-2 text-sm font-semibold text-gray-700 py-2">
+                        <th class="border-2  text-left px-2 text-sm font-semibold text-gray-700 py-2">
                             Branch/Court
                         </th>
 
-                        <th class="border-[0.1rem]  text-left px-2 text-sm font-semibold text-gray-700 py-2">
+                        <th class="border-2  text-left px-2 text-sm font-semibold text-gray-700 py-2">
                             Hearing Date/Schedule
                         </th>
                     </tr>
@@ -54,24 +54,24 @@
                     @endphp
                     @forelse ($hearings as $commit)
                         <tr>
-                            <td class="border-[0.1rem] text-sm  text-gray-700  px-3 py-1">{{ $i++ }}
+                            <td class="border-2 text-sm  text-gray-700  px-3 py-1">{{ $i++ }}
                             </td>
-                            <td class="border-[0.1rem] text-sm  text-gray-700  px-3 py-1">
+                            <td class="border-2 text-sm  text-gray-700  px-3 py-1">
                                 {{ $commit->personalInformation->lastname . ', ' . $commit->personalInformation->firstname . ' ' . ($commit->personalInformation->middlename == null ? '' : $commit->personalInformation->middlename) }}
                             </td>
-                            <td class="border-[0.1rem] text-sm  text-gray-700  px-3 py-1">
+                            <td class="border-2 text-sm  text-gray-700  px-3 py-1">
                                 {{ $commit->classification }}
                             </td>
-                            <td class="border-[0.1rem] text-sm  text-gray-700  px-3 py-1">
+                            <td class="border-2 text-sm  text-gray-700  px-3 py-1">
                                 {{ \Carbon\Carbon::parse($commit->date_of_confinement)->format('F d, Y') }}
                             </td>
-                            <td class="border-[0.1rem] text-sm  text-gray-700  px-3 py-1">
+                            <td class="border-2 text-sm  text-gray-700  px-3 py-1">
                                 sdsdsd
                             </td>
-                            <td class="border-[0.1rem] text-sm  text-gray-700  px-3 py-1">
+                            <td class="border-2 text-sm  text-gray-700  px-3 py-1">
                                 {{ $commit->court }}
                             </td>
-                            <td class="border-[0.1rem] text-sm  text-gray-700  px-3 py-1">
+                            <td class="border-2 text-sm  text-gray-700  px-3 py-1">
                                 <ul>
                                     @foreach ($commit->pdlHearings as $item)
                                         <li>{{ \Carbon\Carbon::parse($item->date_of_hearing)->format('F d, Y') . ' - ' . \Carbon\Carbon::parse($item->time_of_hearing)->format('h:i A') }}
@@ -83,7 +83,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="border-[0.1rem] text-sm  text-gray-700  px-3 py-1">
+                            <td colspan="8" class="border-2 text-sm  text-gray-700  px-3 py-1">
                                 <span class="text-center">No Records Available</span>
                             </td>
                         </tr>
