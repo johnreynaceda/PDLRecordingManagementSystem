@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'user_type',
         'jail_id',
+        'region_id'
     ];
 
     /**
@@ -47,5 +48,9 @@ class User extends Authenticatable
 
     public function jail(){
         return $this->belongsTo(Jail::class);
+    }
+
+    public function region(){
+        return $this->belongsTo(Region::class);
     }
 }

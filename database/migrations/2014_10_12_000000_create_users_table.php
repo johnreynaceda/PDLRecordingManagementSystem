@@ -20,6 +20,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->string('user_type');
             $table->foreignId('jail_id')->nullable();
+            $table->foreignId('region_id')->nullable();
             $table->timestamps();
         });
     }

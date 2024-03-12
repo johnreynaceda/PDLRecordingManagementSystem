@@ -14,4 +14,8 @@ class Region extends Model
     public function jails(){
         return $this->hasMany(Jail::class);
     }
+
+    public function users(){
+        return $this->hasMany(User::class);
+    }
 }

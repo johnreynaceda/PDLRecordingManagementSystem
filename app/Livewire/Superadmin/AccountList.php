@@ -3,6 +3,7 @@
 namespace App\Livewire\Superadmin;
 
 use App\Models\Jail;
+use App\Models\Region;
 use App\Models\User;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
@@ -26,7 +27,7 @@ class AccountList extends Component implements HasForms, HasTable
     use InteractsWithTable;
     use InteractsWithForms;
 
-    public $email, $name, $password, $jail_id, $user_type;
+    public $email, $name, $password, $jail_id, $user_type, $region_id;
 
     public $add_modal = false;
 
@@ -46,6 +47,7 @@ class AccountList extends Component implements HasForms, HasTable
                 TextColumn::make('email')->label('EMAIL')->searchable(),
                 TextColumn::make('user_type')->label('USER TYPE')->searchable(),
                 TextColumn::make('jail.name')->label('JAIL BRANCH')->searchable(),
+                TextColumn::make('region.name')->label('REGION')->searchable(),
             ])
             ->filters([
                 // ...
@@ -59,22 +61,23 @@ class AccountList extends Component implements HasForms, HasTable
             ])->emptyStateIcon('heroicon-s-table-cells')->emptyStateHeading('No Accounts yet!')->emptyStateDescription('Once you create new Account, it will appear here.');
     }
 
-    public function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Grid::make(2)->schema([
-                    TextInput::make('name')->required(),
-                    TextInput::make('email')->email()->unique(),
-                    TextInput::make('password')->password()->required(),
-                    Select::make('user_type')->options([
-                        'admin' => 'Jail Records Unit',
-                        'records' => 'Operations Monitoring',
-                    ])->required(),
-                    Select::make('jail_id')->options(Jail::pluck('name', 'id'))->label('Jail')->required(),
-                ]),
-            ]);
-    }
+    // public function form(Form $form): Form
+    // {
+    //     return $form
+    //         ->schema([
+    //             Grid::make(2)->schema([
+    //                 TextInput::make('name')->required(),
+    //                 TextInput::make('email')->email()->unique(),
+    //                 TextInput::make('password')->password()->required(),
+    //                 Select::make('user_type')->options([
+    //                     'admin' => 'Jail Records Unit',
+    //                     'records' => 'Operations Monitoring',
+    //                 ])->required()->live(),
+    //                 Select::make('jail_id')->options(Jail::pluck('name', 'id'))->label('Jail')->required()->visible($this->user_type == 'admin'),
+    //                 Select::make('region_id')->options(Region::pluck('name', 'id'))->label('Region')->required()->visible($this->user_type == 'records'),
+    //             ]),
+    //         ]);
+    // }
 
     public function saveAccount(){
         $this->validate([
@@ -82,7 +85,7 @@ class AccountList extends Component implements HasForms, HasTable
             'name' => 'required',
             'password' => 'required',
             'user_type' => 'required',
-            'jail_id' => 'required',
+            // 'jail_id' => 'required',
 
         ]);
         User::create([
@@ -90,7 +93,8 @@ class AccountList extends Component implements HasForms, HasTable
             'email' => $this->email,
             'password' => bcrypt($this->password),
             'user_type' => $this->user_type,
-            'jail_id' => $this->jail_id,
+            'jail_id' => $this->user_type == 'admin' ? $this->jail_id : null,
+            'region_id' => $this->user_type == 'admin' ? null : $this->region_id
         ]);
         $this->reset('name', 'password', 'user_type', 'jail_id','email');
         $this->add_modal = false;
@@ -98,6 +102,9 @@ class AccountList extends Component implements HasForms, HasTable
 
     public function render()
     {
-        return view('livewire.superadmin.account-list');
+        return view('livewire.superadmin.account-list',[
+            'jails' => Jail::all(),
+          'regions' => Region::all(),
+        ]);
     }
 }

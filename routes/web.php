@@ -24,7 +24,7 @@ Route::get('/dashboard', function () {
     } elseif (auth()->user()->user_type == 'admin') {
         return redirect()->route('admin.dashboard');
     } else {
-        dd('record section');
+        return redirect()->route('record.dashboard');
     }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -89,6 +89,13 @@ Route::prefix('admin')->group(function () {
         return view('admin.report');
     })->name('admin.report');
 
+});
+
+//records
+Route::prefix('region/')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('record.index');
+    })->name('record.dashboard');
 });
 
 Route::middleware('auth')->group(function () {
