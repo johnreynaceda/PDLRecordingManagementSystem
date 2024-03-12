@@ -55,6 +55,9 @@ Route::prefix('superadmin')->group(function () {
     Route::get('/cases', function () {
         return view('superadmin.cases');
     })->name('superadmin.cases');
+    Route::get('/regions', function () {
+        return view('superadmin.regions');
+    })->name('superadmin.regions');
 
 });
 

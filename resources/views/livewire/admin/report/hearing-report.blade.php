@@ -44,6 +44,10 @@
                         </th>
 
                         <th class="border-2  text-left px-2 text-sm font-semibold text-gray-700 py-2">
+                            Cell/Location
+                        </th>
+
+                        <th class="border-2  text-left px-2 text-sm font-semibold text-gray-700 py-2">
                             Hearing Date/Schedule
                         </th>
                     </tr>
@@ -71,6 +75,9 @@
                             </td>
                             <td class="border-2 text-sm  text-gray-700  px-3 py-1">
                                 {{ $commit->court }}
+                            </td>
+                            <td class="border-2 text-sm  text-gray-700  px-3 py-1">
+                                {{ $commit->cell_location }}
                             </td>
                             <td class="border-2 text-sm  text-gray-700  px-3 py-1">
                                 <ul>
