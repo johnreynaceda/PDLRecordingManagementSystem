@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Models\Crime;
 use App\Models\EmergencyContact;
+use App\Models\LogHistory;
 use App\Models\Pdl;
 use App\Models\PdlAttachment;
 use App\Models\PdlCases;
@@ -124,7 +125,7 @@ class CommitAdd extends Component implements HasForms
                     TextInput::make('brgy_registration'),
                     TextInput::make('language')->label('Language/Dialects Spoken'),
                     TextInput::make('skills'),
-                    TextInput::make('returning_rate'),
+                    DatePicker::make('returning_rate')->label('Returning Date'),
                     TextInput::make('sentence'),
                 ])->columns(3),
                 Fieldset::make('OTHER RELATIVE TO BE CONTACTED/NOTED IN CASE OF EMERGENCY')->schema([
@@ -235,6 +236,13 @@ class CommitAdd extends Component implements HasForms
                 'path' => $value->storeAs('PDL Attachments', $value->getClientOriginalName()),
             ]);
         }
+
+        LogHistory::create([
+            'pdl_id' => $pdl->id,
+            'user_id' => auth()->user()->id,
+            'description' => 'Added new User',
+            'type' => 'Create'
+        ]);
 
         DB::commit();
         // sweetalert()->addSuccess('PDL is successfully created');

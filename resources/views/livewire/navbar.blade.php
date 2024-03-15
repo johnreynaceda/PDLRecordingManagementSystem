@@ -118,7 +118,12 @@
 
                             <div>
                                 <h1 class="font-bold font-barlow text-gray-700">
-                                    {{ auth()->user()->region->name }}</h1>
+                                    @if (auth()->user()->user_type == 'nhq')
+                                        NATIONAL HEADQUARTER
+                                    @else
+                                        {{ auth()->user()->region->name }}
+                                    @endif
+                                </h1>
                                 <h1 class="text-sm font-semibold leading-3 text-red-600">
                                     PDL-Carpeta RMS</h1>
                             </div>
@@ -139,37 +144,32 @@
                 </div>
                 <nav :class="{ 'flex': open, 'hidden': !open }"
                     class="flex-col items-center flex-grow hidden md:pb-0 md:flex md:justify-end md:flex-row">
-                    <a class=" {{ request()->routeIs('record.dashboard') ? 'text-main font-bold' : '' }} px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main lg:ml-auto"
-                        href="{{ route('record.dashboard') }}">
-                        MONITORING
-                    </a>
-                    {{-- <a class="{{ request()->routeIs('admin.commits') ? 'text-main font-medium' : '' }} px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main"
-                        href="{{ route('admin.commits') }}">
-                        Commits
-                    </a>
-                    <a class="{{ request()->routeIs('admin.hearings') ? 'text-main font-medium' : '' }} px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main"
-                        href="{{ route('admin.hearings') }}">
-                        Hearings
-                    </a>
-                    <a class="{{ request()->routeIs('admin.remands') ? 'text-main font-medium' : '' }} px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main"
-                        href="{{ route('admin.remands') }}">
-                        Remands
-                    </a>
-                    <a class="{{ request()->routeIs('admin.releases') ? 'text-main font-medium' : '' }} px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main"
-                        href="{{ route('admin.releases') }}">
-                        Releases
-                    </a>
-                    <a class="px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main" href="#">
-                        Latest Issuance
-                    </a>
-                    <a class="{{ request()->routeIs('admin.report') ? 'text-main font-medium' : '' }} px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main"
-                        href="{{ route('admin.report') }}">
-                        Reports
-                    </a> --}}
+                    <div class="ml-10">
+                        <a class=" {{ request()->routeIs('record.dashboard') || request()->routeIs('nhq.dashboard') ? 'text-main font-bold' : '' }} px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main lg:ml-auto"
+                            href="{{ auth()->user()->user_type == 'records' ? route('record.dashboard') : route('nhq.dashboard') }}">
+                            MONITORING
+                        </a>
+                        <a class="{{ request()->routeIs('record.commits') || request()->routeIs('nhq.commits') ? 'text-main font-bold' : '' }} px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main lg:ml-auto"
+                            href="{{ auth()->user()->user_type == 'records' ? route('record.commits') : route('nhq.commits') }}">
+                            COMMITS
+                        </a>
+                        <a class="{{ request()->routeIs('record.hearings') || request()->routeIs('nhq.hearings') ? 'text-main font-bold' : '' }} px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main lg:ml-auto"
+                            href="{{ auth()->user()->user_type == 'records' ? route('record.hearings') : route('nhq.hearings') }}">
+                            HEARINGS
+                        </a>
+                        <a class=" {{ request()->routeIs('record.remands') || request()->routeIs('nhq.remands') ? 'text-main font-bold' : '' }} px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main lg:ml-auto"
+                            href="{{ auth()->user()->user_type == 'records' ? route('record.remands') : route('nhq.remands') }}">
+                            REMANDS
+                        </a>
+                        <a class=" {{ request()->routeIs('record.releases') || request()->routeIs('nhq.releases') ? 'text-main font-bold' : '' }}  px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main lg:ml-auto"
+                            href="{{ auth()->user()->user_type == 'records' ? route('record.releases') : route('nhq.releases') }}">
+                            RELEASES
+                        </a>
+                    </div>
+
                     <div class="inline-flex items-center gap-2 list-none lg:ml-auto">
                         <div class="relative flex-shrink-0 ml-5" @click.away="open = false" x-data="{ open: false }">
                             <div>
-
                                 <button @click="open = !open" type="button"
                                     class="flex bg-white rounded-full focus:outline-none  focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                     id="user-menu-button" aria-expanded="false" aria-haspopup="true">

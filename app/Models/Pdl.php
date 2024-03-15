@@ -39,4 +39,7 @@ class Pdl extends Model
     public function jail(){
         return $this->belongsTo(Jail::class);
     }
+    public function log_histories(){
+        return $this->hasMany(LogHistory::class);
+    }
 }

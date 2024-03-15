@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Record;
 
 use App\Livewire\Admin\PdlList;
-use App\Models\LogHistory;
 use App\Models\Pdl;
 use App\Models\PdlCases;
 use Filament\Tables\Columns\ViewColumn;
@@ -30,7 +29,9 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use WireUi\Traits\Actions;
 
-class ReleaseList extends Component implements HasForms, HasTable
+
+
+class ReleaseRecord extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -41,7 +42,9 @@ class ReleaseList extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(auth()->user()->user_type == 'superadmin' ? Pdl::query()->where('status', 'release') : Pdl::query()->where('status', 'release')->where('jail_id', auth()->user()->jail_id))
+            ->query( auth()->user()->user_type== 'records' ? Pdl::query()->where('status', 'release')->whereHas('jail', function($record){
+                $record->where('region_id', auth()->user()->region_id);
+            }) : Pdl::query()->where('status', 'release'))
             ->columns([
                 TextColumn::make('id')->label('FULLNAME')->formatStateUsing(
                     function ($record) {
@@ -93,12 +96,6 @@ class ReleaseList extends Component implements HasForms, HasTable
                              'status' =>'',
                              'date_of_release' => null
                             ]);
-                            LogHistory::create([
-                                'pdl_id' => $record->id,
-                                'user_id' => auth()->user()->id,
-                                'description' => 'Update to Commit',
-                                'type' => 'Update',
-                            ]);
                             $this->dialog()->success(
                                 $title = 'PDL Recommit',
                                 $description = 'PDL infos are now in commit.'
@@ -114,15 +111,8 @@ class ReleaseList extends Component implements HasForms, HasTable
                 // ...
             ])->emptyStateHeading('No Release yet!')->emptyStateDescription('Once you add Release Record, it will appear here.')->emptyStateIcon('heroicon-o-document-text');
     }
-
-    public function viewCommitedCrime($id){
-        $this->crime_data = PdlCases::where('pdl_id', $id)->get();
-
-        $this->view_cases = true;
-
-    }
     public function render()
     {
-        return view('livewire.admin.release-list');
+        return view('livewire.record.release-record');
     }
 }

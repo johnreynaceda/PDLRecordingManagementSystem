@@ -291,6 +291,23 @@
                             </p>
                             <ul>
                                 <li>
+                                    <a class="{{ request()->routeIs('superadmin.logs') ? 'bg-gray-200 text-main scale-95' : '' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
+                                        href="{{ route('superadmin.logs') }}">
+                                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                            fill="currentColor" aria-hidden="true">
+                                            <path
+                                                d="M22 7.81v8.38c0 2.81-1.29 4.74-3.56 5.47-.66.23-1.42.34-2.25.34H7.81c-.83 0-1.59-.11-2.25-.34C3.29 20.93 2 19 2 16.19V7.81C2 4.17 4.17 2 7.81 2h8.38C19.83 2 22 4.17 22 7.81z"
+                                                opacity=".4"></path>
+                                            <path
+                                                d="M18.44 21.66c-.66.23-1.42.34-2.25.34H7.81c-.83 0-1.59-.11-2.25-.34.35-2.64 3.11-4.69 6.44-4.69 3.33 0 6.09 2.05 6.44 4.69zM15.58 11.58c0 1.98-1.6 3.59-3.58 3.59s-3.58-1.61-3.58-3.59C8.42 9.6 10.02 8 12 8s3.58 1.6 3.58 3.58z">
+                                            </path>
+                                        </svg>
+                                        <span class="ml-4">
+                                            Log Histories
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
                                     <a class="{{ request()->routeIs('superadmin.accounts') ? 'bg-gray-200 text-main scale-95' : '' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
                                         href="{{ route('superadmin.accounts') }}">
                                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"

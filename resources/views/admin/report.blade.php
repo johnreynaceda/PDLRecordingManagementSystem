@@ -6,7 +6,7 @@
             function printOut(data) {
                 var mywindow = window.open('', '', 'height=1000,width=1000');
                 mywindow.document.head.innerHTML =
-                    '<title></title><link rel="stylesheet" href="{{ Vite::asset('resources/css/app.css') }}" />';
+                    '<title></title><link rel="stylesheet" href="{{ Vite::asset('resources/css/app.css') }}" /> <script src="https://cdn.jsdelivr.net/npm/chart.js"/>';
                 mywindow.document.body.innerHTML = '<div>' + data +
                     '</div><script src="{{ Vite::asset('resources/js/app.js') }}"/>';
 

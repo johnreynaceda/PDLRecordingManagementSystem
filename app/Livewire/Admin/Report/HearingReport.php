@@ -24,7 +24,8 @@ class HearingReport extends Component
                 ->where(function ($query) {
                     $query->where('classification', 'like', '%' . $this->search . '%')
                         ->orWhere('criminal_case_no', 'like', '%' . $this->search . '%')
-                        ->orWhere('court', 'like', '%' . $this->search . '%');
+                        ->orWhere('court', 'like', '%' . $this->search . '%')
+                        ->orWhere('cell_location', 'like', '%' . $this->search . '%');
                 })
                 ->when($this->date, function ($query) {
                     $query->whereHas('pdlHearings', function ($hearing) {

@@ -1,26 +1,30 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Record;
 
-use App\Livewire\Admin\PdlList;
-use App\Models\LogHistory;
+use App\Filament\Exports\PdlExporter;
+use App\Models\Crime;
+use App\Models\EmergencyContact;
+use App\Models\Jail;
 use App\Models\Pdl;
 use App\Models\PdlCases;
-use Filament\Tables\Columns\ViewColumn;
-use Livewire\Component;
+use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Component;
 use App\Models\Shop\Product;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -28,24 +32,33 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
+use Illuminate\Contracts\View\View;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 use WireUi\Traits\Actions;
+use Filament\Forms\Components\ViewField;
+use Filament\Tables\Columns\ViewColumn;
+use pxlrbt\FilamentExcel\Columns\Column;
+// use App\Filament\Exports\ProductExporter;
+use Filament\Tables\Actions\ExportAction;
+use App\Filament\Exports\ProductExporter;
+use Filament\Tables\Actions\ExportBulkAction;
 
-class ReleaseList extends Component implements HasForms, HasTable
+class CommitRecord extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
     use Actions;
 
-    public $view_cases = false;
-    public $crime_data = [];
     public function table(Table $table): Table
     {
         return $table
-            ->query(auth()->user()->user_type == 'superadmin' ? Pdl::query()->where('status', 'release') : Pdl::query()->where('status', 'release')->where('jail_id', auth()->user()->jail_id))
+            ->query(auth()->user()->user_type== 'records' ? Pdl::query()->whereHas('jail', function($record){
+                $record->where('region_id', auth()->user()->region_id);
+            }) : Pdl::query())
             ->columns([
                 TextColumn::make('id')->label('FULLNAME')->formatStateUsing(
                     function ($record) {
-                        return $record->personalInformation->lastname. ', '. $record->personalInformation->firstname. ' '. ($record->personalInformation->middlename == null ? '' : $record->personalInformation->middlename[0].'.') ;
+                        return $record->personalInformation->lastname. ', '. $record->personalInformation->firstname. ' '. $record->personalInformation->middlename;
                     }
                 )->searchable(query: function (Builder $query, string $search): Builder {
                     return $query->whereHas('personalInformation', function($record) use ($search){
@@ -66,63 +79,41 @@ class ReleaseList extends Component implements HasForms, HasTable
                 TextColumn::make('court')->label('BRANCH/COURT')->searchable(),
                 TextColumn::make('status')->label('STATUS')->searchable(),
                 TextColumn::make('remarks')->label('REMARKS')->searchable(),
-                TextColumn::make('date_of_release')->date()->label('RELEASE DATE')->searchable(),
                 TextColumn::make('jail.region.name')->label('REGION')->searchable()->visible(auth()->user()->user_type == 'superadmin'),
                 ])
             ->filters([
-                // Filter::make('created_at')->indicator('Administrators')
-                // ->form([
-                //     DatePicker::make('created_from'),
-                // ])
-                // ->query(function (Builder $query, array $data): Builder {
-                //     return $query
-                //         ->when(
-                //             $data['created_from'],
-                //             fn (Builder $query, $date): Builder => $query->whereDate('created_at', $date),
-                //         );
+    //             Filter::make('created_at')->indicator('Administrators')
+    //             ->form([
+    //                 DatePicker::make('created_from'),
+    //             ])
+    //             ->query(function (Builder $query, array $data): Builder {
+    //                 return $query
+    //                     ->when(
+    //                         $data['created_from'],
+    //                         fn (Builder $query, $date): Builder => $query->whereDate('created_at', $date),
+    //                     );
 
-                // })
+    //             }),
+    //             SelectFilter::make('jail')
+    // ->options(Jail::pluck('name', 'id'))
             ])
             ->actions([
-                // EditAction::make('edit')->color('success'),
-                ActionGroup::make([
 
-                    Action::make('recommit')->icon('heroicon-m-arrow-path-rounded-square')->color('success')->action(
-                        function($record){
-                            $record->update([
-                             'status' =>'',
-                             'date_of_release' => null
-                            ]);
-                            LogHistory::create([
-                                'pdl_id' => $record->id,
-                                'user_id' => auth()->user()->id,
-                                'description' => 'Update to Commit',
-                                'type' => 'Update',
-                            ]);
-                            $this->dialog()->success(
-                                $title = 'PDL Recommit',
-                                $description = 'PDL infos are now in commit.'
+                Action::make('view_data')->icon('heroicon-s-folder-open')->color('warning')->url(
+                    function($record){
+                        return route('record.commits.view', ['id' => $record->id]);
+                    }
+                ),
 
-                            );
-                        }
-
-                    ),
-                ])
 
             ])
             ->bulkActions([
-                // ...
-            ])->emptyStateHeading('No Release yet!')->emptyStateDescription('Once you add Release Record, it will appear here.')->emptyStateIcon('heroicon-o-document-text');
+
+            ])->emptyStateDescription('Once you add PDL Record, it will appear here.')->emptyStateIcon('heroicon-o-document-text');
     }
 
-    public function viewCommitedCrime($id){
-        $this->crime_data = PdlCases::where('pdl_id', $id)->get();
-
-        $this->view_cases = true;
-
-    }
     public function render()
     {
-        return view('livewire.admin.release-list');
+        return view('livewire.record.commit-record');
     }
 }

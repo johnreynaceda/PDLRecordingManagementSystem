@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Livewire\Admin\PdlList;
+use App\Models\LogHistory;
 use App\Models\Pdl;
 use App\Models\PdlCases;
 use App\Models\PdlHearing;
@@ -110,6 +111,12 @@ class HearingList extends Component implements HasForms, HasTable
                                 'date_of_hearing' => Carbon::parse($data['date']),
                                 'time_of_hearing' => Carbon::parse($data['time']),
                             ]);
+                            LogHistory::create([
+                                'pdl_id' => $record->id,
+                                'user_id' => auth()->user()->id,
+                                'description' => 'Create Hearing Date',
+                                'type' => 'Create',
+                            ]);
                         }
                     )->form(
                         function($record){
@@ -126,7 +133,12 @@ class HearingList extends Component implements HasForms, HasTable
                                 'status' => 'remand',
                                 'date_of_remand' => Carbon::parse( $data['date']),
                             ]);
-
+                            LogHistory::create([
+                                'pdl_id' => $record->id,
+                                'user_id' => auth()->user()->id,
+                                'description' => 'Update to Remand',
+                                'type' => 'Update',
+                            ]);
                             $this->dialog()->success(
                                 $title = 'Status updated',
                                 $description = 'PDL infos are now in remand status.'
@@ -142,7 +154,12 @@ class HearingList extends Component implements HasForms, HasTable
                                 'status' => 'release',
                                 'date_of_release' => Carbon::parse($data['date']),
                             ]);
-
+                            LogHistory::create([
+                                'pdl_id' => $record->id,
+                                'user_id' => auth()->user()->id,
+                                'description' => 'Update to Release',
+                                'type' => 'Update',
+                            ]);
                             $this->dialog()->success(
                                 $title = 'Status updated',
                                 $description = 'PDL infos are now in release status.'
@@ -174,7 +191,12 @@ class HearingList extends Component implements HasForms, HasTable
     public function deleteHearing($id){
         $hearing = PdlHearing::find($id);
         $hearing->delete();
-
+        LogHistory::create([
+            'pdl_id' => $hearing->pdl_id,
+            'user_id' => auth()->user()->id,
+            'description' => 'Delete Hearing Date',
+            'type' => 'Delete',
+        ]);
         $this->dialog()->success(
             $title = 'Hearing deleted',
             $description = 'Date has been deleted.'
@@ -188,6 +210,12 @@ class HearingList extends Component implements HasForms, HasTable
         'date_of_hearing' => Carbon::parse($this->date),
         'time_of_hearing' => Carbon::parse($this->time),
        ]);
+       LogHistory::create([
+        'pdl_id' => $data->pdl_id,
+        'user_id' => auth()->user()->id,
+        'description' => 'Update Hearing Date',
+        'type' => 'Update',
+    ]);
        $this->edit_hearings = false;
        $this->dialog()->success(
         $title = 'Hearing update',

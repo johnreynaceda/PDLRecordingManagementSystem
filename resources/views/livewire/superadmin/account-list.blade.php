@@ -9,7 +9,8 @@
                 <x-native-select label="User Type" wire:model.live="user_type">
                     <option>Select An Option</option>
                     <option value="admin">Jail Records Unit</option>
-                    <option value="records">Operations Monitoring</option>
+                    <option value="records">Regional Monitoring</option>
+                    <option value="nhq">National Headquarters</option>
                 </x-native-select>
                 @if ($user_type == 'admin')
                     <x-native-select label="Jail" wire:model="jail_id">

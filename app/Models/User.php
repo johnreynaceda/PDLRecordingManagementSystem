@@ -53,4 +53,8 @@ class User extends Authenticatable
     public function region(){
         return $this->belongsTo(Region::class);
     }
+
+    public function log_histories(){
+        return $this->hasMany(LogHistory::class);
+    }
 }

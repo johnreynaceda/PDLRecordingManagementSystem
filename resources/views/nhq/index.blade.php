@@ -1,4 +1,4 @@
 @section('title', 'Monitoring')
 <x-record-layout>
-    <livewire:record.monitoring />
+    <livewire:nhq.nhq-monitoring />
 </x-record-layout>

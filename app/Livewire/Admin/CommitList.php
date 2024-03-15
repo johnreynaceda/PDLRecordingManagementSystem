@@ -6,6 +6,7 @@ use App\Filament\Exports\PdlExporter;
 use App\Models\Crime;
 use App\Models\EmergencyContact;
 use App\Models\Jail;
+use App\Models\LogHistory;
 use App\Models\Pdl;
 use App\Models\PdlCases;
 use Carbon\Carbon;
@@ -211,6 +212,12 @@ class CommitList extends Component implements HasForms, HasTable
                                 'crime_id' => $value,
                             ]);
                         }
+                        LogHistory::create([
+                           'pdl_id' => $record->id,
+                           'user_id' => auth()->user()->id,
+                           'description' => 'Update Cases',
+                           'type' => 'Update',
+                        ]);
                     }
                 )->form(
                     function($record){
@@ -236,9 +243,13 @@ class CommitList extends Component implements HasForms, HasTable
                         function($record, $data){
                             $record->update([
                                 'status' => 'hearing',
-                                // 'date_of_hearing' => Carbon::parse($data['date']),
                             ]);
-
+                            LogHistory::create([
+                                'pdl_id' => $record->id,
+                                'user_id' => auth()->user()->id,
+                                'description' => 'Update Hearings',
+                                'type' => 'Update',
+                            ]);
                             $this->dialog()->success(
                                 $title = 'Status updated',
                                 $description = 'PDL infos are now in hearing status.'
@@ -251,7 +262,12 @@ class CommitList extends Component implements HasForms, HasTable
                                 'status' => 'remand',
                                 'date_of_remand' => Carbon::parse( $data['date']),
                             ]);
-
+                            LogHistory::create([
+                                'pdl_id' => $record->id,
+                                'user_id' => auth()->user()->id,
+                                'description' => 'Update Remand',
+                                'type' => 'Update',
+                            ]);
                             $this->dialog()->success(
                                 $title = 'Status updated',
                                 $description = 'PDL infos are now in remand status.'
@@ -269,7 +285,12 @@ class CommitList extends Component implements HasForms, HasTable
                                 'status' => 'release',
                                 'date_of_release' => Carbon::parse($data['date']),
                             ]);
-
+                            LogHistory::create([
+                                'pdl_id' => $record->id,
+                                'user_id' => auth()->user()->id,
+                                'description' => 'Update Release',
+                                'type' => 'Update',
+                            ]);
                             $this->dialog()->success(
                                 $title = 'Status updated',
                                 $description = 'PDL infos are now in release status.'

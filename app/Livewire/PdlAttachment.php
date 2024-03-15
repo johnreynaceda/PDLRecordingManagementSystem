@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\LogHistory;
 use Filament\Forms\Components\FileUpload;
 use Livewire\Attributes\On;
 use App\Models\Post;
@@ -49,7 +50,12 @@ class PdlAttachment extends Component implements HasForms
                 'path' => $value->storeAs('PDL Attachments', $value->getClientOriginalName(),'public'),
             ]);
         }
-
+        LogHistory::create([
+            'pdl_id' => $this->pdl_id,
+            'user_id' => auth()->user()->id,
+            'description' => 'Upload Attachment',
+            'type' => 'Upload',
+        ]);
         $this->dialog()->success(
             $title = 'Attachment Added',
             $description = 'Attachment has been added.'

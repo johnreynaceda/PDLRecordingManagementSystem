@@ -358,13 +358,20 @@
     </div>
     <div class="mt-10 py-5  flex justify-between items-center border-t">
         <div>
-            <x-button label="RETURN" href="{{ route('admin.commits') }}" slate icon="arrow-left"
-                class="font-medium" />
+            @if (auth()->user()->user_type == 'records')
+                <x-button label="RETURN" href="{{ route('record.commits') }}" slate icon="arrow-left"
+                    class="font-medium" />
+            @else
+                <x-button label="RETURN" href="{{ route('admin.commits') }}" slate icon="arrow-left"
+                    class="font-medium" />
+            @endif
         </div>
         <div class="flex space-x-2 items-center">
-            <x-button label="Print" dark right-icon="printer" class="font-medium" />
-            <x-button label="Edit Record" positive right-icon="pencil-alt" class="font-medium"
-                wire:click="editRecord" spinner="editRecord" />
+            @if (auth()->user()->user_type != 'records')
+                <x-button label="Print" dark right-icon="printer" class="font-medium" />
+                <x-button label="Edit Record" positive right-icon="pencil-alt" class="font-medium"
+                    wire:click="editRecord" spinner="editRecord" />
+            @endif
         </div>
     </div>
 

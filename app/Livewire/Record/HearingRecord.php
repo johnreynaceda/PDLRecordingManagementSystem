@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Record;
 
+use Livewire\Component;
 use App\Livewire\Admin\PdlList;
-use App\Models\LogHistory;
 use App\Models\Pdl;
 use App\Models\PdlCases;
+use App\Models\PdlHearing;
+use Filament\Forms\Form;
 use Filament\Tables\Columns\ViewColumn;
-use Livewire\Component;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Grid;
@@ -23,15 +24,16 @@ use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\Shop\Product;
 use Carbon\Carbon;
+use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
+use Filament\Forms\Components\ViewField;
 use WireUi\Traits\Actions;
-
-class RemandList extends Component implements HasForms, HasTable
+class HearingRecord extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -39,15 +41,18 @@ class RemandList extends Component implements HasForms, HasTable
 
     public $view_cases = false;
     public $crime_data = [];
+    public $date, $time, $hearing_id;
 
     public function table(Table $table): Table
     {
         return $table
-            ->query(auth()->user()->user_type == 'superadmin' ? Pdl::query()->where('status', 'remand') : Pdl::query()->where('status', 'remand')->where('jail_id', auth()->user()->jail_id))
+            ->query(auth()->user()->user_type== 'records' ? Pdl::query()->where('status', 'hearing')->whereHas('jail', function($record){
+                $record->where('region_id', auth()->user()->region_id);
+            }) : Pdl::query()->where('status', 'hearing'))
             ->columns([
                 TextColumn::make('id')->label('FULLNAME')->formatStateUsing(
                     function ($record) {
-                        return $record->personalInformation->lastname. ', '. $record->personalInformation->firstname. ' '. ($record->personalInformation->middlename == null ? '' : $record->personalInformation->middlename[0].'.') ;
+                        return $record->personalInformation->lastname. ', '. $record->personalInformation->firstname. ' '. ($record->personalInformation->middlename == null ? '' : $record->personalInformation->middlename) ;
                     }
                 )->searchable(query: function (Builder $query, string $search): Builder {
                     return $query->whereHas('personalInformation', function($record) use ($search){
@@ -67,68 +72,44 @@ class RemandList extends Component implements HasForms, HasTable
                 ),
                 TextColumn::make('cell_location')->label('CELL/LOCAION')->searchable(),
                 TextColumn::make('court')->label('BRANCH/COURT')->searchable(),
-                TextColumn::make('date_of_remand')->date()->label('REMAND DATE')->searchable(),
                 TextColumn::make('jail.region.name')->label('REGION')->searchable()->visible(auth()->user()->user_type == 'superadmin'),
-
                 ])
             ->filters([
-                // Filter::make('created_at')->indicator('Administrators')
-                // ->form([
-                //     DatePicker::make('created_from'),
-                // ])
-                // ->query(function (Builder $query, array $data): Builder {
-                //     return $query
-                //         ->when(
-                //             $data['created_from'],
-                //             fn (Builder $query, $date): Builder => $query->whereDate('created_at', $date),
-                //         );
+                Filter::make('created_at')->indicator('Administrators')
+                ->form([
+                    DatePicker::make('created_from')->label('Date of Hearing'),
+                ])
+                ->query(function (Builder $query, array $data): Builder {
+                    return $query
+                        ->when(
+                            $data['created_from'],
+                            fn (Builder $query, $date): Builder => $query->whereHas('pdlHearings', function($record) use ($date){
+                                $record->whereDate('date_of_hearing', $date);
+                            })
+                        );
 
-                // })
+                })
             ])
             ->actions([
-                // EditAction::make('edit')->color('success'),
-                ActionGroup::make([
-                    // Action::make('hearings')->icon('heroicon-s-cursor-arrow-ripple')->color('info'),
-                    Action::make('release')->icon('heroicon-s-cursor-arrow-ripple')->color('success')->action(
-                        function($record, $data){
-                            $record->update([
-                                'status' => 'release',
-                                'date_of_release' => Carbon::parse($data['date']),
-                            ]);
-                            LogHistory::create([
-                                'pdl_id' => $record->id,
-                                'user_id' => auth()->user()->id,
-                                'description' => 'Update to Release',
-                                'type' => 'Update',
-                            ]);
-                            $this->dialog()->success(
-                                $title = 'Status updated',
-                                $description = 'PDL infos are now in release status.'
+                ViewAction::make('view')->label('view hearing dates')->icon('heroicon-s-calendar')->color('warning')->form(
+                    function($record){
+                        $this->edit_hearings = false;
+                        return [
+                                ViewField::make('rating')
+                ->view('filament.forms.hearing_date')
+                        ];
 
-                            );
-                        }
-                    )->form([
+                    }
+                )->modalHeading('Hearing Dates')->modalWidth('2xl'),
 
-                        DatePicker::make('date')->label('Date of Release'),
-                    ])->modalWidth('xl'),
-                ])
             ])
             ->bulkActions([
                 // ...
-            ])->emptyStateHeading('No Remands yet!')->emptyStateDescription('Once you add Remands Record, it will appear here.')->emptyStateIcon('heroicon-o-document-text');
+            ])->emptyStateHeading('No Hearings yet!')->emptyStateDescription('Once you add Hearings Record, it will appear here.')->emptyStateIcon('heroicon-o-document-text');
     }
-
-    public function viewCommitedCrime($id){
-        $this->crime_data = PdlCases::where('pdl_id', $id)->get();
-
-        $this->view_cases = true;
-
-    }
-
-
 
     public function render()
     {
-        return view('livewire.admin.remand-list');
+        return view('livewire.record.hearing-record');
     }
 }

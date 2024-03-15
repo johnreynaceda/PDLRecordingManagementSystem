@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Pdl;
 
+use App\Models\LogHistory;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\MarkdownEditor;
@@ -198,7 +199,12 @@ class ViewData extends Component implements HasForms
                     ]);
                 }
              }
-
+             LogHistory::create([
+                'pdl_id' =>$this->pdl_id,
+                'user_id' => auth()->user()->id,
+                'description' => 'Update PDL Data',
+                'type' => 'Update',
+             ]);
           $this->dialog()->success(
             $title = 'PDL updated',
             $description = 'PDL information has been updated.'
