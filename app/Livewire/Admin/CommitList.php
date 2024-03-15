@@ -275,8 +275,8 @@ class CommitList extends Component implements HasForms, HasTable
                             );
                         }
                     )->form([
-                        ViewField::make('data')
-                        ->view('filament.forms.pdl'),
+                        // ViewField::make('data')
+                        // ->view('filament.forms.pdl'),
                         DatePicker::make('date')->label('Date of Remand'),
                     ])->modalWidth('xl'),
                     Action::make('release')->icon('heroicon-s-cursor-arrow-ripple')->color('success')->action(
