@@ -58,8 +58,25 @@
                                 <h1>({{ auth()->user()->jail->region->name }})</h1>
                             </div>
                         </div>
-                        <div class="mt-5">
-                            <canvas wire:ignore id="myChart"></canvas>
+                        <div class="my-5 text-center py-2 font-bold bg-gray-200">
+                            JAIL POPULATION
+                        </div>
+                        <div
+                            class="mt-5 col-span-3 border-2  bg-white bg-opacity-80 relative rounded-xl py-3 px-2 grid place-content-center">
+
+                            <canvas wire:ignore id="myChart" height="100"></canvas>
+                        </div>
+                        <span>
+                            <div class="my-5 text-center py-2 font-bold bg-gray-200">
+                                PDL CLASSIFICATION
+                            </div>
+                        </span>
+                        <div
+                            class="col-span-3 border-2 mt-2 bg-white bg-opacity-80 relative rounded-xl py-3 px-2 grid place-content-center">
+
+
+                            <canvas wire:ignore id="myChart1" height="400"></canvas>
+
                         </div>
                     </div>
                 </div>
@@ -94,6 +111,37 @@
                         }
                     }
                 }
+            }
+        });
+
+        const ctx1 = document.getElementById('myChart1');
+
+        new Chart(ctx1, {
+            type: 'doughnut',
+            data: {
+                labels: ['ORDINARY PDL', 'HIGH PROFILES', 'HIGH RISKS', 'HIGH PROFILES/HIGH RISKS', 'MUNICIPAL PDL',
+                    'CITY PDL', 'INSULAR PDL'
+                ],
+                datasets: [{
+                    label: '# ',
+                    data: [{{ $ordinary }}, {{ $profiles }}, {{ $risks }},
+                        {{ $profile_risks }}, {{ $municipal }}, {{ $city }},
+                        {{ $insular }},
+
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'left',
+                    },
+
+                },
+
             }
         });
     </script>

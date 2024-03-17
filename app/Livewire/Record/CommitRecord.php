@@ -82,20 +82,9 @@ class CommitRecord extends Component implements HasForms, HasTable
                 TextColumn::make('jail.region.name')->label('REGION')->searchable()->visible(auth()->user()->user_type == 'superadmin'),
                 ])
             ->filters([
-    //             Filter::make('created_at')->indicator('Administrators')
-    //             ->form([
-    //                 DatePicker::make('created_from'),
-    //             ])
-    //             ->query(function (Builder $query, array $data): Builder {
-    //                 return $query
-    //                     ->when(
-    //                         $data['created_from'],
-    //                         fn (Builder $query, $date): Builder => $query->whereDate('created_at', $date),
-    //                     );
 
-    //             }),
-    //             SelectFilter::make('jail')
-    // ->options(Jail::pluck('name', 'id'))
+                SelectFilter::make('jail_id')->label('Jail')
+    ->options(Jail::pluck('name', 'id'))
             ])
             ->actions([
 

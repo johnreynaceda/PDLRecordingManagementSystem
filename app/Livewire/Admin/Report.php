@@ -43,6 +43,14 @@ class Report extends Component
                      $this->labels = ['Commits', 'Hearings', 'Remands', 'Releases'];
                      $this->counts = [$this->commits, $this->hearings,$this->remands, $this->releases];
 
-        return view('livewire.admin.report');
+        return view('livewire.admin.report',[
+            'ordinary' => Pdl::where('classification', 'ORDINARY')->where('jail_id', auth()->user()->jail_id)->count(),
+            'profiles' => Pdl::where('classification', 'HIGH PROFILE')->where('jail_id', auth()->user()->jail_id)->count(),
+            'risks' => Pdl::where('classification', 'HIGH RISKS')->where('jail_id', auth()->user()->jail_id)->count(),
+            'profile_risks' => Pdl::where('classification', 'HIGH PROFILE/HIGH RISK')->where('jail_id', auth()->user()->jail_id)->count(),
+            'insular' => Pdl::where('classification', 'INSULAR PDL')->where('jail_id', auth()->user()->jail_id)->count(),
+            'city' => Pdl::where('classification', 'CITY PDL')->where('jail_id', auth()->user()->jail_id)->count(),
+            'municipal' => Pdl::where('classification', 'MUNICIPAL PDL')->where('jail_id', auth()->user()->jail_id)->count(),
+        ]);
     }
 }

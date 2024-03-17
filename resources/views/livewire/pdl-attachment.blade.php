@@ -1,7 +1,7 @@
 <div class="z-50">
     <ul class="border-b pb-5 relative">
         @foreach ($attachments as $item)
-            <li>
+            <li class="flex justify-between items-center">
                 <a href="{{ Storage::url($item->path) }}" target="_blank"
                     class="hover:text-green-600 flex space-x-1 items-center">
                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
@@ -18,7 +18,10 @@
                         @endphp
                         {{ $file[1] }}
                     </span>
+
                 </a>
+                <x-button.circle sm class="ml-5" spinner="deleteAttachment({{ $item->id }})" negative
+                    wire:click="deleteAttachment({{ $item->id }})" icon="trash" />
             </li>
         @endforeach
 

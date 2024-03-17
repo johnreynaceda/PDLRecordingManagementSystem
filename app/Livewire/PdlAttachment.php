@@ -65,6 +65,21 @@ class PdlAttachment extends Component implements HasForms
 
     }
 
+    public function deleteAttachment($id){
+      $data =   \App\Models\PdlAttachment::where('id',$id)->first();
+      $data->delete();
+        LogHistory::create([
+            'pdl_id' => $data->pdl_id,
+            'user_id' => auth()->user()->id,
+            'description' => 'Delete Attachment',
+            'type' => 'Delete',
+        ]);
+        $this->dialog()->success(
+            $title = 'Attachment deleted',
+            $description = 'Attachment has been deleted.'
+        );
+    }
+
 
     public function render()
     {
