@@ -100,7 +100,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="border-2 text-sm  text-gray-700  px-3 py-1">
+                            <td colspan="11" class="border-2 text-sm  text-gray-700  px-3 py-1">
                                 <span class="text-center">No Records Available</span>
                             </td>
                         </tr>

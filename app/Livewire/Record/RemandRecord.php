@@ -67,7 +67,7 @@ class RemandRecord extends Component implements HasForms, HasTable
                         });
                     }
                 ),
-                TextColumn::make('cell_location')->label('CELL/LOCAION')->searchable(),
+                TextColumn::make('cell_location')->label('CELL/LOCATION')->searchable(),
                 TextColumn::make('court')->label('BRANCH/COURT')->searchable(),
                 TextColumn::make('date_of_remand')->date()->label('REMAND DATE')->searchable(),
                 TextColumn::make('jail.region.name')->label('REGION')->searchable()->visible(auth()->user()->user_type == 'superadmin'),

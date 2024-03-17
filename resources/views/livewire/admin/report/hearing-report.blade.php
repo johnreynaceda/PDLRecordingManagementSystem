@@ -50,6 +50,9 @@
                         <th class="border-2  text-left px-2 text-sm font-semibold text-gray-700 py-2">
                             Hearing Date/Schedule
                         </th>
+                        <th class="border-2 w-40  text-left px-2 text-sm font-semibold text-gray-700 py-2">
+
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="">
@@ -94,7 +97,9 @@
                                     @endforeach
                                 </ul>
                             </td>
+                            <td class="border-2 text-sm  text-gray-700  px-3 py-1">
 
+                            </td>
                         </tr>
                     @empty
                         <tr>
