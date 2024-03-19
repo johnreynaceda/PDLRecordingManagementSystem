@@ -57,4 +57,8 @@ class User extends Authenticatable
     public function log_histories(){
         return $this->hasMany(LogHistory::class);
     }
+
+    public function accountlogo(){
+        return $this->hasOne(AccountLogo::class);
+    }
 }

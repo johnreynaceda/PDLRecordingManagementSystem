@@ -2,6 +2,9 @@
 
 namespace App\Livewire\Record;
 
+use App\Models\Jail;
+use App\Models\Region;
+use Filament\Tables\Filters\SelectFilter;
 use Livewire\Component;
 use App\Livewire\Admin\PdlList;
 use App\Models\Pdl;
@@ -75,20 +78,10 @@ class HearingRecord extends Component implements HasForms, HasTable
                 TextColumn::make('jail.region.name')->label('REGION')->searchable()->visible(auth()->user()->user_type == 'superadmin'),
                 ])
             ->filters([
-                Filter::make('created_at')->indicator('Administrators')
-                ->form([
-                    DatePicker::make('created_from')->label('Date of Hearing'),
-                ])
-                ->query(function (Builder $query, array $data): Builder {
-                    return $query
-                        ->when(
-                            $data['created_from'],
-                            fn (Builder $query, $date): Builder => $query->whereHas('pdlHearings', function($record) use ($date){
-                                $record->whereDate('date_of_hearing', $date);
-                            })
-                        );
-
-                })
+                SelectFilter::make('jail_id')->label('Jail')
+                ->options(Jail::pluck('name', 'id'))->visible(auth()->user()->user_type == 'records'),
+                SelectFilter::make('region_id')->label('Region')
+                ->options(Region::pluck('name', 'id'))->visible(auth()->user()->user_type == 'nhq'),
             ])
             ->actions([
                 ViewAction::make('view')->label('view hearing dates')->icon('heroicon-s-calendar')->color('warning')->form(

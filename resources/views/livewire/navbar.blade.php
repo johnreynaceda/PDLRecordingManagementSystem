@@ -113,10 +113,18 @@
             <div x-data="{ open: false }"
                 class="relative flex flex-col w-full px-5 py-2 mx-auto  md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
                 <div class="flex flex-row items-center justify-between lg:justify-start">
-                    <a class="text-lg tracking-tight text-black uppercase focus:outline-none focus:ring lg:text-2xl"
+                    <div class="text-lg tracking-tight text-black uppercase focus:outline-none focus:ring lg:text-2xl"
                         href="/">
                         <div class="flex space-x-2 items-center">
-
+                            <button wire:click="$set('upload_logo', true)">
+                                @if (\App\Models\AccountLogo::where('user_id', auth()->user()->id)->get()->count() > 0)
+                                    <img src="{{ Storage::url(auth()->user()->accountlogo->logo_path) }}"
+                                        class="h-20 w-20 rounded-full object-cover" alt="">
+                                @else
+                                    <img src="{{ asset('images/no_image.jpg') }}"
+                                        class="h-20 w-20 rounded-full object-cover" alt="">
+                                @endif
+                            </button>
                             <div>
                                 <h1 class="font-bold font-barlow text-gray-700">
                                     @if (auth()->user()->user_type == 'nhq')
@@ -129,7 +137,8 @@
                                     PDL-Carpeta RMS</h1>
                             </div>
                         </div>
-                    </a>
+
+                    </div>
                     <button @click="open = !open"
                         class="inline-flex items-center justify-center p-2 text-gray-400 hover:text-black focus:outline-none focus:text-black md:hidden">
                         <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -212,5 +221,32 @@
                 </nav>
             </div>
         @endif
+        <x-modal wire:model.defer="upload_logo" align="center">
+            <x-card title="UPLOAD LOGO">
+                <div>
+                    @if ($photo)
+                        <img src="{{ $photo->temporaryUrl() }}" class="h-20 w-20 rounded-full object-cover"
+                            alt="">
+                    @else
+                        @if (\App\Models\AccountLogo::where('user_id', auth()->user()->id)->get()->count() > 0)
+                            <img src="{{ Storage::url(auth()->user()->accountlogo->logo_path) }}"
+                                class="h-20 w-20 rounded-full object-cover" alt="">
+                        @else
+                            <img src="{{ asset('images/no_image.jpg') }}" class="h-20 w-20 rounded-full object-cover"
+                                alt="">
+                        @endif
+                    @endif
+                    <x-input type="file" wire:model.live="photo" class="mt-5" />
+                    <span class="text-red-600 text-sm" wire:loading wire:target="photo">loading...</span>
+                </div>
+                <x-slot name="footer">
+                    <div class="flex justify-end gap-x-4">
+                        <x-button flat label="Cancel" x-on:click="close" />
+                        <x-button primary label="Update" icon="save" wire:click="saveLogo" spinner="saveLogo" />
+                    </div>
+                </x-slot>
+            </x-card>
+        </x-modal>
     </div>
+
 </div>

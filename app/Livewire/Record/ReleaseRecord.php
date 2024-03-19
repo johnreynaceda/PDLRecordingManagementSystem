@@ -3,9 +3,12 @@
 namespace App\Livewire\Record;
 
 use App\Livewire\Admin\PdlList;
+use App\Models\Jail;
 use App\Models\Pdl;
 use App\Models\PdlCases;
+use App\Models\Region;
 use Filament\Tables\Columns\ViewColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Livewire\Component;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
@@ -74,18 +77,10 @@ class ReleaseRecord extends Component implements HasForms, HasTable
                 TextColumn::make('jail.region.name')->label('REGION')->searchable()->visible(auth()->user()->user_type == 'superadmin'),
                 ])
             ->filters([
-                // Filter::make('created_at')->indicator('Administrators')
-                // ->form([
-                //     DatePicker::make('created_from'),
-                // ])
-                // ->query(function (Builder $query, array $data): Builder {
-                //     return $query
-                //         ->when(
-                //             $data['created_from'],
-                //             fn (Builder $query, $date): Builder => $query->whereDate('created_at', $date),
-                //         );
-
-                // })
+                SelectFilter::make('jail_id')->label('Jail')
+                ->options(Jail::pluck('name', 'id'))->visible(auth()->user()->user_type == 'records'),
+                SelectFilter::make('region_id')->label('Region')
+                ->options(Region::pluck('name', 'id'))->visible(auth()->user()->user_type == 'nhq'),
             ])
             ->actions([
                 // EditAction::make('edit')->color('success'),

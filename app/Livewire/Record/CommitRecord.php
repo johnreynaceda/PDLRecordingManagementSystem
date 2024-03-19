@@ -8,6 +8,7 @@ use App\Models\EmergencyContact;
 use App\Models\Jail;
 use App\Models\Pdl;
 use App\Models\PdlCases;
+use App\Models\Region;
 use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
@@ -84,7 +85,9 @@ class CommitRecord extends Component implements HasForms, HasTable
             ->filters([
 
                 SelectFilter::make('jail_id')->label('Jail')
-    ->options(Jail::pluck('name', 'id'))
+    ->options(Jail::pluck('name', 'id'))->visible(auth()->user()->user_type == 'records'),
+    SelectFilter::make('region_id')->label('Region')
+    ->options(Region::pluck('name', 'id'))->visible(auth()->user()->user_type == 'nhq'),
             ])
             ->actions([
 

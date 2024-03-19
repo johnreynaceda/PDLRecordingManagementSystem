@@ -3,9 +3,12 @@
 namespace App\Livewire\Record;
 
 use App\Livewire\Admin\PdlList;
+use App\Models\Jail;
 use App\Models\Pdl;
 use App\Models\PdlCases;
+use App\Models\Region;
 use Filament\Tables\Columns\ViewColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Livewire\Component;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
@@ -74,7 +77,10 @@ class RemandRecord extends Component implements HasForms, HasTable
 
                 ])
             ->filters([
-
+                SelectFilter::make('jail_id')->label('Jail')
+                ->options(Jail::pluck('name', 'id'))->visible(auth()->user()->user_type == 'records'),
+                SelectFilter::make('region_id')->label('Region')
+                ->options(Region::pluck('name', 'id'))->visible(auth()->user()->user_type == 'nhq'),
             ])
             ->actions([
 
