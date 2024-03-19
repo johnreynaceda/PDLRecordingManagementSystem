@@ -15,7 +15,7 @@ class NhqMonitoring extends Component
 
     public function render()
     {
-        $this->populations = Pdl::count();
+        $this->populations = Pdl::count() - (Pdl::where('status','remand')->count() + Pdl::where('status','release')->count());
         $this->commits = Pdl::count();
             $this->hearings = Pdl::where('status', 'hearing')->count();
 

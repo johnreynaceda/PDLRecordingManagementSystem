@@ -21,4 +21,8 @@ class Jail extends Model
     public function users(){
         return $this->hasMany(User::class);
     }
+
+    public function issuances(){
+        return $this->hasMany(Issuance::class);
+    }
 }

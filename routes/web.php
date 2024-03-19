@@ -94,6 +94,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/report', function () {
         return view('admin.report');
     })->name('admin.report');
+    Route::get('/latest-issuance', function () {
+        return view('admin.issuance');
+    })->name('admin.issuance');
 
 });
 

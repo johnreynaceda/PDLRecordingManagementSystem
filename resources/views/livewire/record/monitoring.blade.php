@@ -24,7 +24,7 @@
                             </path>
                         </svg>
                         <div class="mt-3">
-                            <h1 class="font-bold text-2xl">{{ $populations }}</h1>
+                            <h1 class="font-bold text-2xl">{{ $populations < 0 ? 0 : $populations }}</h1>
                             <p>Current Jail Population</p>
                         </div>
                     </center>

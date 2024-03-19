@@ -37,6 +37,7 @@ class ReleaseRecord extends Component implements HasForms, HasTable
     use InteractsWithForms;
     use Actions;
 
+
     public $view_cases = false;
     public $crime_data = [];
     public function table(Table $table): Table

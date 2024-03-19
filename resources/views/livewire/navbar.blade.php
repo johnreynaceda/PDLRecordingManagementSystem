@@ -57,7 +57,8 @@
                         href="{{ route('admin.releases') }}">
                         Releases
                     </a>
-                    <a class="px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main" href="#">
+                    <a class="{{ request()->routeIs('admin.issuance') ? 'text-main font-medium' : '' }} px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main"
+                        href="{{ route('admin.issuance') }}">
                         Latest Issuance
                     </a>
                     <a class="{{ request()->routeIs('admin.report') ? 'text-main font-medium' : '' }} px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main"
