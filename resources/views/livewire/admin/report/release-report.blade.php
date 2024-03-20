@@ -55,7 +55,7 @@
                             Remarks
                         </th>
                         <th class="border-2  text-left px-2 text-sm font-semibold text-gray-700 py-2">
-                            Date of Remand
+                            Date of Release
                         </th>
                     </tr>
                 </thead>
