@@ -20,19 +20,23 @@
                     </span>
 
                 </a>
-                <x-button.circle sm class="ml-5" spinner="deleteAttachment({{ $item->id }})" negative
-                    wire:click="deleteAttachment({{ $item->id }})" icon="trash" />
+                @if (auth()->user()->user_type == 'admin')
+                    <x-button.circle sm class="ml-5" spinner="deleteAttachment({{ $item->id }})" negative
+                        wire:click="deleteAttachment({{ $item->id }})" icon="trash" />
+                @endif
             </li>
         @endforeach
 
     </ul>
-    <div class="mt-5">
-        <div>
-            {{ $this->form }}
+    @if (auth()->user()->user_type == 'admin')
+        <div class="mt-5">
+            <div>
+                {{ $this->form }}
+            </div>
+            <div class="mt-5 relative">
+                <x-button label="Submit Attachment" wire:click="submitAttachment" spinner="submitAttachment"
+                    right-icon="save" positive />
+            </div>
         </div>
-        <div class="mt-5 relative">
-            <x-button label="Submit Attachment" wire:click="submitAttachment" spinner="submitAttachment"
-                right-icon="save" positive />
-        </div>
-    </div>
+    @endif
 </div>

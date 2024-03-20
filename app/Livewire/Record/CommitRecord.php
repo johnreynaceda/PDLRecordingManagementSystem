@@ -53,26 +53,26 @@ class CommitRecord extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(auth()->user()->user_type== 'records' ? Pdl::query()->whereHas('jail', function($record){
+            ->query(auth()->user()->user_type == 'records' ? Pdl::query()->whereHas('jail', function ($record) {
                 $record->where('region_id', auth()->user()->region_id);
             }) : Pdl::query())
             ->columns([
                 TextColumn::make('id')->label('FULLNAME')->formatStateUsing(
                     function ($record) {
-                        return $record->personalInformation->lastname. ', '. $record->personalInformation->firstname. ' '. $record->personalInformation->middlename;
+                        return $record->personalInformation->lastname . ', ' . $record->personalInformation->firstname . ' ' . $record->personalInformation->middlename;
                     }
                 )->searchable(query: function (Builder $query, string $search): Builder {
-                    return $query->whereHas('personalInformation', function($record) use ($search){
-                        return $record->where('firstname', 'LIKE', '%'.$search.'%')->orWhere('lastname', 'LIKE', '%'.$search.'%')->orWhere('middlename', 'LIKE', '%'. $search. '%');
+                    return $query->whereHas('personalInformation', function ($record) use ($search) {
+                        return $record->where('firstname', 'LIKE', '%' . $search . '%')->orWhere('lastname', 'LIKE', '%' . $search . '%')->orWhere('middlename', 'LIKE', '%' . $search . '%');
                     });
                 }),
                 TextColumn::make('classification')->label('CLASSIFICATION')->searchable(),
                 TextColumn::make('date_of_confinement')->date()->label('DATE COMMITED')->searchable(),
                 ViewColumn::make('crime')->label('CRIME COMMITTED')->view('filament.tables.columns.crime-committed')->searchable(
                     query: function (Builder $query, string $search): Builder {
-                        return $query->whereHas('pdlcases', function($record) use ($search){
-                            $record->whereHas('crime', function($k) use ($search){
-                                $k->where('name', 'LIKE', '%'.$search.'%');
+                        return $query->whereHas('pdlcases', function ($record) use ($search) {
+                            $record->whereHas('crime', function ($k) use ($search) {
+                                $k->where('name', 'LIKE', '%' . $search . '%');
                             });
                         });
                     }
@@ -81,18 +81,18 @@ class CommitRecord extends Component implements HasForms, HasTable
                 TextColumn::make('status')->label('STATUS')->searchable(),
                 TextColumn::make('remarks')->label('REMARKS')->searchable(),
                 TextColumn::make('jail.region.name')->label('REGION')->searchable()->visible(auth()->user()->user_type == 'superadmin'),
-                ])
+            ])
             ->filters([
 
                 SelectFilter::make('jail_id')->label('Jail')
-    ->options(Jail::pluck('name', 'id'))->visible(auth()->user()->user_type == 'records'),
-    SelectFilter::make('region_id')->label('Region')
-    ->options(Region::pluck('name', 'id'))->visible(auth()->user()->user_type == 'nhq'),
+                    ->options(Jail::where('region_id', auth()->user()->region_id)->pluck('name', 'id'))->visible(auth()->user()->user_type == 'records'),
+                SelectFilter::make('region_id')->label('Region')
+                    ->options(Region::pluck('name', 'id'))->visible(auth()->user()->user_type == 'nhq'),
             ])
             ->actions([
 
                 Action::make('view_data')->icon('heroicon-s-folder-open')->color('warning')->url(
-                    function($record){
+                    function ($record) {
                         return route('record.commits.view', ['id' => $record->id]);
                     }
                 ),

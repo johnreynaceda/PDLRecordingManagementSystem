@@ -114,7 +114,7 @@
                                         </a>
                                     </li>
 
-                                    <div x-data="{ open: false }">
+                                    {{-- <div x-data="{ open: false }">
                                         <button
                                             class="inline-flex items-center justify-between w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-100 hover:scale-95 hover:text-main group"
                                             @click="open = ! open">
@@ -228,9 +228,9 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
-                                    <li>
+                                    {{-- <li>
                                         <a class="inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
                                             href="#">
                                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
@@ -246,12 +246,12 @@
                                                 Reports
                                             </span>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li>
                                         <a class="{{ request()->routeIs('superadmin.cases') ? 'bg-gray-200 text-main scale-95' : '' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
                                             href="{{ route('superadmin.cases') }}">
-                                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                fill="currentColor" aria-hidden="true">
                                                 <path
                                                     d="M21 7v10c0 3-1.5 5-5 5H8c-3.5 0-5-2-5-5V7c0-3 1.5-5 5-5h8c3.5 0 5 2 5 5z"
                                                     opacity=".4"></path>
@@ -267,8 +267,8 @@
                                     <li>
                                         <a class="{{ request()->routeIs('superadmin.regions') ? 'bg-gray-200 text-main scale-95' : '' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-gray-500 transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-200 hover:scale-95 hover:text-main"
                                             href="{{ route('superadmin.regions') }}">
-                                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                fill="currentColor" aria-hidden="true">
                                                 <path
                                                     d="M21 7v10c0 3-1.5 5-5 5H8c-3.5 0-5-2-5-5V7c0-3 1.5-5 5-5h8c3.5 0 5 2 5 5z"
                                                     opacity=".4"></path>

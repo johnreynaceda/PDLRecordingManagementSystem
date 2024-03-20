@@ -32,8 +32,8 @@
                     <a href="/">
                         <div class="bjmp flex space-x-3 items-end">
 
-                            <p class=" font-bold text-white font-barlow 2xl:text-2xl text-lg">PDL- Carpeta Management
-                                Database
+                            <p class=" font-bold text-white font-barlow 2xl:text-2xl text-lg">PDL- Carpeta Records
+                                Management
                                 System</p>
 
                         </div>

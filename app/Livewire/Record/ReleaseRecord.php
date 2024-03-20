@@ -78,7 +78,7 @@ class ReleaseRecord extends Component implements HasForms, HasTable
                 ])
             ->filters([
                 SelectFilter::make('jail_id')->label('Jail')
-                ->options(Jail::pluck('name', 'id'))->visible(auth()->user()->user_type == 'records'),
+                    ->options(Jail::where('region_id', auth()->user()->region_id)->pluck('name', 'id'))->visible(auth()->user()->user_type == 'records'),
                 SelectFilter::make('region_id')->label('Region')
                 ->options(Region::pluck('name', 'id'))->visible(auth()->user()->user_type == 'nhq'),
             ])

@@ -1,7 +1,13 @@
 <div>
     <div class="my-5 border-t flex justify-between items-end pt-5">
-        <div class="w-64">
-            <x-input label="" placeholder="search..." wire:model.live="search" icon="search" />
+        <div class="flex space-x-2 items-center">
+            <div class="w-64">
+                <x-input label="" placeholder="search..." wire:model.live="search" icon="search" />
+            </div>
+            <div class="w-64">
+                <x-datetime-picker without-time without-timezone wire:model.live="date" />
+            </div>
+
         </div>
         <div>
             <x-button label="Print Report" dark icon="printer" rounded class="font-semibold"
