@@ -46,7 +46,7 @@ class JailList extends Component implements HasForms, HasTable
                         ]);
                     }
                 )->form([
-                    TextInput::make('name'),
+                    TextInput::make('name')->rules(['unique:jails,name,except,id']),
                     Select::make('region_id')->label('Region')->options(
                         Region::all()->pluck('name', 'id')
                     ),

@@ -53,7 +53,15 @@ class AccountList extends Component implements HasForms, HasTable
                 // ...
             ])
             ->actions([
-                // EditAction::make('edit')->color('success'),
+                Action::make('change')->label('Change Password')->color('success')->icon('heroicon-c-key')->action(
+                    function($record, $data){
+                        $record->update([
+                            'password' => bcrypt($data['password'])
+                        ]);
+                    }
+                )->form([
+                    TextInput::make('password')->password()->required(),
+                ])->modalWidth('lg'),
                 DeleteAction::make('delete'),
             ])
             ->bulkActions([
