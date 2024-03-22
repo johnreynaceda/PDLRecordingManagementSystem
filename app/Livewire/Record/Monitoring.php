@@ -52,17 +52,25 @@ class Monitoring extends Component
 
     public function render()
     {
-        $this->populations = Pdl::whereHas('jail', function($record){
+        $this->populations = Pdl::when($this->jail, function($jail){
+                $jail->where('jail_id', $this->jail);
+            })->whereHas('jail', function($record){
                 $record->where('region_id', auth()->user()->region_id);
             })->count() - (Pdl::when($this->jail, function($jail){
+                $jail->where('jail_id', $this->jail);
+            })->when($this->jail, function($jail){
                 $jail->where('jail_id', $this->jail);
             })->where('status','remand')->whereHas('jail', function($record){
                 $record->where('region_id', auth()->user()->region_id);
             })->count() + Pdl::when($this->jail, function($jail){
                 $jail->where('jail_id', $this->jail);
+            })->when($this->jail, function($jail){
+                $jail->where('jail_id', $this->jail);
             })->where('status','release')->whereHas('jail', function($record){
                 $record->where('region_id', auth()->user()->region_id);
             })->count());
+
+
             $this->commits = Pdl::when($this->jail, function($jail){
                     $jail->where('jail_id', $this->jail);
                 })->whereHas('jail', function($record){
