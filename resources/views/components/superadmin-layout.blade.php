@@ -61,7 +61,9 @@
 
                             <div class="mt-1 flex flex-col">
 
-                                <x-badge label="{{ auth()->user()->user_type }}" rounded flat dark />
+                                <a href="{{ route('profile.edit') }}">
+                                    <x-badge label="{{ auth()->user()->user_type }}" rounded flat dark />
+                                </a>
                             </div>
                         </div>
                         <nav class="flex-1 mt-10 px-2 ">
