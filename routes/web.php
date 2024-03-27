@@ -142,6 +142,9 @@ Route::prefix('nhq')->group(function () {
     Route::get('/releases', function () {
         return view('nhq.releases');
     })->name('nhq.releases');
+    Route::get('/reports', function () {
+        return view('nhq.reports');
+    })->name('nhq.reports');
 });
 
 Route::middleware('auth')->group(function () {

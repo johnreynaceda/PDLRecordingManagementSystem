@@ -14,12 +14,24 @@
                 @click="printOut($refs.printContainer.outerHTML);" />
         </div>
     </div>
+    @if (auth()->user()->user_type != 'admin')
+        <div class="w-64 mt-5">
+            <x-native-select label="Region" wire:model.live="region">
+                <option value="">Select an Option</option>
+                @foreach ($regions as $item)
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                @endforeach
+            </x-native-select>
+        </div>
+    @endif
     <div class="mt-10 border-t pt-3" x-ref="printContainer">
         <div>
             <h1 class="font-bold text-xl text-gray-600">PDL-CARPETA RECORD MANAGEMENT SYSTEM</h1>
             <div class="flex space-x-1 leading-2 text-sm">
-                <h1 class="uppercase font-semibold">{{ auth()->user()->jail->name }}</h1>
-                <h1>({{ auth()->user()->jail->region->name }})</h1>
+                <h1 class="uppercase font-semibold">
+                    {{ auth()->user()->user_type == 'admin' ? auth()->user()->jail->name : 'NATIONAL HEADQUARTERS' }}
+                </h1>
+                <h1>({{ auth()->user()->user_type == 'admin' ? auth()->user()->jail->region->name : '' }})</h1>
             </div>
         </div>
         <div class="mt-5">

@@ -3,10 +3,10 @@
         <span class="font-bold text-main">JAIL POPULATION</span>
     </div>
     <div class=" mt-5 w-64">
-        <label for="" class="text-white ">Jails</label>
-        <x-native-select wire:model.live="jail">
+        <label for="" class="text-white ">Region</label>
+        <x-native-select wire:model.live="region">
             <option>Select An Option</option>
-            @foreach ($jails as $region)
+            @foreach ($regions as $region)
                 <option value="{{ $region->id }}">{{ $region->name }}</option>
             @endforeach
         </x-native-select>

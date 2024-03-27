@@ -175,6 +175,12 @@
                             href="{{ auth()->user()->user_type == 'records' ? route('record.releases') : route('nhq.releases') }}">
                             RELEASES
                         </a>
+                        @if (auth()->user()->user_type == 'nhq')
+                            <a class=" {{ request()->routeIs('nhq.reports') ? 'text-main font-bold' : '' }}  px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main lg:ml-auto"
+                                href="{{ route('nhq.reports') }}">
+                                REPORT
+                            </a>
+                        @endif
                     </div>
 
                     <div class="inline-flex items-center gap-2 list-none lg:ml-auto">
