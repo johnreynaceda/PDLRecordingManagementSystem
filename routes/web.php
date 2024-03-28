@@ -120,6 +120,10 @@ Route::prefix('region')->group(function () {
     Route::get('/releases', function () {
         return view('record.releases');
     })->name('record.releases');
+    Route::get('/reports', function () {
+        return view('record.reports');
+    })->name('record.reports');
+
 });
 
 //NHQ

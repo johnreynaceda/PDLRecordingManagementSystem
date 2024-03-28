@@ -181,6 +181,12 @@
                                 REPORT
                             </a>
                         @endif
+                        @if (auth()->user()->user_type == 'records')
+                            <a class=" {{ request()->routeIs('record.reports') ? 'text-main font-bold' : '' }}  px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 hover:text-main lg:ml-auto"
+                                href="{{ route('record.reports') }}">
+                                REPORT
+                            </a>
+                        @endif
                     </div>
 
                     <div class="inline-flex items-center gap-2 list-none lg:ml-auto">
