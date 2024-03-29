@@ -1,4 +1,6 @@
-@if ($getRecord()->pdlcases->count() > 1)
+@if ($getRecord()->pdlcases->count() == null)
+    <span class="ml-3 text-xs">No Case...</span>
+@elseif ($getRecord()->pdlcases->count() > 1)
     <div class="text-xs ml-3">
         {{ $getRecord()->pdlcases->first()->crime->name }} and <span
             class="text-green-600 hover:text-blue-700  text-sm cursor-pointer">
