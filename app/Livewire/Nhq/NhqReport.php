@@ -17,7 +17,7 @@ class NhqReport extends Component
         return view('livewire.nhq.nhq-report',[
             'jails' => Jail::where('region_id', auth()->user()->region_id)->get(),
             'commits' => Pdl::when($this->jail, function($jail){
-                $jail->where('jail_id', $this->jail_id);
+                $jail->where('jail_id', $this->jail);
             })->when($this->date, function($confinement){
                 $confinement->whereDate('date_of_confinement', $this->date);
             })
@@ -34,7 +34,7 @@ class NhqReport extends Component
                     ->orWhere('remarks', 'like', '%' . $this->search . '%');
             })->get(),
             'hearings' => Pdl::where('status', 'hearing')->when($this->jail, function($jail){
-                $jail->where('jail_id', $this->jail_id);
+                $jail->where('jail_id', $this->jail);
             }) ->when($this->search, function ($query) {
                 $query->whereHas('personalInformation', function ($info) {
                     $info->where('firstname', 'like', '%' . $this->search . '%')
@@ -53,7 +53,7 @@ class NhqReport extends Component
                 });
             })->get(),
             'remands' => Pdl::where('status', 'remand')->when($this->jail, function($jail){
-                $jail->where('jail_id', $this->jail_id);
+                $jail->where('jail_id', $this->jail);
             }) ->when($this->search, function ($query) {
                 $query->whereHas('personalInformation', function ($info) {
                     $info->where('firstname', 'like', '%' . $this->search . '%')
@@ -71,7 +71,7 @@ class NhqReport extends Component
                 $remand->whereDate('date_of_remand', $this->date);
             })->get(),
             'releases' => Pdl::where('status', 'release')->when($this->jail, function($jail){
-                $jail->where('jail_id', $this->jail_id);
+                $jail->where('jail_id', $this->jail);
             }) ->when($this->search, function ($query) {
                 $query->whereHas('personalInformation', function ($info) {
                     $info->where('firstname', 'like', '%' . $this->search . '%')

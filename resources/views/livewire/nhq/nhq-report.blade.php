@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="w-64 mt-5">
-            <x-native-select label="Region" wire:model.live="region">
+            <x-native-select label="Jail" wire:model.live="jail">
                 <option value="">Select an Option</option>
                 @foreach ($jails as $item)
                     <option value="{{ $item->id }}">{{ $item->name }}</option>
