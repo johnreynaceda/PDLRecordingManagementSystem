@@ -84,23 +84,23 @@ class ReleaseRecord extends Component implements HasForms, HasTable
             ])
             ->actions([
                 // EditAction::make('edit')->color('success'),
-                ActionGroup::make([
+                // ActionGroup::make([
 
-                    Action::make('recommit')->icon('heroicon-m-arrow-path-rounded-square')->color('success')->action(
-                        function($record){
-                            $record->update([
-                             'status' =>'',
-                             'date_of_release' => null
-                            ]);
-                            $this->dialog()->success(
-                                $title = 'PDL Recommit',
-                                $description = 'PDL infos are now in commit.'
+                //     Action::make('recommit')->icon('heroicon-m-arrow-path-rounded-square')->color('success')->action(
+                //         function($record){
+                //             $record->update([
+                //              'status' =>'',
+                //              'date_of_release' => null
+                //             ]);
+                //             $this->dialog()->success(
+                //                 $title = 'PDL Recommit',
+                //                 $description = 'PDL infos are now in commit.'
 
-                            );
-                        }
+                //             );
+                //         }
 
-                    ),
-                ])
+                //     ),
+                // ])
 
             ])
             ->bulkActions([
