@@ -89,7 +89,8 @@
                                 class="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                 role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                                 tabindex="-1">
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-500" role="menuitem"
+                                <a href="{{ route('profile.edit') }}"
+                                    class="block px-4 py-2 hover:text-gray-700 text-sm text-gray-500" role="menuitem"
                                     tabindex="-1" id="user-menu-item-0">
                                     Your Profile
                                 </a>
@@ -212,9 +213,10 @@
                                 class="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                 role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                                 tabindex="-1">
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-500" role="menuitem"
+                                <a href="{{ route('profile.edit') }}"
+                                    class="block px-4 py-2 hover:text-gray-700 text-sm text-gray-500" role="menuitem"
                                     tabindex="-1" id="user-menu-item-0">
-                                    Your Profile
+                                    Your Profiles
                                 </a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
