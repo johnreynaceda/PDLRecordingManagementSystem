@@ -61,4 +61,8 @@ class User extends Authenticatable
     public function accountlogo(){
         return $this->hasOne(AccountLogo::class);
     }
+
+    public function userProfile(){
+        return $this->hasOne(UserProfile::class);
+    }
 }

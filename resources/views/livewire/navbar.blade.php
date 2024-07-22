@@ -75,8 +75,19 @@
                                     <span class="sr-only">
                                         Open user menu
                                     </span>
-                                    <img class="object-cover w-12 h-12  border rounded-full"
-                                        src="{{ asset('images/sample.png') }}" alt="">
+                                    @php
+                                        $profile = \App\Models\UserProfile::where(
+                                            'user_id',
+                                            auth()->user()->id,
+                                        )->first();
+                                    @endphp
+                                    @if ($profile != null)
+                                        <img class="object-cover w-12 h-12  border rounded-full"
+                                            src="{{ Storage::url($profile->path) }}" alt="">
+                                    @else
+                                        <img class="object-cover w-12 h-12  border rounded-full"
+                                            src="{{ asset('images/sample.png') }}" alt="">
+                                    @endif
                                 </button>
                             </div>
 
@@ -199,8 +210,19 @@
                                     <span class="sr-only">
                                         Open user menu
                                     </span>
-                                    <img class="object-cover w-12 h-12  border rounded-full"
-                                        src="{{ asset('images/sample.png') }}" alt="">
+                                    @php
+                                        $profile = \App\Models\UserProfile::where(
+                                            'user_id',
+                                            auth()->user()->id,
+                                        )->first();
+                                    @endphp
+                                    @if ($profile != null)
+                                        <img class="object-cover w-12 h-12  border rounded-full"
+                                            src="{{ Storage::url($profile->path) }}" alt="">
+                                    @else
+                                        <img class="object-cover w-12 h-12  border rounded-full"
+                                            src="{{ asset('images/sample.png') }}" alt="">
+                                    @endif
                                 </button>
                             </div>
 
@@ -216,7 +238,7 @@
                                 <a href="{{ route('profile.edit') }}"
                                     class="block px-4 py-2 hover:text-gray-700 text-sm text-gray-500" role="menuitem"
                                     tabindex="-1" id="user-menu-item-0">
-                                    Your Profiles
+                                    Your Profile
                                 </a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
